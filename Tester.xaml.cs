@@ -32,6 +32,7 @@ namespace Tarneeb_Card_Game
             DisplayCards();
         }
 
+        StackPanel player1StackPanel = new StackPanel();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
@@ -41,20 +42,36 @@ namespace Tarneeb_Card_Game
         {
             Button clickedButton = sender as Button;
             string buttonName = clickedButton.Name;
+            clickedButton.IsEnabled = false;
+            //MessageBox.Show("Button " + buttonName + " was clicked! " + Convert.ToString(this.Background));
 
-            MessageBox.Show("Button " + buttonName + " was clicked!");
+            // Get the position of the button
+            System.Windows.Point position = clickedButton.TranslatePoint(new System.Windows.Point(0, 0), this);
 
+            // Animate the button to move from grid1 to grid2
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                Duration = TimeSpan.FromSeconds(1),
+                From = position.X,
+                To = Round.ActualWidth / 2 - clickedButton.ActualWidth / 2,
+                EasingFunction = new QuadraticEase()
+            };
 
-            // Set the starting position of the button
-            clickedButton.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
-            TranslateTransform translation = new TranslateTransform();
-            clickedButton.RenderTransform = translation;
-            translation.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(Player1.ActualWidth, Round.ActualWidth), HandoffBehavior.Compose);
-            translation.BeginAnimation(TranslateTransform.YProperty, CreateAnimation(Player1.ActualHeight, Round.ActualHeight), HandoffBehavior.Compose);
+            Storyboard storyboard = new Storyboard();
+            storyboard.Children.Add(animation);
+            Storyboard.SetTarget(animation, clickedButton);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("(Canvas.Left)"));
+            storyboard.Begin(this);
 
-            // Add the button to grid1
-            Player1.Children.Remove(clickedButton);
+            // Remove the button from the StackPanel
+            player1StackPanel.Children.Remove(clickedButton);
+
+            // Add the button to grid2
+            int marginTop = 150;
+            clickedButton.Margin = new Thickness(0, marginTop, 0, 0);
             Round.Children.Add(clickedButton);
+            Grid.SetColumn(clickedButton, 0);
+            Grid.SetRow(clickedButton, 0);
 
         }
         private DoubleAnimation CreateAnimation(double fromValue, double toValue)
@@ -67,13 +84,14 @@ namespace Tarneeb_Card_Game
         }
         public void DisplayCards()
         {
-            Grid Test = new Grid();
+            //Grid Test = new Grid();
             Deck deck = new Deck();
+            deck.Shuffle();
             cards = deck.TakeCards(13);
             int x = 0;
             List<Button> buttons = new List<Button>();
 
-            StackPanel player1StackPanel = new StackPanel();
+            //StackPanel player1StackPanel = new StackPanel();
             player1StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player1StackPanel.Orientation = Orientation.Horizontal;
             foreach (Card card in cards)
@@ -84,6 +102,7 @@ namespace Tarneeb_Card_Game
                 button.Tag = card; // Assign the card object to the button's Tag property
                 button.Width = 85;
                 button.Height = 140;
+                card.isFaceUp = true;
                 if (x == 0)
                 {
 
@@ -98,7 +117,7 @@ namespace Tarneeb_Card_Game
 
                 Image myImage = new Image
                 {
-                    Source = new BitmapImage(new Uri("/Images/cardBackRed.png", UriKind.RelativeOrAbsolute)),
+                    Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
                     Stretch = Stretch.Fill
                 };
                 button.Content = myImage;

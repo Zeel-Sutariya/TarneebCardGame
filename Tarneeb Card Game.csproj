@@ -10,12 +10,233 @@
 
   <ItemGroup>
     <None Remove="Images\background.jpg" />
+    <None Remove="Images\cardBackBlue.jpg" />
     <None Remove="Images\cardBackRed.png" />
+    <None Remove="Images\Cards\ClubAce.png" />
+    <None Remove="Images\Cards\ClubEight.png" />
+    <None Remove="Images\Cards\ClubFive.png" />
+    <None Remove="Images\Cards\ClubFour.png" />
+    <None Remove="Images\Cards\ClubJack.png" />
+    <None Remove="Images\Cards\ClubKing.png" />
+    <None Remove="Images\Cards\ClubNine.png" />
+    <None Remove="Images\Cards\ClubQueen.png" />
+    <None Remove="Images\Cards\ClubSeven.png" />
+    <None Remove="Images\Cards\ClubSix.png" />
+    <None Remove="Images\Cards\ClubTen.png" />
+    <None Remove="Images\Cards\ClubThree.png" />
+    <None Remove="Images\Cards\ClubTwo.png" />
+    <None Remove="Images\Cards\DiamondAce.png" />
+    <None Remove="Images\Cards\DiamondEight.png" />
+    <None Remove="Images\Cards\DiamondFive.png" />
+    <None Remove="Images\Cards\DiamondFour.png" />
+    <None Remove="Images\Cards\DiamondJack.png" />
+    <None Remove="Images\Cards\DiamondKing.png" />
+    <None Remove="Images\Cards\DiamondNine.png" />
+    <None Remove="Images\Cards\DiamondQueen.png" />
+    <None Remove="Images\Cards\DiamondSeven.png" />
+    <None Remove="Images\Cards\DiamondSix.png" />
+    <None Remove="Images\Cards\DiamondTen.png" />
+    <None Remove="Images\Cards\DiamondThree.png" />
+    <None Remove="Images\Cards\DiamondTwo.png" />
+    <None Remove="Images\Cards\HeartAce.png" />
+    <None Remove="Images\Cards\HeartEight.png" />
+    <None Remove="Images\Cards\HeartFive.png" />
+    <None Remove="Images\Cards\HeartFour.png" />
+    <None Remove="Images\Cards\HeartJack.png" />
+    <None Remove="Images\Cards\HeartKing.png" />
+    <None Remove="Images\Cards\HeartNine.png" />
+    <None Remove="Images\Cards\HeartQueen.png" />
+    <None Remove="Images\Cards\HeartSeven.png" />
+    <None Remove="Images\Cards\HeartSix.png" />
+    <None Remove="Images\Cards\HeartTen.png" />
+    <None Remove="Images\Cards\HeartThree.png" />
+    <None Remove="Images\Cards\HeartTwo.png" />
+    <None Remove="Images\Cards\JokerBlack.png" />
+    <None Remove="Images\Cards\JokerRed.png" />
+    <None Remove="Images\Cards\SpadeAce.png" />
+    <None Remove="Images\Cards\SpadeEight.png" />
+    <None Remove="Images\Cards\SpadeFive.png" />
+    <None Remove="Images\Cards\SpadeFour.png" />
+    <None Remove="Images\Cards\SpadeJack.png" />
+    <None Remove="Images\Cards\SpadeKing.png" />
+    <None Remove="Images\Cards\SpadeNine.png" />
+    <None Remove="Images\Cards\SpadeQueen.png" />
+    <None Remove="Images\Cards\SpadeSeven.png" />
+    <None Remove="Images\Cards\SpadeSix.png" />
+    <None Remove="Images\Cards\SpadeTen.png" />
+    <None Remove="Images\Cards\SpadeThree .png" />
+    <None Remove="Images\Cards\SpadeThree.png" />
+    <None Remove="Images\Cards\SpadeTwo.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\background.jpg" />
+    <Resource Include="Images\cardBackBlue.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\cardBackRed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubAce.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubEight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubFive.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubFour.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubJack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubKing.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubNine.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubQueen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubSeven.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubSix.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubTen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubThree.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\ClubTwo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondAce.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondEight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondFive.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondFour.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondJack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondKing.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondNine.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondQueen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondSeven.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondSix.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondTen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondThree.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\DiamondTwo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartAce.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartEight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartFive.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartFour.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartJack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartKing.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartNine.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartQueen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartSeven.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartSix.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartTen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartThree.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\HeartTwo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\JokerBlack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\JokerRed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeAce.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeEight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeFive.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeFour.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeJack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeKing.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeNine.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeQueen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeSeven.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeSix.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeTen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeThree.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Cards\SpadeTwo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

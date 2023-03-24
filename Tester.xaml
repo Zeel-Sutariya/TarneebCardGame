@@ -26,32 +26,10 @@
             <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition Width="1.2*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="Player1" Grid.Row="4" Grid.Column="2">
-            
+        <Grid x:Name="Player1" ShowGridLines="True" Grid.Row="4" Grid.Column="2">
         </Grid>
-        <Grid x:Name="RoundSpace" Grid.Row="2" Grid.Column="2" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid x:Name="Round" Grid.Row="1" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-            </Grid>
+        <Grid x:Name="Round" ShowGridLines="True" Grid.Row="2" Grid.Column="2" >
+            
         </Grid>
         
     </Grid>

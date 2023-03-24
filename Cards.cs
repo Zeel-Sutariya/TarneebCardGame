@@ -14,7 +14,7 @@ namespace Cards
             Club = 1,
             Diamond = 2,
             Heart = 3,
-            Spades = 4,
+            Spade = 4,
         }
 
         public enum CardNumber
@@ -69,6 +69,7 @@ namespace Cards
         {
             this.isTrump = isTrump;
         }
+
 
         public static bool operator >=(Card card1, Card card2)
         {
@@ -147,9 +148,20 @@ namespace Cards
 
         }
 
-        public string getImagePath(Card card)
+        public string getImagePath()
         {
-            return "path";
+            string path = "";
+            if (this.isFaceUp)
+            { 
+                string name = Convert.ToString(this.Suit) + Convert.ToString(this.CardNumber);
+                path = "/Images/Cards/" + name + ".png";
+            
+            }
+            else
+            {
+                path = "/Images/cardBackRed.png";
+            }
+            return path;
         }
     }
 
