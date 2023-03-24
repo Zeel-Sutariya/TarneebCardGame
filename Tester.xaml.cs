@@ -45,16 +45,16 @@ namespace Tarneeb_Card_Game
             MessageBox.Show("Button " + buttonName + " was clicked!");
 
 
-            //// Set the starting position of the button
-            //clickedButton.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
-            //TranslateTransform translation = new TranslateTransform();
-            //clickedButton.RenderTransform = translation;
-            //translation.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(Player1.ActualWidth, Round.ActualWidth), HandoffBehavior.Compose);
-            //translation.BeginAnimation(TranslateTransform.YProperty, CreateAnimation(Player1.ActualHeight, Round.ActualHeight), HandoffBehavior.Compose);
+            // Set the starting position of the button
+            clickedButton.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+            TranslateTransform translation = new TranslateTransform();
+            clickedButton.RenderTransform = translation;
+            translation.BeginAnimation(TranslateTransform.XProperty, CreateAnimation(Player1.ActualWidth, Round.ActualWidth), HandoffBehavior.Compose);
+            translation.BeginAnimation(TranslateTransform.YProperty, CreateAnimation(Player1.ActualHeight, Round.ActualHeight), HandoffBehavior.Compose);
 
-            //// Add the button to grid1
-            //Player1.Children.Remove(clickedButton);
-            //Round.Children.Add(clickedButton);
+            // Add the button to grid1
+            Player1.Children.Remove(clickedButton);
+            Round.Children.Add(clickedButton);
 
         }
         private DoubleAnimation CreateAnimation(double fromValue, double toValue)
@@ -74,6 +74,7 @@ namespace Tarneeb_Card_Game
             List<Button> buttons = new List<Button>();
 
             StackPanel player1StackPanel = new StackPanel();
+            player1StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player1StackPanel.Orientation = Orientation.Horizontal;
             foreach (Card card in cards)
             {
@@ -83,7 +84,16 @@ namespace Tarneeb_Card_Game
                 button.Tag = card; // Assign the card object to the button's Tag property
                 button.Width = 85;
                 button.Height = 140;
-                button.Margin = new Thickness(x * -10, 0, 0, 0);
+                if (x == 0)
+                {
+
+                    button.Margin = new Thickness(0, 0, 0, 0);
+                }
+                else
+                {
+
+                    button.Margin = new Thickness(-30, 0, 0, 0);
+                }
                 button.Click += CardButton_Click;
 
                 Image myImage = new Image
