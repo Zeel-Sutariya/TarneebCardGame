@@ -1,0 +1,38 @@
+﻿<Window x:Class="Tarneeb_Card_Game.Rules"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tarneeb_Card_Game"
+        mc:Ignorable="d"
+        Title="Rules" WindowStartupLocation="CenterScreen" Height="400" Width="600">
+    <Grid>
+        <Label x:Name="rulesTitle" Content="Rules" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.427,1.807"/>
+        <RichTextBox Margin="31,52,30,30" VerticalScrollBarVisibility="Visible">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="Players: The game is typically played with four players, who sit opposite each other in pairs."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="Deck: Tarneeb is played with a standard deck of 52 cards."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="Objective: The objective of the game is to win tricks by playing the highest card of the same suit as the lead card or by playing a trump card."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="Deal: The dealer shuffles the deck and deals 13 cards to each player, one at a time, starting with the player to their right. The dealer then places the remaining cards in a stack in the middle of the table, with the top card face-up."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="Bidding: Before the start of the play, players bid to determine the trump suit for the round. The player to the dealer's right starts the bidding and can either bid a number of tricks they think they can win or pass. Each subsequent player can either bid a higher number of tricks or pass. The bidding continues around the table until all players have either passed or one player has won the bidding. The player who wins the bidding gets to choose the trump suit for the round."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="Play: The player to the dealer's right leads the first trick by playing any card from their hand. The other players must follow suit if possible; if they cannot follow suit, they can play any card. The player who plays the highest card of the same suit as the lead card or the highest trump card wins the trick and leads the next one. The winner of each trick scores one point for their team."/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="Scoring: At the end of the round, each team counts the number of tricks they won. If the bidding team won at least as many tricks as they bid, they score points equal to their bid. If they did not win as many tricks as they bid, they score negative points equal to their bid. The opposing team scores one point for each trick they won. The game is typically played to a predetermined number of points, such as 31 or 41."/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+    </Grid>
+</Window>
