@@ -87,7 +87,14 @@ namespace Tarneeb_Card_Game
             //Grid Test = new Grid();
             Deck deck = new Deck();
             deck.Shuffle();
-            cards = deck.TakeCards(13);
+            cards = deck.TakeCards(13); 
+
+            // Sort the cards by suit, and then by rank
+            var sortedCards = cards.OrderBy(c => c.Suit).ThenBy(c => c.CardNumber);
+
+            // Store the sorted cards back into the cards list
+            cards = sortedCards.ToList();
+
             int x = 0;
             List<Button> buttons = new List<Button>();
 
