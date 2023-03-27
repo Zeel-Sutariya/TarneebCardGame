@@ -25,7 +25,10 @@ namespace Tarneeb_Card_Game
     public partial class Tester : Window
     {
 
-        List<Card> cards = new List<Card>();
+        List<Card> player1 = new List<Card>();
+        List<Card> player2 = new List<Card>();
+        List<Card> player3 = new List<Card>();
+        List<Card> player4 = new List<Card>();
         public Tester()
         {
             InitializeComponent();
@@ -33,6 +36,9 @@ namespace Tarneeb_Card_Game
         }
 
         StackPanel player1StackPanel = new StackPanel();
+        StackPanel player2StackPanel = new StackPanel();
+        StackPanel player3StackPanel = new StackPanel();
+        StackPanel player4StackPanel = new StackPanel();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
@@ -53,7 +59,7 @@ namespace Tarneeb_Card_Game
             {
                 Duration = TimeSpan.FromSeconds(1),
                 From = position.X,
-                To = Round.ActualWidth / 2 - clickedButton.ActualWidth / 2,
+                To = Round.ActualWidth,
                 EasingFunction = new QuadraticEase()
             };
 
@@ -87,21 +93,35 @@ namespace Tarneeb_Card_Game
             //Grid Test = new Grid();
             Deck deck = new Deck();
             deck.Shuffle();
-            cards = deck.TakeCards(13); 
+            player1 = deck.Sort(deck.TakeCards(13)); 
+            player2 = deck.Sort(deck.TakeCards(13));
+            player3 = deck.Sort(deck.TakeCards(13));
+            player4 = deck.Sort(deck.TakeCards(13));
+
 
             // Sort the cards by suit, and then by rank
-            var sortedCards = cards.OrderBy(c => c.Suit).ThenBy(c => c.CardNumber);
+            //var sortedCards = player1.OrderBy(c => c.Suit).ThenBy(c => c.CardNumber);
 
             // Store the sorted cards back into the cards list
-            cards = sortedCards.ToList();
+            //player1 = sortedCards.ToList();
+            //player2 = sortedCards.ToList();
+            //player3 = sortedCards.ToList();
+            //player4 = sortedCards.ToList();
 
+            
+            DisplayPlayer1();
+            DisplayPlayer2();
+            DisplayPlayer3();
+            DisplayPlayer4();
+        }
+
+        public void DisplayPlayer1()
+        {
             int x = 0;
-            List<Button> buttons = new List<Button>();
-
             //StackPanel player1StackPanel = new StackPanel();
             player1StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player1StackPanel.Orientation = Orientation.Horizontal;
-            foreach (Card card in cards)
+            foreach (Card card in player1)
             {
                 Button button = new Button();
                 button.Name = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber);
@@ -132,27 +152,126 @@ namespace Tarneeb_Card_Game
 
                 x++;
                 player1StackPanel.Children.Add(button);
-                buttons.Add(button);
             }
             Player1.Children.Add(player1StackPanel);
-            //x = 0;
-            //foreach (Button btn in buttons)
-            //{
-
-            //    Grid.SetRow(btn, 0); // set the row of the button in the grid
-            //    Grid.SetColumn(btn, x);
-
-            //    Player1.Children.Add(btn);// set the column of the button in the grid
-            //                              //Test.Children.Add(btn);
-
-            //    x++;
-            //}
-
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void DisplayPlayer2()
         {
-            throw new NotImplementedException();
+            player2StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            player2StackPanel.Orientation = Orientation.Vertical;
+            int x = 0;
+            foreach (Card card in player2)
+            {
+                Button button = new Button();
+                button.Name = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber);
+                button.Content = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber); // Set the button's content to the card's name
+                button.Tag = card; // Assign the card object to the button's Tag property
+                button.Width = 85;
+                button.Height = 140;
+                card.isFaceUp = false;
+
+
+                button.Margin = new Thickness(0, 0, 0, -120);
+                
+                button.Click += CardButton_Click;
+
+                var rotateTransform = new RotateTransform(-90);
+                button.RenderTransform = rotateTransform;
+                Image myImage = new Image
+                {
+                    Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
+                    Stretch = Stretch.Fill
+                };
+                button.Content = myImage;
+
+
+                x++;
+                player2StackPanel.Children.Add(button);
+            }
+            player2StackPanel.Margin = new Thickness(0, 100, 0, 0);
+            Player2.Children.Add(player2StackPanel);
         }
+
+        public void DisplayPlayer3()
+        {
+            int x = 0;
+            //StackPanel player1StackPanel = new StackPanel();
+            player3StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            player3StackPanel.Orientation = Orientation.Horizontal;
+            foreach (Card card in player3)
+            {
+                Button button = new Button();
+                button.Name = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber);
+                button.Content = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber); // Set the button's content to the card's name
+                button.Tag = card; // Assign the card object to the button's Tag property
+                button.Width = 85;
+                button.Height = 140;
+                card.isFaceUp = false;
+                if (x == 0)
+                {
+
+                    button.Margin = new Thickness(0, 0, 0, 0);
+                }
+                else
+                {
+
+                    button.Margin = new Thickness(-30, 0, 0, 0);
+                }
+                button.Click += CardButton_Click;
+
+                Image myImage = new Image
+                {
+                    Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
+                    Stretch = Stretch.Fill
+                };
+                button.Content = myImage;
+
+
+                x++;
+                player3StackPanel.Children.Add(button);
+            }
+            Player3.Children.Add(player3StackPanel);
+        }
+
+        public void DisplayPlayer4()
+        {
+            player4StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            player4StackPanel.Orientation = Orientation.Vertical;
+            int x = 0;
+            foreach (Card card in player4)
+            {
+                Button button = new Button();
+                button.Name = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber);
+                button.Content = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber); // Set the button's content to the card's name
+                button.Tag = card; // Assign the card object to the button's Tag property
+                button.Width = 85;
+                button.Height = 140;
+                card.isFaceUp = false;
+
+             
+
+                button.Margin = new Thickness(0, 0, 0, -120);
+                
+                button.Click += CardButton_Click;
+
+                var rotateTransform = new RotateTransform(-90);
+                button.RenderTransform = rotateTransform;
+                Image myImage = new Image
+                {
+                    Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
+                    Stretch = Stretch.Fill
+                };
+                button.Content = myImage;
+
+
+                x++;
+                player4StackPanel.Children.Add(button);
+            }
+            player4StackPanel.Margin = new Thickness(0, 100, 0, 0);
+            Player4.Children.Add(player4StackPanel);
+        }
+
+
     }
 }

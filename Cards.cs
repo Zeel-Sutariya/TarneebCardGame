@@ -19,7 +19,6 @@ namespace Cards
 
         public enum CardNumber
         {
-            Ace = 1,
             Two = 2,
             Three = 3,
             Four = 4,
@@ -32,6 +31,7 @@ namespace Cards
             Jack = 11,
             Queen = 12,
             King = 13,
+            Ace = 14,
         }
 
 
@@ -47,7 +47,12 @@ namespace Cards
 
         public Boolean isFaceUp = false;
 
+        public int cardOwner { get; set; }
 
+        public Card() 
+        { 
+            cardOwner = 0;
+        }
         public Boolean getIsFaceUp()
         {
             return isFaceUp;
@@ -165,63 +170,7 @@ namespace Cards
         }
     }
 
-    public class Deck
-    {
-        public Deck()
-        {
-            Reset();
-        }
-
-        public List<Card> Cards { get; set; }
-
-        public void Reset()
-        {
-            Cards = Enumerable.Range(1, 4)
-                .SelectMany(s => Enumerable.Range(1, 13)
-                                    .Select(c => new Card()
-                                    {
-                                        Suit = (Enums.Suit)s,
-                                        CardNumber = (Enums.CardNumber)c
-                                    }
-                                            )
-                            )
-                   .ToList();
-        }
-
-        public void Shuffle()
-        {
-            Cards = Cards.OrderBy(c => Guid.NewGuid())
-                         .ToList();
-        }
-
-        public Card TakeCard()
-        {
-            var card = Cards.FirstOrDefault();
-            Cards.Remove(card);
-            return card;
-        }
-
-        public List<Card> TakeCards(int numberOfCards)
-        {
-            var cards = Cards.Take(numberOfCards);
-
-            //var takeCards = cards as Card[] ?? cards.ToArray();
-            var takeCards = cards as List<Card> ?? cards.ToList();
-            Cards.RemoveAll(takeCards.Contains);
-
-            return takeCards;
-        }
-
-        public List<Card> Sort(List<Card> listOfCards)
-        {
-            List<Card> sorted = listOfCards.GroupBy(s => s.Suit).
-                OrderByDescending(c => c.Count()).SelectMany(g => g.OrderByDescending(c => c.CardNumber)).ToList();
-
-            
-            return sorted;
-
-        }
-    }
+    
 
 
 }

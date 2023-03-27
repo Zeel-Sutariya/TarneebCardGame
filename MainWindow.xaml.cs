@@ -47,11 +47,11 @@ namespace Tarneeb_Card_Game
             win1.Show();
             if (win1.IsEnabled)
             {
-                playButton.IsEnabled = false;
+                //playButton.IsEnabled = false;
             }
             else
             {
-                playButton.IsEnabled = true;
+                //playButton.IsEnabled = true;
             }
             //win1.GameMode.Content = selectedMode;
         }

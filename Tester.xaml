@@ -28,6 +28,13 @@
         </Grid.ColumnDefinitions>
         <Grid x:Name="Player1" ShowGridLines="True" Grid.Row="4" Grid.Column="2">
         </Grid>
+        <Grid x:Name="Player2" ShowGridLines="True" Grid.Row="2" Grid.Column="4">
+        </Grid>
+        <Grid x:Name="Player3" ShowGridLines="True" Grid.Row="0" Grid.Column="2">
+        </Grid>
+        <Grid x:Name="Player4" ShowGridLines="True" Grid.Row="2" Grid.Column="0">
+            
+        </Grid>
         <Grid x:Name="Round" ShowGridLines="True" Grid.Row="2" Grid.Column="2" >
             
         </Grid>
