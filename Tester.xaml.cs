@@ -29,6 +29,8 @@ namespace Tarneeb_Card_Game
         List<Card> player2 = new List<Card>();
         List<Card> player3 = new List<Card>();
         List<Card> player4 = new List<Card>();
+
+        List<Button> bidButtons = new List<Button>();
         public Tester()
         {
             InitializeComponent();
@@ -38,14 +40,19 @@ namespace Tarneeb_Card_Game
         StackPanel player2StackPanel = new StackPanel();
         StackPanel player3StackPanel = new StackPanel();
         StackPanel player4StackPanel = new StackPanel();
+        Label lblBid = new Label();
+        Label lblHighestBid = new Label();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
             DisplayCards();
+            DisplayBid();
         }
 
         private void CardButton_Click(object sender, RoutedEventArgs e)
         {
+            Round.Children.Remove(lblBid);
+            Round.Children.Remove(Bid);
             Button clickedButton = sender as Button;
             string buttonName = clickedButton.Name;
             clickedButton.IsEnabled = false;
@@ -54,7 +61,6 @@ namespace Tarneeb_Card_Game
             Card card = (Card)clickedButton.Tag;
             card.isFaceUp = true;
 
-            
             clickedButton.Content = SetCardImage(card);
 
             // Get the position of the button
@@ -85,13 +91,13 @@ namespace Tarneeb_Card_Game
                 clickedButton.Margin = new Thickness(0, margin, 0, 0);
             }
             else if(card.cardOwner == 2){
-                clickedButton.Margin = new Thickness(margin, 2*margin, 0, 0);
+                clickedButton.Margin = new Thickness(margin, 2 * margin, 0, 0);
             }
             else if(card.cardOwner == 3){
                 clickedButton.Margin = new Thickness(0, 0, 0, margin);
             }
             else if(card.cardOwner == 4){
-                clickedButton.Margin = new Thickness(0, 2*margin, 2 * margin, 0);
+                clickedButton.Margin = new Thickness(0, 2 * margin, 2 * margin, 0);
             }
 
             Round.Children.Add(clickedButton);
@@ -285,5 +291,126 @@ namespace Tarneeb_Card_Game
             };
             return myImage;
         }
+
+
+        public void DisplayBid()
+        {
+            lblBid.Name = "lblBid";
+            lblBid.Content = "BID";
+            lblBid.FontWeight = FontWeights.Bold;
+            lblBid.FontSize = 44;
+            lblBid.HorizontalAlignment = HorizontalAlignment.Center;
+            lblBid.VerticalAlignment = VerticalAlignment.Bottom;
+            Bid.Children.Add(lblBid);
+            Grid.SetRow(lblBid, 0);
+            Grid.SetColumn(lblBid, 4);
+
+            lblHighestBid.Name = "lblHighestBid";
+            lblHighestBid.Content = "Highest Bid : ";
+            lblHighestBid.FontWeight = FontWeights.Bold;
+            lblHighestBid.FontSize = 24;
+            lblHighestBid.HorizontalAlignment = HorizontalAlignment.Center;
+            lblHighestBid.VerticalAlignment = VerticalAlignment.Center;
+            Bid.Children.Add(lblHighestBid);
+            Grid.SetRow(lblHighestBid, 1);
+            Grid.SetColumn(lblHighestBid, 3);
+            Grid.SetColumnSpan(lblHighestBid, 3);
+            int x = 1;
+            for (int i = 1; i <= 2; i++)
+            {
+                for (int j = 1; j <= 7; j++)
+                {
+
+                    Button btnBid = new Button();
+                    if (i == 2 && j == 7)
+                    {
+                        btnBid.Name = "btnPass" + x.ToString();
+                        btnBid.Content = "Pass";
+                        btnBid.Width = 50;
+                        btnBid.Height = 50;
+                        btnBid.Click += PassButton_Click;
+                        Bid.Children.Add(btnBid);
+                    }
+                    else 
+                    {
+                        btnBid.Name = "btnBid" + x.ToString();
+                        btnBid.Content = x.ToString();
+                        btnBid.Width = 50;
+                        btnBid.Height = 50;
+                        btnBid.Click += BidButton_Click;
+                        Bid.Children.Add(btnBid);
+                    }
+                    
+                    
+                    Grid.SetColumn(btnBid, j);
+                    Grid.SetRow(btnBid, i + 1);
+                    x++;
+                    bidButtons.Add(btnBid);
+                }
+            }
+
+        }
+
+        private void BidButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            string buttonContent = Convert.ToString(clickedButton.Content);
+            lblHighestBid.Content = "Highest Bid : " + buttonContent;
+
+            int x = 1;
+            foreach (Button button in bidButtons)
+            {
+                button.IsEnabled = false;
+                if (x == Convert.ToInt64(buttonContent))
+                {
+                    break;
+                }
+                x++;
+            }
+        }
+
+        private void PassButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This button is under constructions!");
+        }
+
+        /* ------------- AI PART ---------------
+        public Card SelectCardToPlay(List<Card> playedCards, List<Card> aiHand, List<Card> currentTrick, GameMode gameMode)
+        {
+            // Determine the legal plays (i.e., the cards in the AI player's hand that can legally be played in the current trick)
+            List<Card> legalPlays = GetLegalPlays(aiHand, currentTrick);
+
+            // If there is only one legal play, play it
+            if (legalPlays.Count == 1)
+            {
+                return legalPlays[0];
+            }
+
+            // If there are multiple legal plays, use the AI player's strategy to select the best one
+            switch (gameMode)
+            {
+                case GameMode.Easy:
+                    // In easy mode, the AI player simply plays the highest-ranked legal card in its hand
+                    return legalPlays.OrderByDescending(card => card.Rank).First();
+
+                case GameMode.Medium:
+                // In medium mode, the AI player uses a heuristic to evaluate the strength of its cards and the likelihood of winning the trick
+                // TODO: implement medium mode strategy
+
+                case GameMode.Hard:
+                // In hard mode, the AI player uses a more sophisticated heuristic to evaluate the strength of its cards and the likelihood of winning the trick
+                // TODO: implement hard mode strategy
+
+                default:
+                    throw new ArgumentException("Invalid game mode specified.");
+            }
+        }
+
+        private List<Card> GetLegalPlays(List<Card> hand, List<Card> trick)
+        {
+            // TODO: implement logic to determine the legal plays for the AI player's hand in the current trick
+            throw new NotImplementedException();
+        }
+        */
     }
 }
