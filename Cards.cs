@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Cards
 {
@@ -46,7 +47,7 @@ namespace Cards
         public Enums.CardNumber CardNumber { get; set; }
 
         public Boolean isFaceUp = false;
-
+        public Button ParentButton { get; set; }
         public int cardOwner { get; set; }
 
         public Card() 

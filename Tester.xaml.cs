@@ -29,12 +29,10 @@ namespace Tarneeb_Card_Game
         List<Card> player2 = new List<Card>();
         List<Card> player3 = new List<Card>();
         List<Card> player4 = new List<Card>();
+        List<Card> roundCards = new List<Card>();
 
         List<Button> bidButtons = new List<Button>();
-        public Tester()
-        {
-            InitializeComponent();
-        }
+
 
         StackPanel player1StackPanel = new StackPanel();
         StackPanel player2StackPanel = new StackPanel();
@@ -42,6 +40,12 @@ namespace Tarneeb_Card_Game
         StackPanel player4StackPanel = new StackPanel();
         Label lblBid = new Label();
         Label lblHighestBid = new Label();
+
+        Card currentRoundCard = new Card();
+        public Tester()
+        {
+            InitializeComponent();
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
@@ -51,8 +55,9 @@ namespace Tarneeb_Card_Game
 
         private void CardButton_Click(object sender, RoutedEventArgs e)
         {
-            Round.Children.Remove(lblBid);
+            // Removing Bid GRID from Round Grid.
             Round.Children.Remove(Bid);
+
             Button clickedButton = sender as Button;
             string buttonName = clickedButton.Name;
             clickedButton.IsEnabled = false;
@@ -63,28 +68,31 @@ namespace Tarneeb_Card_Game
 
             clickedButton.Content = SetCardImage(card);
 
-            // Get the position of the button
-            System.Windows.Point position = clickedButton.TranslatePoint(new System.Windows.Point(0, 0), this);
+            /*----- Animation PART----- */
+            //// Get the position of the button
+            //System.Windows.Point position = clickedButton.TranslatePoint(new System.Windows.Point(0, 0), this);
 
-            // Animate the button to move from grid1 to grid2
-            DoubleAnimation animation = new DoubleAnimation
-            {
-                Duration = TimeSpan.FromSeconds(1),
-                From = position.X,
-                To = Round.ActualWidth,
-                EasingFunction = new QuadraticEase()
-            };
+            //// Animate the button to move from grid1 to grid2
+            //DoubleAnimation animation = new DoubleAnimation
+            //{
+            //    Duration = TimeSpan.FromSeconds(1),
+            //    From = position.X,
+            //    To = Round.ActualWidth,
+            //    EasingFunction = new QuadraticEase()
+            //};
 
-            Storyboard storyboard = new Storyboard();
-            storyboard.Children.Add(animation);
-            Storyboard.SetTarget(animation, clickedButton);
-            Storyboard.SetTargetProperty(animation, new PropertyPath("(Canvas.Left)"));
-            storyboard.Begin(this);
+            //Storyboard storyboard = new Storyboard();
+            //storyboard.Children.Add(animation);
+            //Storyboard.SetTarget(animation, clickedButton);
+            //Storyboard.SetTargetProperty(animation, new PropertyPath("(Canvas.Left)"));
+            //storyboard.Begin(this);
+            
             StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
+
             // Remove the button from the StackPanel
             parentStackPanel.Children.Remove(clickedButton);
 
-            // Add the button to grid2
+            
             int margin = 100;
             if(card.cardOwner == 1)
             {
@@ -100,10 +108,21 @@ namespace Tarneeb_Card_Game
                 clickedButton.Margin = new Thickness(0, 2 * margin, 2 * margin, 0);
             }
 
+            roundCards.Add(card);
+
+            // Add the button to Round GRID
             Round.Children.Add(clickedButton);
             Grid.SetColumn(clickedButton, 0);
             Grid.SetRow(clickedButton, 0);
-
+            if(currentRoundCard.cardOwner == 0)
+            {
+                List<Card> legal = SetLegalPlays(card);
+            }
+            else
+            {
+                List<Card> legal = SetLegalPlays(currentRoundCard);
+            }
+                
         }
         private static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
@@ -114,14 +133,37 @@ namespace Tarneeb_Card_Game
             }
             return parent as T;
         }
-        private DoubleAnimation CreateAnimation(double fromValue, double toValue)
+
+        private List<Card> FindParentCardList(Card card)
         {
-            DoubleAnimation animation = new DoubleAnimation();
-            animation.From = fromValue;
-            animation.To = toValue;
-            animation.Duration = new Duration(TimeSpan.FromSeconds(1));
-            return animation;
+
+            if (card.cardOwner == 1)
+            {
+                return player1;
+            }
+            else if (card.cardOwner == 2)
+            {
+                return player2;
+            }
+            else if (card.cardOwner == 3)
+            {
+                return player3;
+            }
+            else
+            {
+                return player4;
+            }
+
         }
+
+        //private DoubleAnimation CreateAnimation(double fromValue, double toValue)
+        //{
+        //    DoubleAnimation animation = new DoubleAnimation();
+        //    animation.From = fromValue;
+        //    animation.To = toValue;
+        //    animation.Duration = new Duration(TimeSpan.FromSeconds(1));
+        //    return animation;
+        //}
         public void DisplayCards()
         {
             //Grid Test = new Grid();
@@ -155,6 +197,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = true;
+                card.ParentButton = button;
                 if (x == 0)
                 {
 
@@ -191,6 +234,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = false;
+                card.ParentButton = button;
 
 
                 button.Margin = new Thickness(0, 0, 0, -120);
@@ -226,6 +270,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = false;
+                card.ParentButton = button;
                 if (x == 0)
                 {
 
@@ -262,7 +307,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = false;
-
+                card.ParentButton = button;
              
 
                 button.Margin = new Thickness(0, 0, 0, -120);
@@ -374,7 +419,69 @@ namespace Tarneeb_Card_Game
             MessageBox.Show("This button is under constructions!");
         }
 
-        /* ------------- AI PART ---------------
+
+        private List<Card> SetLegalPlays(Card card)
+        {
+            currentRoundCard = card;
+            List<Card> list = new List<Card>();
+            List<Card> parent = FindParentCardList(card);
+            foreach (Card card1 in player1) 
+            {
+                Button btn = card1.ParentButton;
+                if (card1.Suit == card.Suit)
+                {
+                    list.Add(card1);
+                    btn.Margin = new Thickness(0, 0, 0, 20);
+                }
+                else
+                {
+                    btn.IsEnabled = false;
+                }
+            
+            }
+            foreach (Card card1 in player2)
+            {
+                Button btn = card1.ParentButton;
+                if (card1.Suit == card.Suit)
+                {
+                    list.Add(card1);
+                }
+                else
+                {
+                    btn.IsEnabled = false;
+                }
+
+            }
+            foreach (Card card1 in player3)
+            {
+                Button btn = card1.ParentButton;
+                if (card1.Suit == card.Suit)
+                {
+                    list.Add(card1);
+                }
+                else
+                {
+                    btn.IsEnabled = false;
+                }
+
+            }
+            foreach (Card card1 in player4)
+            {
+                Button btn = card1.ParentButton;
+                if (card1.Suit == card.Suit)
+                {
+                    list.Add(card1);
+                }
+                else
+                {
+                    btn.IsEnabled = false;
+                }
+
+            }
+            return list;
+        }
+
+        /* ------------- AI PART --------------- *
         public Card SelectCardToPlay(List<Card> playedCards, List<Card> aiHand, List<Card> currentTrick, GameMode gameMode)
         {
             // Determine the legal plays (i.e., the cards in the AI player's hand that can legally be played in the current trick)
