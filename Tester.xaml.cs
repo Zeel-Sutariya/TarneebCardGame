@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 using Cards;
 using Size = System.Windows.Size;
@@ -340,6 +341,13 @@ namespace Tarneeb_Card_Game
 
         public void DisplayBid()
         {
+            //System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+            //rectangle.Width = Round.Width;
+            //rectangle.Height = Round.Height;
+            //rectangle.Stroke = Brushes.Aqua;
+            //rectangle.StrokeThickness = 3;
+            //Round.Children.Add(rectangle);
+
             lblBid.Name = "lblBid";
             lblBid.Content = "BID";
             lblBid.FontWeight = FontWeights.Bold;
@@ -481,8 +489,9 @@ namespace Tarneeb_Card_Game
             return list;
         }
 
+
         /* ------------- AI PART --------------- *
-        public Card SelectCardToPlay(List<Card> playedCards, List<Card> aiHand, List<Card> currentTrick, GameMode gameMode)
+        public Card SelectCardToPlay(List<Card> playedCards, List<Card> aiHand, List<Card> currentTrick, string gameMode)
         {
             // Determine the legal plays (i.e., the cards in the AI player's hand that can legally be played in the current trick)
             List<Card> legalPlays = GetLegalPlays(aiHand, currentTrick);
@@ -518,6 +527,6 @@ namespace Tarneeb_Card_Game
             // TODO: implement logic to determine the legal plays for the AI player's hand in the current trick
             throw new NotImplementedException();
         }
-        */
+        /**/
     }
 }

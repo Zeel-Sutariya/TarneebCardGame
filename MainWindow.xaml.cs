@@ -53,7 +53,7 @@ namespace Tarneeb_Card_Game
             {
                 //playButton.IsEnabled = true;
             }
-            //win1.GameMode.Content = selectedMode;
+            win1.gameMode.Content = selectedMode;
         }
 
         private void RulesButton_Click(object sender, RoutedEventArgs e)
