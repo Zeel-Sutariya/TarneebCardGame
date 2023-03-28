@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cards;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,10 @@ namespace Tarneeb_Card_Game
     class Match
     {
         public int matchScore;
-
+        public List<Card> player1 = new List<Card>();
+        public List<Card> player2 = new List<Card>();
+        public List<Card> player3 = new List<Card>();
+        public List<Card> player4 = new List<Card>();      
         public int getMatchScore()
         {
             return matchScore;

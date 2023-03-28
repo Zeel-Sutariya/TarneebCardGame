@@ -9,7 +9,7 @@ namespace UsingCards
     class Player
     {
         public string name { get; set; }
-        public int no { get; set; }
+        public int id { get; set; }
         public List<Card> playersCards = new List<Card>();
         public int bid;
         public Boolean isBidWinner;

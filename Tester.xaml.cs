@@ -26,13 +26,12 @@ namespace Tarneeb_Card_Game
     public partial class Tester : Window
     {
 
-        List<Card> player1 = new List<Card>();
-        List<Card> player2 = new List<Card>();
-        List<Card> player3 = new List<Card>();
-        List<Card> player4 = new List<Card>();
-        List<Card> roundCards = new List<Card>();
+        
+        //List<Card> roundCards = new List<Card>();
 
         List<Button> bidButtons = new List<Button>();
+        Round round = new Round();
+        Match match = new Match();
 
 
         StackPanel player1StackPanel = new StackPanel();
@@ -109,7 +108,10 @@ namespace Tarneeb_Card_Game
                 clickedButton.Margin = new Thickness(0, 2 * margin, 2 * margin, 0);
             }
 
-            roundCards.Add(card);
+            round.roundCards.Add(card);
+            if (round.roundCards.Count > 3) {
+                MessageBox.Show(Convert.ToString(round.RoundWinner()));
+            }
 
             // Add the button to Round GRID
             Round.Children.Add(clickedButton);
@@ -140,19 +142,19 @@ namespace Tarneeb_Card_Game
 
             if (card.cardOwner == 1)
             {
-                return player1;
+                return match.player1;
             }
             else if (card.cardOwner == 2)
             {
-                return player2;
+                return match.player2;
             }
             else if (card.cardOwner == 3)
             {
-                return player3;
+                return match.player3;
             }
             else
             {
-                return player4;
+                return match.player4;
             }
 
         }
@@ -170,10 +172,10 @@ namespace Tarneeb_Card_Game
             //Grid Test = new Grid();
             Deck deck = new Deck();
             deck.Shuffle();
-            player1 = deck.Sort(deck.TakeCards(13)); 
-            player2 = deck.Sort(deck.TakeCards(13));
-            player3 = deck.Sort(deck.TakeCards(13));
-            player4 = deck.Sort(deck.TakeCards(13));
+            match.player1 = deck.Sort(deck.TakeCards(13)); 
+            match.player2 = deck.Sort(deck.TakeCards(13));
+            match.player3 = deck.Sort(deck.TakeCards(13));
+            match.player4 = deck.Sort(deck.TakeCards(13));
 
             
             DisplayPlayer1();
@@ -188,7 +190,7 @@ namespace Tarneeb_Card_Game
             //StackPanel player1StackPanel = new StackPanel();
             player1StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player1StackPanel.Orientation = Orientation.Horizontal;
-            foreach (Card card in player1)
+            foreach (Card card in match.player1)
             {
                 card.cardOwner = 1;
                 Button button = new Button();
@@ -225,7 +227,7 @@ namespace Tarneeb_Card_Game
             player2StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player2StackPanel.Orientation = Orientation.Vertical;
             int x = 0;
-            foreach (Card card in player2)
+            foreach (Card card in match.player2)
             {
                 card.cardOwner = 2;
                 Button button = new Button();
@@ -234,7 +236,7 @@ namespace Tarneeb_Card_Game
                 button.Tag = card; // Assign the card object to the button's Tag property
                 button.Width = 85;
                 button.Height = 140;
-                card.isFaceUp = false;
+                card.isFaceUp = true;
                 card.ParentButton = button;
 
 
@@ -261,7 +263,7 @@ namespace Tarneeb_Card_Game
             //StackPanel player1StackPanel = new StackPanel();
             player3StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player3StackPanel.Orientation = Orientation.Horizontal;
-            foreach (Card card in player3)
+            foreach (Card card in match.player3)
             {
                 card.cardOwner = 3;
                 Button button = new Button();
@@ -270,7 +272,7 @@ namespace Tarneeb_Card_Game
                 button.Tag = card; // Assign the card object to the button's Tag property
                 button.Width = 85;
                 button.Height = 140;
-                card.isFaceUp = false;
+                card.isFaceUp = true;
                 card.ParentButton = button;
                 if (x == 0)
                 {
@@ -298,7 +300,7 @@ namespace Tarneeb_Card_Game
             player4StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player4StackPanel.Orientation = Orientation.Vertical;
             int x = 0;
-            foreach (Card card in player4)
+            foreach (Card card in match.player4)
             {
                 card.cardOwner = 4;
                 Button button = new Button();
@@ -307,7 +309,7 @@ namespace Tarneeb_Card_Game
                 button.Tag = card; // Assign the card object to the button's Tag property
                 button.Width = 85;
                 button.Height = 140;
-                card.isFaceUp = false;
+                card.isFaceUp = true;
                 card.ParentButton = button;
              
 
@@ -341,12 +343,12 @@ namespace Tarneeb_Card_Game
 
         public void DisplayBid()
         {
-            //System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
-            //rectangle.Width = Round.Width;
-            //rectangle.Height = Round.Height;
-            //rectangle.Stroke = Brushes.Aqua;
-            //rectangle.StrokeThickness = 3;
-            //Round.Children.Add(rectangle);
+            System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+            rectangle.Width = Round.Width;
+            rectangle.Height = Round.Height;
+            rectangle.Stroke = Brushes.Aqua;
+            rectangle.StrokeThickness = 3;
+            Round.Children.Add(rectangle);
 
             lblBid.Name = "lblBid";
             lblBid.Content = "BID";
@@ -433,7 +435,7 @@ namespace Tarneeb_Card_Game
             currentRoundCard = card;
             List<Card> list = new List<Card>();
             List<Card> parent = FindParentCardList(card);
-            foreach (Card card1 in player1) 
+            foreach (Card card1 in match.player1) 
             {
                 Button btn = card1.ParentButton;
                 if (card1.Suit == card.Suit)
@@ -447,7 +449,7 @@ namespace Tarneeb_Card_Game
                 }
             
             }
-            foreach (Card card1 in player2)
+            foreach (Card card1 in match.player2)
             {
                 Button btn = card1.ParentButton;
                 if (card1.Suit == card.Suit)
@@ -460,7 +462,7 @@ namespace Tarneeb_Card_Game
                 }
 
             }
-            foreach (Card card1 in player3)
+            foreach (Card card1 in match.player3)
             {
                 Button btn = card1.ParentButton;
                 if (card1.Suit == card.Suit)
@@ -473,7 +475,7 @@ namespace Tarneeb_Card_Game
                 }
 
             }
-            foreach (Card card1 in player4)
+            foreach (Card card1 in match.player4)
             {
                 Button btn = card1.ParentButton;
                 if (card1.Suit == card.Suit)
