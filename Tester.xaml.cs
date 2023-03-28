@@ -32,7 +32,6 @@ namespace Tarneeb_Card_Game
         public Tester()
         {
             InitializeComponent();
-            DisplayCards();
         }
 
         StackPanel player1StackPanel = new StackPanel();
@@ -42,6 +41,7 @@ namespace Tarneeb_Card_Game
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
+            DisplayCards();
         }
 
         private void CardButton_Click(object sender, RoutedEventArgs e)
@@ -50,6 +50,12 @@ namespace Tarneeb_Card_Game
             string buttonName = clickedButton.Name;
             clickedButton.IsEnabled = false;
             //MessageBox.Show("Button " + buttonName + " was clicked! " + Convert.ToString(this.Background));
+
+            Card card = (Card)clickedButton.Tag;
+            card.isFaceUp = true;
+
+            
+            clickedButton.Content = SetCardImage(card);
 
             // Get the position of the button
             System.Windows.Point position = clickedButton.TranslatePoint(new System.Windows.Point(0, 0), this);
@@ -68,17 +74,39 @@ namespace Tarneeb_Card_Game
             Storyboard.SetTarget(animation, clickedButton);
             Storyboard.SetTargetProperty(animation, new PropertyPath("(Canvas.Left)"));
             storyboard.Begin(this);
-
+            StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
             // Remove the button from the StackPanel
-            player1StackPanel.Children.Remove(clickedButton);
+            parentStackPanel.Children.Remove(clickedButton);
 
             // Add the button to grid2
-            int marginTop = 150;
-            clickedButton.Margin = new Thickness(0, marginTop, 0, 0);
+            int margin = 100;
+            if(card.cardOwner == 1)
+            {
+                clickedButton.Margin = new Thickness(0, margin, 0, 0);
+            }
+            else if(card.cardOwner == 2){
+                clickedButton.Margin = new Thickness(margin, 2*margin, 0, 0);
+            }
+            else if(card.cardOwner == 3){
+                clickedButton.Margin = new Thickness(0, 0, 0, margin);
+            }
+            else if(card.cardOwner == 4){
+                clickedButton.Margin = new Thickness(0, 2*margin, 2 * margin, 0);
+            }
+
             Round.Children.Add(clickedButton);
             Grid.SetColumn(clickedButton, 0);
             Grid.SetRow(clickedButton, 0);
 
+        }
+        private static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(child);
+            while (parent != null && !(parent is T))
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+            return parent as T;
         }
         private DoubleAnimation CreateAnimation(double fromValue, double toValue)
         {
@@ -98,16 +126,6 @@ namespace Tarneeb_Card_Game
             player3 = deck.Sort(deck.TakeCards(13));
             player4 = deck.Sort(deck.TakeCards(13));
 
-
-            // Sort the cards by suit, and then by rank
-            //var sortedCards = player1.OrderBy(c => c.Suit).ThenBy(c => c.CardNumber);
-
-            // Store the sorted cards back into the cards list
-            //player1 = sortedCards.ToList();
-            //player2 = sortedCards.ToList();
-            //player3 = sortedCards.ToList();
-            //player4 = sortedCards.ToList();
-
             
             DisplayPlayer1();
             DisplayPlayer2();
@@ -123,6 +141,7 @@ namespace Tarneeb_Card_Game
             player1StackPanel.Orientation = Orientation.Horizontal;
             foreach (Card card in player1)
             {
+                card.cardOwner = 1;
                 Button button = new Button();
                 button.Name = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber);
                 button.Content = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber); // Set the button's content to the card's name
@@ -142,12 +161,7 @@ namespace Tarneeb_Card_Game
                 }
                 button.Click += CardButton_Click;
 
-                Image myImage = new Image
-                {
-                    Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
-                    Stretch = Stretch.Fill
-                };
-                button.Content = myImage;
+                button.Content = SetCardImage(card);
 
 
                 x++;
@@ -163,6 +177,7 @@ namespace Tarneeb_Card_Game
             int x = 0;
             foreach (Card card in player2)
             {
+                card.cardOwner = 2;
                 Button button = new Button();
                 button.Name = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber);
                 button.Content = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber); // Set the button's content to the card's name
@@ -178,12 +193,8 @@ namespace Tarneeb_Card_Game
 
                 var rotateTransform = new RotateTransform(-90);
                 button.RenderTransform = rotateTransform;
-                Image myImage = new Image
-                {
-                    Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
-                    Stretch = Stretch.Fill
-                };
-                button.Content = myImage;
+
+                button.Content = SetCardImage(card);
 
 
                 x++;
@@ -201,6 +212,7 @@ namespace Tarneeb_Card_Game
             player3StackPanel.Orientation = Orientation.Horizontal;
             foreach (Card card in player3)
             {
+                card.cardOwner = 3;
                 Button button = new Button();
                 button.Name = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber);
                 button.Content = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber); // Set the button's content to the card's name
@@ -220,12 +232,7 @@ namespace Tarneeb_Card_Game
                 }
                 button.Click += CardButton_Click;
 
-                Image myImage = new Image
-                {
-                    Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
-                    Stretch = Stretch.Fill
-                };
-                button.Content = myImage;
+                button.Content = SetCardImage(card);
 
 
                 x++;
@@ -241,6 +248,7 @@ namespace Tarneeb_Card_Game
             int x = 0;
             foreach (Card card in player4)
             {
+                card.cardOwner = 4;
                 Button button = new Button();
                 button.Name = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber);
                 button.Content = Convert.ToString(card.Suit) + Convert.ToString(card.CardNumber); // Set the button's content to the card's name
@@ -257,12 +265,8 @@ namespace Tarneeb_Card_Game
 
                 var rotateTransform = new RotateTransform(-90);
                 button.RenderTransform = rotateTransform;
-                Image myImage = new Image
-                {
-                    Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
-                    Stretch = Stretch.Fill
-                };
-                button.Content = myImage;
+                
+                button.Content = SetCardImage(card);
 
 
                 x++;
@@ -272,6 +276,14 @@ namespace Tarneeb_Card_Game
             Player4.Children.Add(player4StackPanel);
         }
 
-
+        public Image SetCardImage(Card card)
+        {
+            Image myImage = new Image
+            {
+                Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
+                Stretch = Stretch.Fill
+            };
+            return myImage;
+        }
     }
 }
