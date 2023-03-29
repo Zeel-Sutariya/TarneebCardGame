@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Tarneeb_Card_Game
 {
-    internal class Score
+    public class Score
     {
+        
+
+        
     }
 }

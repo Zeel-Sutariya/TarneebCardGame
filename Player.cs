@@ -16,10 +16,10 @@ namespace UsingCards
         //public String trump { get; set; }
     
 
-        public Player(string name, List<Card> playersCards)
+        public Player(string name)
         {
             this.name = name;
-            this.playersCards = playersCards;
+            //this.playersCards = playersCards;
             
 
         }
