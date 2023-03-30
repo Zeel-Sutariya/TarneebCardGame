@@ -11,7 +11,7 @@ namespace Tarneeb_Card_Game
 {
     public class AI
     {
-        static int? PlaceBid(List<Card> hand, int currentBid, string gameMode)
+        public static int PlaceBid(List<Card> hand, int currentBid, string gameMode)
         {
             // Count the number of cards in each suit
             Dictionary<Suit, int> suitCounts = new Dictionary<Suit, int>();
@@ -22,10 +22,8 @@ namespace Tarneeb_Card_Game
 
             foreach (Card card in hand)
             {
-                if (card.isFaceUp)
-                {
-                    suitCounts[card.Suit]++;
-                }
+                suitCounts[card.Suit]++;
+                
             }
 
             // Find the suit with the maximum number of cards
@@ -39,6 +37,13 @@ namespace Tarneeb_Card_Game
                     maxCount = pair.Value;
                 }
             }
+
+
+            
+
+
+
+
 
             // Determine the bid based on the game mode and the maximum suit
             int bid = currentBid;
@@ -55,6 +60,8 @@ namespace Tarneeb_Card_Game
                     break;
             }
 
+
+
             // Make sure the bid is between 7 and 13, or return null if not
             if (bid >= 7 && bid <= 13)
             {
@@ -62,7 +69,7 @@ namespace Tarneeb_Card_Game
             }
             else
             {
-                return null;
+                return 0;
             }
         }
 

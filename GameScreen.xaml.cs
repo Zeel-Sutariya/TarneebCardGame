@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 using Cards;
+using UsingCards;
 using Size = System.Windows.Size;
 
 namespace Tarneeb_Card_Game
@@ -31,8 +34,8 @@ namespace Tarneeb_Card_Game
         List<Button> bidButtons = new List<Button>();
         Round round = new Round();
         Match match;
-
-
+        int currentBid = 0;
+        int currentPlayer = 1;
         StackPanel player1StackPanel = new StackPanel();
         StackPanel player2StackPanel = new StackPanel();
         StackPanel player3StackPanel = new StackPanel();
@@ -40,12 +43,12 @@ namespace Tarneeb_Card_Game
         Label lblBid = new Label();
         Label lblHighestBid = new Label();
 
+        Team team01 = new Team("Player 1", "Player3");
+        Team team02 = new Team("player 2", "Player4");
         Card currentRoundCard = new Card();
         public GameScreen()
         {
             InitializeComponent();
-            Team team01 = new Team("Player 1", "Player3");
-            Team team02 = new Team("player 2", "Player4");
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -56,11 +59,35 @@ namespace Tarneeb_Card_Game
                 match = new Match();
                 DisplayCards();
                 DisplayBid();
+                if (currentPlayer == 1)
+                {
+                    WaitForPlayerMoveAsync();
+                }
+                else
+                {
+                    MakeBidAsync(e);
+                }
                 //CardButton_Click(sender, e);
                 //MessageBox.Show(Convert.ToString(AI.PlaceBid(match.player1, 6, "Hard")));
             }
         }
 
+        public void WaitForPlayerMoveAsync()
+        {
+            Thread.Sleep(5000);
+            MessageBox.Show("Your Turn!");
+        }
+
+        public void MakeBidAsync(RoutedEventArgs e) {
+            int selectBid = 0;
+            if(currentPlayer == 2)
+            {
+                selectBid = AI.PlaceBid(match.player2, currentBid, "Easy");
+                string buttonName = "btnBid" + selectBid.ToString();
+                Button myButton = (Button)Bid.FindName(buttonName);
+                CardButton_Click(myButton, e);
+            }
+        }
         private void CardButton_Click(object sender, RoutedEventArgs e)
         {
             // Removing Bid GRID from Round Grid.
@@ -76,24 +103,6 @@ namespace Tarneeb_Card_Game
 
             clickedButton.Content = SetCardImage(card);
 
-            /*----- Animation PART----- */
-            //// Get the position of the button
-            //System.Windows.Point position = clickedButton.TranslatePoint(new System.Windows.Point(0, 0), this);
-
-            //// Animate the button to move from grid1 to grid2
-            //DoubleAnimation animation = new DoubleAnimation
-            //{
-            //    Duration = TimeSpan.FromSeconds(1),
-            //    From = position.X,
-            //    To = Round.ActualWidth,
-            //    EasingFunction = new QuadraticEase()
-            //};
-
-            //Storyboard storyboard = new Storyboard();
-            //storyboard.Children.Add(animation);
-            //Storyboard.SetTarget(animation, clickedButton);
-            //Storyboard.SetTargetProperty(animation, new PropertyPath("(Canvas.Left)"));
-            //storyboard.Begin(this);
             
             StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
 
@@ -416,10 +425,11 @@ namespace Tarneeb_Card_Game
 
         private void BidButton_Click(object sender, RoutedEventArgs e)
         {
+            currentPlayer++;
             Button clickedButton = sender as Button;
             string buttonContent = Convert.ToString(clickedButton.Content);
             lblHighestBid.Content = "Highest Bid : " + buttonContent;
-
+            currentBid = Convert.ToInt32(buttonContent);
             int x = 1;
             foreach (Button button in bidButtons)
             {
@@ -430,6 +440,7 @@ namespace Tarneeb_Card_Game
                 }
                 x++;
             }
+            if(currentBid >4) { currentBid = 1; }
         }
 
         private void PassButton_Click(object sender, RoutedEventArgs e)
