@@ -26,12 +26,11 @@ namespace Tarneeb_Card_Game
     public partial class GameScreen : Window
     {
 
-        
         //List<Card> roundCards = new List<Card>();
-
+        public int gameScore;
         List<Button> bidButtons = new List<Button>();
         Round round = new Round();
-        Match match = new Match();
+        Match match;
 
 
         StackPanel player1StackPanel = new StackPanel();
@@ -45,12 +44,21 @@ namespace Tarneeb_Card_Game
         public GameScreen()
         {
             InitializeComponent();
+            Team team01 = new Team("Player 1", "Player3");
+            Team team02 = new Team("player 2", "Player4");
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
-            DisplayCards();
-            DisplayBid();
+
+            while(gameScore <31)
+            {
+                match = new Match();
+                DisplayCards();
+                DisplayBid();
+                //CardButton_Click(sender, e);
+                //MessageBox.Show(Convert.ToString(AI.PlaceBid(match.player1, 6, "Hard")));
+            }
         }
 
         private void CardButton_Click(object sender, RoutedEventArgs e)
