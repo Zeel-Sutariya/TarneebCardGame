@@ -59,6 +59,7 @@ namespace Tarneeb_Card_Game
                 match = new Match();
                 DisplayCards();
                 DisplayBid();
+                Thread.Sleep(10000);
                 if (currentPlayer == 1)
                 {
                     WaitForPlayerMoveAsync();
@@ -71,11 +72,12 @@ namespace Tarneeb_Card_Game
                 //MessageBox.Show(Convert.ToString(AI.PlaceBid(match.player1, 6, "Hard")));
             }
         }
-
-        public void WaitForPlayerMoveAsync()
+        private TaskCompletionSource<object> _buttonClickCompletionSource = new TaskCompletionSource<object>();
+        public async Task WaitForPlayerMoveAsync()
         {
-            Thread.Sleep(5000);
             MessageBox.Show("Your Turn!");
+
+            await _buttonClickCompletionSource.Task;
         }
 
         public void MakeBidAsync(RoutedEventArgs e) {
@@ -425,6 +427,7 @@ namespace Tarneeb_Card_Game
 
         private void BidButton_Click(object sender, RoutedEventArgs e)
         {
+            _buttonClickCompletionSource.SetResult(null);
             currentPlayer++;
             Button clickedButton = sender as Button;
             string buttonContent = Convert.ToString(clickedButton.Content);
