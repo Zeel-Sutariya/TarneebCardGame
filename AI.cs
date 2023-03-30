@@ -11,80 +11,63 @@ namespace Tarneeb_Card_Game
 {
     public class AI
     {
-        public static int? PlaceBid(List<Card> hand,int currentBid, String gameMode)
+        static int? PlaceBid(List<Card> hand, int currentBid, string gameMode)
         {
-                // Determine the minimum and maximum bids based on the game mode
-                int minBid, maxBid;
-                switch (gameMode)
+            // Count the number of cards in each suit
+            Dictionary<Suit, int> suitCounts = new Dictionary<Suit, int>();
+            foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+            {
+                suitCounts[suit] = 0;
+            }
+
+            foreach (Card card in hand)
+            {
+                if (card.isFaceUp)
                 {
-                    case "easy":
-                        minBid = 7;
-                        maxBid = 9;
-                        break;
-                    case "medium":
-                        minBid = 7;
-                        maxBid = 11;
-                        break;
-                    case "hard":
-                        minBid = 7;
-                        maxBid = 13;
-                        break;
-                    default:
-                        throw new ArgumentException("Invalid game mode", nameof(gameMode));
+                    suitCounts[card.Suit]++;
                 }
+            }
 
-                // Determine the strength of the player's hand based on the number of high-ranking cards
-                int highRankingCards = hand.Count(card => card.CardNumber >= CardNumber.Jack);
-
-                // Determine the minimum bid based on the current bid and the strength of the player's hand
-                int minBidForStrength = Math.Max(currentBid + 1, highRankingCards + 6);
-
-                // Determine the final minimum bid based on the game mode and the minimum bid for the hand strength
-                int finalMinBid = Math.Max(minBid, minBidForStrength);
-
-                // Determine the maximum bid based on the game mode and the current bid
-                int finalMaxBid = Math.Min(maxBid, 13);
-
-                // Generate a random bid between the minimum and maximum bids
-                Random rand = new Random();
-                int bid = rand.Next(finalMinBid, finalMaxBid + 1);
-
-                // If the bid is less than the current bid, return null to indicate no bid
-                if (bid <= currentBid)
+            // Find the suit with the maximum number of cards
+            Suit maxSuit = Suit.Club;
+            int maxCount = 0;
+            foreach (KeyValuePair<Suit, int> pair in suitCounts)
+            {
+                if (pair.Value > maxCount)
                 {
-                    return null;
+                    maxSuit = pair.Key;
+                    maxCount = pair.Value;
                 }
+            }
 
-                // Otherwise, return the bid
+            // Determine the bid based on the game mode and the maximum suit
+            int bid = currentBid;
+            switch (gameMode)
+            {
+                case "Easy":
+                    bid = Math.Max(bid, maxCount + 6);
+                    break;
+                case "Medium":
+                    bid = Math.Max(bid, maxCount + 7);
+                    break;
+                case "Hard":
+                    bid = Math.Max(bid, maxCount + 8);
+                    break;
+            }
+
+            // Make sure the bid is between 7 and 13, or return null if not
+            if (bid >= 7 && bid <= 13)
+            {
                 return bid;
             }
-        
-            static void Main(string[] args)
+            else
             {
-                // Create a list of cards to use for testing
-                Deck deck = new Deck();
-                List<Card> hand = deck.TakeCards(13);
-
-                // Test the function with different game modes and current bids
-                int? bid = PlaceBid(hand, 6,"easy");
-                Console.WriteLine($"Bid: {bid}");
-
-                bid = PlaceBid(hand, 7, "easy");
-                Console.WriteLine($"Bid: {bid}");
-
-                bid = PlaceBid(hand, 10, "medium");
-                Console.WriteLine($"Bid: {bid}");
-
-                bid = PlaceBid(hand, 12, "hard");
-                Console.WriteLine($"Bid: {bid}");
-
-                // You can add more test cases here to cover other scenarios
-
-                Console.ReadLine();
+                return null;
             }
-
         }
-    
 
-    
+
+
+    }
+
 }

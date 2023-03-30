@@ -1,0 +1,38 @@
+﻿<Window x:Class="Tarneeb_Card_Game.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tarneeb_Card_Game"
+        mc:Ignorable="d"
+        Title="Settings" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="volumeLabel" Content="Volume" Width="100" FontWeight="Bold" FontSize="16" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"></Label>
+        <Slider x:Name="volumeSlider" Minimum="0" Maximum="1" Value="1" Width="100" FontSize="16" FontWeight="Bold" Foreground="#FF090606" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" />
+        <Label x:Name="musicLabel" Content="Music" Width="100" FontSize="16" FontWeight="Bold" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"></Label>
+        <CheckBox x:Name="musicCheckBox" Content="On" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Button x:Name="closeButton" Content="Exit" Click="closeButton_Click" Grid.Row="3" Grid.ColumnSpan="2" Width="120" Height="30" Grid.Column="1" FontSize="20" Background="#FFA13522" Foreground="#FFFFFEFE"></Button>
+        <Button Content="Play" Click="PlayButton_Click" HorizontalAlignment="Left" Margin="140,54,0,0" VerticalAlignment="Top"/>
+        <Button Content="Pause" Click="PauseButton_Click" HorizontalAlignment="Left" Margin="50,54,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+
+
+
+
+    </Grid>
+
+</Window>
+    
