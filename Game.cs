@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UsingCards;
 
 namespace Tarneeb_Card_Game
 {
@@ -10,24 +6,32 @@ namespace Tarneeb_Card_Game
     {
         public const int winningScore = 31;
 
-        public int currentScore;
+        //public int currentScore;
         //public int matchScore;
         //public int roundScore;
+        public int gameScore;
 
         public Game()
         {
-            setCurrentScore(0);
+            setGameScore(0);
+            Team team01 = new Team("Player 1", "Player3");
+            Team team02 = new Team("player 2", "Player4");
+            while (gameScore < winningScore)
+            {
+                Match match = new Match();
+            }
+           
         }
 
 
-        public int getCurrentScore()
+        public int getGameScore()
         {
-            return currentScore;
+            return gameScore;
         }
 
-        public void setCurrentScore(int currentScore)
+        public void setGameScore(int gameScore)
         {
-            this.currentScore = currentScore;
+            this.gameScore = gameScore;
         }
 
 

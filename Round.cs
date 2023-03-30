@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Cards;
@@ -14,8 +15,22 @@ namespace Tarneeb_Card_Game
         {
 
         }*/
+        public List<Card> roundCards = new List<Card>();
 
+        public int RoundWinner()
+        {
+            Card greaterCard = roundCards[0];
+            for (int i=0;i<3;i++)
+            {
+               
+                if (roundCards[i+1] >= greaterCard) 
+                { 
+                    greaterCard = roundCards[i+1];
+                }
+            }
 
-
+            return (roundCards.IndexOf( greaterCard ) +1);
+           
+        }
     }
 }

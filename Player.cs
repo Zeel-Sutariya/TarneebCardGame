@@ -9,17 +9,17 @@ namespace UsingCards
     class Player
     {
         public string name { get; set; }
-        public int no { get; set; }
+        public int id { get; set; }
         public List<Card> playersCards = new List<Card>();
         public int bid;
         public Boolean isBidWinner;
         //public String trump { get; set; }
     
 
-        public Player(string name, List<Card> playersCards)
+        public Player(string name)
         {
             this.name = name;
-            this.playersCards = playersCards;
+            //this.playersCards = playersCards;
             
 
         }
