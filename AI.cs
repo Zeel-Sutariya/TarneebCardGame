@@ -46,7 +46,7 @@ namespace Tarneeb_Card_Game
 
 
             // Determine the bid based on the game mode and the maximum suit
-            int bid = currentBid+1;
+            int bid = currentBid;
             switch (gameMode)
             {
                 case "Easy":
@@ -65,7 +65,7 @@ namespace Tarneeb_Card_Game
             // Make sure the bid is between 7 and 13, or return null if not
             if (bid >= 7 && bid <= 13)
             {
-                return bid;
+                return 14;
             }
             else
             {

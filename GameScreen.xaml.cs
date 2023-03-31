@@ -42,7 +42,7 @@ namespace Tarneeb_Card_Game
         StackPanel player4StackPanel = new StackPanel();
         Label lblBid = new Label();
         Label lblHighestBid = new Label();
-
+        int pass = 0;
         Team team01 = new Team("Player 1", "Player3");
         Team team02 = new Team("player 2", "Player4");
         Card currentRoundCard = new Card();
@@ -73,13 +73,9 @@ namespace Tarneeb_Card_Game
                 //MessageBox.Show(Convert.ToString(AI.PlaceBid(match.player1, 6, "Hard")));
             }
         }
-        ManualResetEvent buttonClickedEvent = new ManualResetEvent(false);
         public void WaitForPlayerMoveAsync()
         {
             MessageBox.Show("Your Turn!");
-            //buttonClickedEvent.WaitOne();
-
-
         }
 
         public void MakeBidAsync(RoutedEventArgs e) {
@@ -87,7 +83,7 @@ namespace Tarneeb_Card_Game
             MessageBox.Show("AI Bidding");
             if(currentPlayer != 1)
             {
-                selectBid = Convert.ToInt32(AI.PlaceBid(match.player2, currentBid, "Easy"));
+                selectBid = Convert.ToInt32(AI.PlaceBid(match.player2, currentBid+1, "Easy"));
                 string buttonName = "btnBid" + selectBid.ToString();
                 //Button myButton = (Button)Bid.FindName(buttonName);
                 Button mybutton = bidButtons.ElementAt(selectBid - 7);
@@ -446,9 +442,7 @@ namespace Tarneeb_Card_Game
         private void BidButton_Click(object sender, RoutedEventArgs e)
         {
 
-            //bidButtonClickedTcs.SetResult(true);
-            //buttonClickedEvent.Set();
-            currentPlayer++;
+            
             Button clickedButton = sender as Button;
             string buttonContent = Convert.ToString(clickedButton.Content);
             lblHighestBid.Content = "Highest Bid : " + buttonContent;
@@ -465,19 +459,44 @@ namespace Tarneeb_Card_Game
                 }
                 x++;
             }
-            if(currentPlayer >4) 
-            { 
-                currentPlayer = 1; 
-            }
-            if(currentPlayer != 1)
+            if (pass < 3 && currentBid < 13)
             {
-                MakeBidAsync(e);
+                currentPlayer++;
+                if (currentPlayer > 4)
+                {
+                    currentPlayer = 1;
+                }
+                if (currentPlayer != 1)
+                {
+                    MakeBidAsync(e);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Final Bid is " + currentBid);
             }
         }
 
         private void PassButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("This button is under constructions!");
+            pass++;
+            currentPlayer++;
+            if (currentPlayer > 4)
+            {
+                currentPlayer = 1;
+            }
+            if (currentPlayer != 1)
+            {
+                MakeBidAsync(e);
+            }
+            if(pass == 3)
+            {
+                Round.Children.Remove(Bid);
+                //Thread.Sleep(3000);
+                MessageBox.Show("Final Bid is " + currentBid);
+                pass = 0;
+            }
         }
 
 
