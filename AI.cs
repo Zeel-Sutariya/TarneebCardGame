@@ -65,7 +65,7 @@ namespace Tarneeb_Card_Game
             // Make sure the bid is between 7 and 13, or return null if not
             if (bid >= 7 && bid <= 13)
             {
-                return 14;
+                return bid;
             }
             else
             {

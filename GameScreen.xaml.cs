@@ -43,6 +43,7 @@ namespace Tarneeb_Card_Game
         Label lblBid = new Label();
         Label lblHighestBid = new Label();
         int pass = 0;
+        Label selectTrump = new Label();
         Team team01 = new Team("Player 1", "Player3");
         Team team02 = new Team("player 2", "Player4");
         Card currentRoundCard = new Card();
@@ -59,9 +60,10 @@ namespace Tarneeb_Card_Game
                 match = new Match();
                 DisplayCards();
                 DisplayBid();
+                DisplayScore();
                 if (currentPlayer == 1)
                 {
-                    WaitForPlayerMoveAsync();
+                    HumanBidTurn();
                     // while loop untill button is clicked
 
                 }
@@ -73,12 +75,13 @@ namespace Tarneeb_Card_Game
                 //MessageBox.Show(Convert.ToString(AI.PlaceBid(match.player1, 6, "Hard")));
             }
         }
-        public void WaitForPlayerMoveAsync()
+        public void HumanBidTurn()
         {
             MessageBox.Show("Your Turn!");
         }
 
         public void MakeBidAsync(RoutedEventArgs e) {
+            thinkTime();
             int selectBid = 0;
             MessageBox.Show("AI Bidding");
             if(currentPlayer != 1)
@@ -107,6 +110,7 @@ namespace Tarneeb_Card_Game
         {
             // Removing Bid GRID from Round Grid.
             Round.Children.Remove(Bid);
+            Round.Children.Remove(selectTrump);
 
             Button clickedButton = sender as Button;
             string buttonName = clickedButton.Name;
@@ -191,14 +195,8 @@ namespace Tarneeb_Card_Game
 
         }
 
-        //private DoubleAnimation CreateAnimation(double fromValue, double toValue)
-        //{
-        //    DoubleAnimation animation = new DoubleAnimation();
-        //    animation.From = fromValue;
-        //    animation.To = toValue;
-        //    animation.Duration = new Duration(TimeSpan.FromSeconds(1));
-        //    return animation;
-        //}
+        
+
         public void DisplayCards()
         {
             //Grid Test = new Grid();
@@ -270,7 +268,7 @@ namespace Tarneeb_Card_Game
                 button.Height = 140;
                 card.isFaceUp = true;
                 card.ParentButton = button;
-
+                button.IsEnabled = false;
 
                 button.Margin = new Thickness(0, 0, 0, -120);
                 
@@ -305,6 +303,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = true;
+                button.IsEnabled = false;
                 card.ParentButton = button;
                 if (x == 0)
                 {
@@ -342,6 +341,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = true;
+                button.IsEnabled = false;
                 card.ParentButton = button;
              
 
@@ -372,14 +372,69 @@ namespace Tarneeb_Card_Game
             return myImage;
         }
 
+        public void ShowMatchHighestBid()
+        {
+            // For match - showing final bid here
+            System.Windows.Shapes.Rectangle highestBidBorder = new System.Windows.Shapes.Rectangle();
+            highestBidBorder.Width = Round.Width;
+            highestBidBorder.Height = Round.Height;
+            highestBidBorder.Stroke = Brushes.Aqua;
+            highestBidBorder.StrokeThickness = 3;
+            highestBidBorder.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            highestBidBorder.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            highestBidBorder.Height = 60;
+            highestBidBorder.Width = 60;
+            highestBidBorder.Margin = new System.Windows.Thickness(20, 35, 120, 0);
+            test.Children.Add(highestBidBorder);
+            Grid.SetColumn(highestBidBorder, 0);
+            Grid.SetRow(highestBidBorder, 0);
+            Grid.SetColumnSpan(highestBidBorder, 2);
+
+            Label matchHighestBid = new Label();
+            matchHighestBid.Name = "matchHighestBid";
+            matchHighestBid.Content = currentBid;
+            matchHighestBid.FontSize = 36;
+            matchHighestBid.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            matchHighestBid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            if (currentPlayer == 1 || currentPlayer == 3)
+            {
+                // If player 1 or 3 wins
+                highestBidBorder.Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 88, 3, 255));
+                matchHighestBid.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 88, 3, 255));
+            }
+            else
+            {
+                // else
+                highestBidBorder.Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 255, 3, 3));
+                matchHighestBid.Foreground = Brushes.Red;
+            }
+            highestBidBorder.Opacity = 0.25;
+            matchHighestBid.Margin = new System.Windows.Thickness(20, 35, 127, 0);
+            test.Children.Add(matchHighestBid);
+            Grid.SetColumn(matchHighestBid, 0);
+            Grid.SetRow(matchHighestBid, 0);
+            Grid.SetColumnSpan(matchHighestBid, 2);
+
+            selectTrump.Name = "selectTrump";
+            selectTrump.Content = "SELECT TRUMP";
+            selectTrump.FontFamily = new FontFamily("ROG Fonts");
+            selectTrump.FontSize = 64;
+            selectTrump.HorizontalAlignment = HorizontalAlignment.Center;
+            selectTrump.VerticalAlignment = VerticalAlignment.Center;
+            Round.Children.Add(selectTrump);
+            Grid.SetColumn(selectTrump, 0);
+            Grid.SetRow(selectTrump, 0);
+        }
         public void DisplayBid()
         {
-            System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
-            rectangle.Width = Round.Width;
-            rectangle.Height = Round.Height;
-            rectangle.Stroke = Brushes.Aqua;
-            rectangle.StrokeThickness = 3;
-            Round.Children.Add(rectangle);
+          
+            // Making for Round - bidding take place here.
+            System.Windows.Shapes.Rectangle bidBorder = new System.Windows.Shapes.Rectangle();
+            bidBorder.Width = Round.Width;
+            bidBorder.Height = Round.Height;
+            bidBorder.Stroke = Brushes.Aqua;
+            bidBorder.StrokeThickness = 3;
+            Round.Children.Add(bidBorder);
 
             lblBid.Name = "lblBid";
             lblBid.Content = "BID";
@@ -439,6 +494,69 @@ namespace Tarneeb_Card_Game
 
         }
 
+        public void DisplayScore()
+        {
+            Grid Score = new Grid();
+            Score.Name = "Score";
+            test.Children.Add(Score);
+            Grid.SetRow(Score, 0);
+            Grid.SetColumn(Score, 0);
+
+            Score.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            Score.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+
+            System.Windows.Shapes.Rectangle ScoreUs = new System.Windows.Shapes.Rectangle();
+            ScoreUs.Name = "ScoreUs";
+            ScoreUs.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            ScoreUs.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            ScoreUs.Height = 100;
+            ScoreUs.Width = 60;
+            ScoreUs.Margin = new System.Windows.Thickness(13, 15, 0, 0);
+            ScoreUs.Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 88, 3, 255));
+            ScoreUs.Opacity = 0.25;
+
+            System.Windows.Shapes.Rectangle ScoreThem = new System.Windows.Shapes.Rectangle();
+            ScoreThem.Name = "ScoreThem";
+            ScoreThem.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            ScoreThem.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            ScoreThem.Height = 100;
+            ScoreThem.Width = 60;
+            ScoreThem.Margin = new System.Windows.Thickness(72, 15, 0, 0);
+            ScoreThem.Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 255, 3, 3));
+            ScoreThem.Opacity = 0.25;
+
+            Label lblUs = new Label();
+            lblUs.Content = "US";
+            lblUs.FontWeight = System.Windows.FontWeights.Bold;
+            lblUs.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            lblUs.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            lblUs.Margin = new System.Windows.Thickness(28, 18, 0, 0);
+            lblUs.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 88, 3, 255));
+            lblUs.FontSize = 16;
+
+            Label lblThem = new Label();
+            lblThem.Content = "THEM";
+            lblThem.FontWeight = System.Windows.FontWeights.Bold;
+            lblThem.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            lblThem.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            lblThem.Margin = new System.Windows.Thickness(74, 18, 0, 0);
+            lblThem.Foreground = Brushes.Red;
+            lblThem.FontSize = 16;
+
+            Score.Children.Add(ScoreUs);
+            Score.Children.Add(ScoreThem);
+            Score.Children.Add(lblUs);
+            Score.Children.Add(lblThem);
+        }
+
+        public void thinkTime()
+        {
+            Random rnd = new Random();
+            int time = rnd.Next(4000, 8000);
+
+            //Thread.Sleep(time);
+        }
+
         private void BidButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -473,13 +591,15 @@ namespace Tarneeb_Card_Game
             }
             else
             {
+                Round.Children.Remove(Bid);
                 MessageBox.Show("Final Bid is " + currentBid);
+                ShowMatchHighestBid();
             }
         }
 
         private void PassButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This button is under constructions!");
+            //MessageBox.Show("This button is under constructions!");
             pass++;
             currentPlayer++;
             if (currentPlayer > 4)
@@ -496,6 +616,7 @@ namespace Tarneeb_Card_Game
                 //Thread.Sleep(3000);
                 MessageBox.Show("Final Bid is " + currentBid);
                 pass = 0;
+                ShowMatchHighestBid();
             }
         }
 
