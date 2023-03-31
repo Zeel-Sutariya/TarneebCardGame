@@ -1,4 +1,5 @@
-﻿using UsingCards;
+﻿using System.Windows.Controls;
+using UsingCards;
 
 namespace Tarneeb_Card_Game
 {
@@ -14,10 +15,11 @@ namespace Tarneeb_Card_Game
         public Game()
         {
             
-            while (gameScore < winningScore)
-            {
-                Match match = new Match();
-            }
+            //while (gameScore < winningScore)
+            //{
+            //    Match match = new Match();
+                
+            //}
            
         }
 
