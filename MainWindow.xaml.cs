@@ -44,6 +44,8 @@ namespace Tarneeb_Card_Game
             /*GameScreen win1 = new GameScreen();
             win1.Show();*/
             GameScreen win1 = new GameScreen();
+
+            win1.gameMode.Content = selectedMode;
             win1.Show();
             if (win1.IsEnabled)
             {
@@ -53,7 +55,6 @@ namespace Tarneeb_Card_Game
             {
                 //playButton.IsEnabled = true;
             }
-            win1.gameMode.Content = selectedMode;
         }
 
         private void RulesButton_Click(object sender, RoutedEventArgs e)

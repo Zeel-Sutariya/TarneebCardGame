@@ -51,6 +51,14 @@ namespace Tarneeb_Card_Game
         {
             InitializeComponent();
         }
+        /*
+         * In Function 1 put func2
+         * In func2 put func3
+         * In func3 put func4
+         * and in dunc4 put Function 1
+         * And the function 1 will be called in load event.
+         */
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
@@ -64,31 +72,27 @@ namespace Tarneeb_Card_Game
                 if (currentPlayer == 1)
                 {
                     HumanBidTurn();
-                    // while loop untill button is clicked
+                    // xWhile loop untill button is clicked
 
                 }
-                if(currentPlayer == 2)
-                {
-                    MakeBidAsync(e);
-                }
-                //CardButton_Click(sender, e);
-                //MessageBox.Show(Convert.ToString(AI.PlaceBid(match.player1, 6, "Hard")));
             }
         }
         public void HumanBidTurn()
         {
             MessageBox.Show("Your Turn!");
+
         }
 
-        public void MakeBidAsync(RoutedEventArgs e) {
+        public void MakeBidAsync(RoutedEventArgs e) 
+        {
             thinkTime();
             int selectBid = 0;
             MessageBox.Show("AI Bidding");
             if(currentPlayer != 1)
             {
-                selectBid = Convert.ToInt32(AI.PlaceBid(match.player2, currentBid+1, "Easy"));
+                selectBid = Convert.ToInt32(AI.PlaceBid(match.player2, currentBid+1, gameMode.Content.ToString()));
                 string buttonName = "btnBid" + selectBid.ToString();
-                //Button myButton = (Button)Bid.FindName(buttonName);
+
                 Button mybutton = bidButtons.ElementAt(selectBid - 7);
                 //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
                 MessageBox.Show(Convert.ToString(selectBid));
@@ -103,7 +107,6 @@ namespace Tarneeb_Card_Game
                     // Handle the error
                     MessageBox.Show("button not found");
                 }
-                //BidButton_Click(mybutton, e);
             }
         }
         private void CardButton_Click(object sender, RoutedEventArgs e)
