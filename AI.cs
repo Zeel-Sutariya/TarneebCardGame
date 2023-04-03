@@ -1,9 +1,11 @@
 ﻿using Cards;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Media.Animation;
 using static Cards.Enums;
 
@@ -11,6 +13,13 @@ namespace Tarneeb_Card_Game
 {
     public class AI
     {
+        /// <summary>
+        ///  This function place bid in behalf of computer players utilize card strength of players card
+        /// </summary>
+        /// <param name="hand">List of player card who will place bid</param> 
+        /// <param name="currentBid">highest bid that is placed till now</param>
+        /// <param name="gameMode">mode of game </param>
+        /// <returns>gives bid value in int from  current bid +1 and 14 for passing the bid </returns>
         public static int PlaceBid(List<Card> hand, int currentBid, string gameMode)
         {
             // Count the number of cards in each suit
@@ -29,6 +38,7 @@ namespace Tarneeb_Card_Game
             // Find the suit with the maximum number of cards
             Suit maxSuit = Suit.Club;
             int maxCount = 0;
+
             foreach (KeyValuePair<Suit, int> pair in suitCounts)
             {
                 if (pair.Value > maxCount)
@@ -37,40 +47,139 @@ namespace Tarneeb_Card_Game
                     maxCount = pair.Value;
                 }
             }
+            // Define a dictionary that maps each suit to a list of card numbers
+          
+            // Count the number of face cards with Ace in each suit except the maxSuit
+            int HighValueCard = 0;
+            foreach (Card card in hand)
+            {
+                if ((card.Suit != maxSuit)&&(card.CardNumber ==
+                    CardNumber.Jack||card.CardNumber== CardNumber.Queen 
+                    || card.CardNumber == CardNumber.King || card.CardNumber == CardNumber.Ace))
+                {
+                    HighValueCard++;
 
 
-            
-
-
-
+                }
+            }
 
 
             // Determine the bid based on the game mode and the maximum suit
-            int bid = currentBid;
+            int bid =0;
             switch (gameMode)
             {
                 case "Easy":
-                    bid = Math.Max(bid, maxCount + 6);
+                   
+                    Random random = new Random();
+                    int randomNumber = random.Next(1, 101);
+                    if(randomNumber <30) {
+                        if (maxCount > 5) //best case if 8 or more card from trump suit
+                        {
+                            bid =random.Next(9,14);
+                        }else
+                        if (HighValueCard > 5) //best case if 8 or more card from trump suit
+                        {
+                            bid = random.Next(8,10);
+                            if (bid == 9)
+                                bid = 14;
+                         }
+                        else
+                        if ( (maxCount < 6)&&(HighValueCard<6) )//best case if 8 or more card from trump suit
+                        {
+                            bid = random.Next(7, 9);
+                            if (bid == 8)
+                                bid = 14;
+                        }
+
+                    }
+                    else
+                    {
+                        Random randEasyBid = new Random();
+                        bid = randEasyBid.Next(currentBid+1, 14);
+                        
+                    }
                     break;
+
+
                 case "Medium":
-                    bid = Math.Max(bid, maxCount + 7);
+
+                     random = new Random();
+                     randomNumber = random.Next(1, 101);
+                    if (randomNumber <66 )
+                    {
+                        if (maxCount > 6) //best case if 8 or more card from trump suit
+                        {
+                            bid = random.Next(9, 14);
+                        }
+                        else
+                        if (HighValueCard > 6) //best case if 8 or more card from trump suit
+                        {
+                            bid = random.Next(8, 10);
+                            if (bid == 9)
+                                bid = 14;
+                        }
+                        else
+                        if ((maxCount < 6) && (HighValueCard <6))//best case if 8 or more card from trump suit
+                        {
+                            bid = random.Next(7, 9);
+                            if (bid == 8)
+                                bid = 14;
+                        }
+
+                    }
+                    else
+                    {
+                        Random randEasyBid = new Random();
+                        bid = randEasyBid.Next(currentBid + 1, 14);
+                       
+                    }
                     break;
+
+
+
+
                 case "Hard":
-                    bid = Math.Max(bid, maxCount + 8);
+                    random = new Random();
+                    randomNumber = random.Next(1, 101);
+                    if (randomNumber < 86)
+                    {
+                        if (maxCount > 4) //best case if 8 or more card from trump suit
+                        {
+                            bid = random.Next(9, 14);
+                        }
+                        else
+                        if (HighValueCard > 4) //best case if 8 or more card from trump suit
+                        {
+                            bid = random.Next(8, 10);
+                            if (bid == 9)
+                                bid = 14;
+                        }
+                        else
+                        if ((maxCount < 5) && (HighValueCard <5))//best case if 8 or more card from trump suit
+                        {
+                            bid = random.Next(7, 9);
+                            if (bid == 8)
+                                bid = 14;
+                        }
+
+                    }
+                    else
+                    {
+                        Random randEasyBid = new Random();
+                        bid = randEasyBid.Next(currentBid + 1, 14);
+
+                    }
                     break;
+
             }
 
 
 
-            // Make sure the bid is between 7 and 13, or return null if not
-            if (bid >= 7 && bid <= 13)
-            {
-                return bid;
-            }
-            else
+            if (bid<currentBid+1)
             {
                 return 14;
             }
+            return bid;
         }
 
         public static int selectTrump(List<Card> deck, string gameMode)
