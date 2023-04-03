@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -32,7 +33,7 @@ namespace Tarneeb_Card_Game
             foreach (Card card in hand)
             {
                 suitCounts[card.Suit]++;
-                
+
             }
 
             // Find the suit with the maximum number of cards
@@ -48,13 +49,13 @@ namespace Tarneeb_Card_Game
                 }
             }
             // Define a dictionary that maps each suit to a list of card numbers
-          
+
             // Count the number of face cards with Ace in each suit except the maxSuit
             int HighValueCard = 0;
             foreach (Card card in hand)
             {
-                if ((card.Suit != maxSuit)&&(card.CardNumber ==
-                    CardNumber.Jack||card.CardNumber== CardNumber.Queen 
+                if ((card.Suit != maxSuit) && (card.CardNumber ==
+                    CardNumber.Jack || card.CardNumber == CardNumber.Queen
                     || card.CardNumber == CardNumber.King || card.CardNumber == CardNumber.Ace))
                 {
                     HighValueCard++;
@@ -65,26 +66,28 @@ namespace Tarneeb_Card_Game
 
 
             // Determine the bid based on the game mode and the maximum suit
-            int bid =0;
+            int bid = 0;
             switch (gameMode)
             {
                 case "Easy":
-                   
+
                     Random random = new Random();
                     int randomNumber = random.Next(1, 101);
-                    if(randomNumber <30) {
+                    if (randomNumber < 30)
+                    {
                         if (maxCount > 5) //best case if 8 or more card from trump suit
                         {
-                            bid =random.Next(9,14);
-                        }else
+                            bid = random.Next(9, 14);
+                        }
+                        else
                         if (HighValueCard > 5) //best case if 8 or more card from trump suit
                         {
-                            bid = random.Next(8,10);
+                            bid = random.Next(8, 10);
                             if (bid == 9)
                                 bid = 14;
-                         }
+                        }
                         else
-                        if ( (maxCount < 6)&&(HighValueCard<6) )//best case if 8 or more card from trump suit
+                        if ((maxCount < 6) && (HighValueCard < 6))//best case if 8 or more card from trump suit
                         {
                             bid = random.Next(7, 9);
                             if (bid == 8)
@@ -95,17 +98,17 @@ namespace Tarneeb_Card_Game
                     else
                     {
                         Random randEasyBid = new Random();
-                        bid = randEasyBid.Next(currentBid+1, 14);
-                        
+                        bid = randEasyBid.Next(currentBid + 1, 14);
+
                     }
                     break;
 
 
                 case "Medium":
 
-                     random = new Random();
-                     randomNumber = random.Next(1, 101);
-                    if (randomNumber <66 )
+                    random = new Random();
+                    randomNumber = random.Next(1, 101);
+                    if (randomNumber < 66)
                     {
                         if (maxCount > 6) //best case if 8 or more card from trump suit
                         {
@@ -119,7 +122,7 @@ namespace Tarneeb_Card_Game
                                 bid = 14;
                         }
                         else
-                        if ((maxCount < 6) && (HighValueCard <6))//best case if 8 or more card from trump suit
+                        if ((maxCount < 6) && (HighValueCard < 6))//best case if 8 or more card from trump suit
                         {
                             bid = random.Next(7, 9);
                             if (bid == 8)
@@ -131,7 +134,7 @@ namespace Tarneeb_Card_Game
                     {
                         Random randEasyBid = new Random();
                         bid = randEasyBid.Next(currentBid + 1, 14);
-                       
+
                     }
                     break;
 
@@ -155,7 +158,7 @@ namespace Tarneeb_Card_Game
                                 bid = 14;
                         }
                         else
-                        if ((maxCount < 5) && (HighValueCard <5))//best case if 8 or more card from trump suit
+                        if ((maxCount < 5) && (HighValueCard < 5))//best case if 8 or more card from trump suit
                         {
                             bid = random.Next(7, 9);
                             if (bid == 8)
@@ -175,7 +178,7 @@ namespace Tarneeb_Card_Game
 
 
 
-            if (bid<currentBid+1)
+            if (bid < currentBid + 1)
             {
                 return 14;
             }
@@ -186,13 +189,14 @@ namespace Tarneeb_Card_Game
         {
             int trump;
             var maxSuit = (from card in deck
-                                group card by card.Suit into g
-                                orderby g.Count() descending
-                                select g.Key).FirstOrDefault();
+                           group card by card.Suit into g
+                           orderby g.Count() descending
+                           select g.Key).FirstOrDefault();
             if (gameMode == "Easy")
             {
-                
-                if (maxSuit == Suit.Club){
+
+                if (maxSuit == Suit.Club)
+                {
                     trump = 1;
                 }
                 else if (maxSuit == Suit.Diamond)
@@ -205,7 +209,7 @@ namespace Tarneeb_Card_Game
                 }
                 else
                 {
-                    trump= 4;
+                    trump = 4;
                 }
             }
             else
@@ -215,6 +219,35 @@ namespace Tarneeb_Card_Game
             return trump;
         }
 
-    }
+        public static Card playCard(List<Card> playersCard, string roundSuit, List<Card> roundCard, string gameMode)
+        {
+            //use roundsuit to find playable  card
+            List<Card> playableCard = new List<Card>();
+            foreach (Card card in playersCard)
+            {
+                if((card.Suit).ToString() == roundSuit)
+                {
+                    playableCard.Add(card);
+                }
+            }
+            int teammate = 0;
+            if (playableCard.ElementAt(0).cardOwner == 1)
+                teammate = 3;
+            if (playableCard.ElementAt(0).cardOwner == 3)
+                teammate = 1;
+            if (playableCard.ElementAt(0).cardOwner == 4)
+                teammate = 2;
+            if (playableCard.ElementAt(0).cardOwner == 2)
+                teammate = 4;
+            foreach (Card card in playableCard)
+            {
+                  
+            }
 
+
+
+
+            return playableCard.ElementAt(1);
+        }
+    }
 }
