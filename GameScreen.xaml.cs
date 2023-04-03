@@ -87,12 +87,12 @@ namespace Tarneeb_Card_Game
 
         }
 
-        public void MakeBidAsync(RoutedEventArgs e) 
+        public void AIBidTurn() 
         {
             thinkTime();
             int selectBid = 0;
             MessageBox.Show("AI Bidding");
-            if(currentPlayer != 1)
+            if(currentPlayer == 2)
             {
                 selectBid = Convert.ToInt32(AI.PlaceBid(match.player2, currentBid+1, gameMode.Content.ToString()));
                 string buttonName = "btnBid" + selectBid.ToString();
@@ -112,7 +112,76 @@ namespace Tarneeb_Card_Game
                     MessageBox.Show("button not found");
                 }
             }
+            else if(currentPlayer == 3)
+            {
+                selectBid = Convert.ToInt32(AI.PlaceBid(match.player3, currentBid + 1, gameMode.Content.ToString()));
+                string buttonName = "btnBid" + selectBid.ToString();
+
+                Button mybutton = bidButtons.ElementAt(selectBid - 7);
+                //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
+                MessageBox.Show(Convert.ToString(selectBid));
+                if (mybutton != null)
+                {
+                    // Click the button programmatically
+                    mybutton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                else
+                {
+                    // Button not found
+                    // Handle the error
+                    MessageBox.Show("button not found");
+                }
+            }
+            else if (currentPlayer == 4)
+            {
+                selectBid = Convert.ToInt32(AI.PlaceBid(match.player4, currentBid + 1, gameMode.Content.ToString()));
+                string buttonName = "btnBid" + selectBid.ToString();
+
+                Button mybutton = bidButtons.ElementAt(selectBid - 7);
+                //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
+                MessageBox.Show(Convert.ToString(selectBid));
+                if (mybutton != null)
+                {
+                    // Click the button programmatically
+                    mybutton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                else
+                {
+                    // Button not found
+                    // Handle the error
+                    MessageBox.Show("button not found");
+                }
+            }
         }
+
+        public void HumanTrumpTurn()
+        {
+            MessageBox.Show("Your Turn!");
+        } 
+        public void AITrumpTurn()
+        {
+            if (currentPlayer == 2)
+            {
+                currentTrump = AI.selectTrump(match.player2, gameMode.Content.ToString());
+                string buttonName = "btnTrump" + currentTrump.ToString();
+
+                Button mybutton = trumpButtons.ElementAt(currentTrump-1);
+                //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
+                MessageBox.Show(Convert.ToString(currentTrump));
+                if (mybutton != null)
+                {
+                    // Click the button programmatically
+                    mybutton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                else
+                {
+                    // Button not found
+                    // Handle the error
+                    MessageBox.Show("button not found");
+                }
+            }
+        }
+
         private void CardButton_Click(object sender, RoutedEventArgs e)
         {
             // Removing Bid GRID from Round Grid.
@@ -170,6 +239,7 @@ namespace Tarneeb_Card_Game
             }
                 
         }
+        #region FindParent
         private static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
             DependencyObject parent = VisualTreeHelper.GetParent(child);
@@ -179,7 +249,9 @@ namespace Tarneeb_Card_Game
             }
             return parent as T;
         }
+        #endregion
 
+        #region FindParent CardList
         private List<Card> FindParentCardList(Card card)
         {
 
@@ -201,9 +273,9 @@ namespace Tarneeb_Card_Game
             }
 
         }
+        #endregion
 
-        
-
+        #region Display Cards
         public void DisplayCards()
         {
             //Grid Test = new Grid();
@@ -220,7 +292,9 @@ namespace Tarneeb_Card_Game
             DisplayPlayer3();
             DisplayPlayer4();
         }
+        #endregion
 
+        #region Display Player 1
         public void DisplayPlayer1()
         {
             int x = 0;
@@ -258,7 +332,9 @@ namespace Tarneeb_Card_Game
             }
             Player1.Children.Add(player1StackPanel);
         }
+        #endregion
 
+        #region Display Player 2
         public void DisplayPlayer2()
         {
             player2StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
@@ -293,7 +369,9 @@ namespace Tarneeb_Card_Game
             player2StackPanel.Margin = new Thickness(0, 100, 0, 0);
             Player2.Children.Add(player2StackPanel);
         }
+        #endregion
 
+        #region Display Player 3
         public void DisplayPlayer3()
         {
             int x = 0;
@@ -332,7 +410,9 @@ namespace Tarneeb_Card_Game
             }
             Player3.Children.Add(player3StackPanel);
         }
+        #endregion
 
+        #region Display PLayer 4
         public void DisplayPlayer4()
         {
             player4StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
@@ -368,7 +448,9 @@ namespace Tarneeb_Card_Game
             player4StackPanel.Margin = new Thickness(0, 100, 0, 0);
             Player4.Children.Add(player4StackPanel);
         }
+        #endregion
 
+        #region SetCardImage
         public Image SetCardImage(Card card)
         {
             Image myImage = new Image
@@ -378,7 +460,9 @@ namespace Tarneeb_Card_Game
             };
             return myImage;
         }
+        #endregion
 
+        #region SetTrumpImage
         public Image SetTrumpImage(String imagePath)
         {
             Image myImage = new Image
@@ -388,7 +472,7 @@ namespace Tarneeb_Card_Game
             };
             return myImage;
         }
-
+        #endregion
         public async void ShowMatchHighestBid()
         {
             // For match - showing final bid here
@@ -442,6 +526,15 @@ namespace Tarneeb_Card_Game
             Grid.SetColumn(selectTrump, 0);
             Grid.SetRow(selectTrump, 0);
             await DisplayTrump();
+
+            if (currentPlayer == 1)
+            {
+                HumanTrumpTurn();
+            }
+            else
+            {
+                AITrumpTurn();
+            }
         }
         public void DisplayBid()
         {
@@ -653,7 +746,7 @@ namespace Tarneeb_Card_Game
                 }
                 if (currentPlayer != 1)
                 {
-                    MakeBidAsync(e);
+                    AIBidTurn();
                 }
             }
             else
@@ -699,18 +792,9 @@ namespace Tarneeb_Card_Game
 
         private void PassButton_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show("This button is under constructions!");
+            MessageBox.Show("Pass btn Clicked");
             pass++;
-            currentPlayer++;
-            if (currentPlayer > 4)
-            {
-                currentPlayer = 1;
-            }
-            if (currentPlayer != 1)
-            {
-                MakeBidAsync(e);
-            }
-            if(pass == 3)
+            if (pass >= 3)
             {
                 Round.Children.Remove(Bid);
                 //Thread.Sleep(3000);
@@ -718,6 +802,16 @@ namespace Tarneeb_Card_Game
                 pass = 0;
                 ShowMatchHighestBid();
             }
+            currentPlayer++;
+            if (currentPlayer > 4)
+            {
+                currentPlayer = 1;
+            }
+            if (currentPlayer != 1)
+            {
+                AIBidTurn();
+            }
+            
         }
 
 
