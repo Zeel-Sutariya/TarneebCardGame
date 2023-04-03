@@ -552,10 +552,10 @@ namespace Tarneeb_Card_Game
             Grid.SetRow(trumpButtons[2], 1);
             Grid.SetColumn(trumpButtons[3], 1);
             Grid.SetRow(trumpButtons[3], 0);
-            trumpButtons[0].Content = SetTrumpImage("/Images/spades.png");
+            trumpButtons[0].Content = SetTrumpImage("/Images/club.png");
             trumpButtons[1].Content = SetTrumpImage("/Images/diamond.png");
-            trumpButtons[2].Content = SetTrumpImage("/Images/club.png");
-            trumpButtons[3].Content = SetTrumpImage("/Images/heart.png");
+            trumpButtons[2].Content = SetTrumpImage("/Images/heart.png");
+            trumpButtons[3].Content = SetTrumpImage("/Images/spades.png");
            
             
 
@@ -676,19 +676,19 @@ namespace Tarneeb_Card_Game
 
             if(currentTrump == 1)
             {
-                trumpCard = "spades";
+                trumpCard = "Club";
             }
             else if (currentTrump == 2)
             {
-                trumpCard = "diamond";
+                trumpCard = "Diamond";
             }
             else if (currentTrump == 3)
             {
-                trumpCard = "club";
+                trumpCard = "Heart";
             }
             else
             {
-                trumpCard = "heart";
+                trumpCard = "Spade";
             }
 
             TrumpSelect.Children.Remove(Trump);

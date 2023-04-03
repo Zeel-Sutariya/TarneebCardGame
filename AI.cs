@@ -73,7 +73,38 @@ namespace Tarneeb_Card_Game
             }
         }
 
-
+        public static int selectTrump(List<Card> deck, string gameMode)
+        {
+            int trump;
+            var maxSuit = (from card in deck
+                                group card by card.Suit into g
+                                orderby g.Count() descending
+                                select g.Key).FirstOrDefault();
+            if (gameMode == "Easy")
+            {
+                
+                if (maxSuit == Suit.Club){
+                    trump = 1;
+                }
+                else if (maxSuit == Suit.Diamond)
+                {
+                    trump = 2;
+                }
+                else if (maxSuit == Suit.Heart)
+                {
+                    trump = 3;
+                }
+                else
+                {
+                    trump= 4;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+            return trump;
+        }
 
     }
 
