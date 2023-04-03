@@ -691,7 +691,7 @@ namespace Tarneeb_Card_Game
                 trumpCard = "heart";
             }
 
-            //Round.Children.Remove(Bid);
+            TrumpSelect.Children.Remove(Trump);
             MessageBox.Show("The trump is " + trumpCard);
                 //ShowMatchHighestBid();
             
