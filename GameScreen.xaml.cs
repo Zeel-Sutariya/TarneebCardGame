@@ -391,7 +391,7 @@ namespace Tarneeb_Card_Game
                 button.Height = 140;
                 card.isFaceUp = true;
                 card.ParentButton = button;
-                button.IsEnabled = false;
+                button.IsEnabled = true;
 
                 button.Margin = new Thickness(0, 0, 0, -120);
                 
@@ -428,7 +428,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = true;
-                button.IsEnabled = false;
+                button.IsEnabled = true;
                 card.ParentButton = button;
                 if (x == 0)
                 {
@@ -468,7 +468,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = true;
-                button.IsEnabled = false;
+                button.IsEnabled = true;
                 card.ParentButton = button;
              
 
@@ -562,6 +562,7 @@ namespace Tarneeb_Card_Game
             selectTrump.FontSize = 64;
             selectTrump.HorizontalAlignment = HorizontalAlignment.Center;
             selectTrump.VerticalAlignment = VerticalAlignment.Center;
+            FadeAnimation(selectTrump, 0, 2);
             Round.Children.Add(selectTrump);
             Grid.SetColumn(selectTrump, 0);
             Grid.SetRow(selectTrump, 0);
@@ -645,10 +646,40 @@ namespace Tarneeb_Card_Game
 
         }
 
+        private void FadeAnimation(UIElement element, int from, int to)
+        {
+            // Create a new DoubleAnimation to fade in the element
+            DoubleAnimation opacityAnimation = new DoubleAnimation
+            {
+                From = from,
+                To = to,
+                Duration = TimeSpan.FromSeconds(1)
+            };
+
+            // Create a new Storyboard and add the opacity animation to it
+            Storyboard storyboard = new Storyboard();
+            storyboard.Children.Add(opacityAnimation);
+
+            // Set the target property of the opacity animation to the element's Opacity property
+            Storyboard.SetTargetProperty(opacityAnimation, new PropertyPath(UIElement.OpacityProperty));
+
+            // Set the target of the opacity animation to the element
+            Storyboard.SetTarget(opacityAnimation, element);
+
+            // Start the storyboard
+            storyboard.Begin((FrameworkElement)element);
+        }
+
         public async Task DisplayTrump()
         {
-            await Task.Delay(TimeSpan.FromSeconds(2));
+
+            FadeAnimation(selectTrump, 3, 0);
+            await Task.Delay(TimeSpan.FromSeconds(1));
             Round.Children.Remove(selectTrump);
+
+            FadeAnimation(Trump, 0, 1);
+
+
             System.Windows.Shapes.Rectangle trumpBorder = new System.Windows.Shapes.Rectangle();
             trumpBorder.Width = Trump.Width;
             trumpBorder.Height = Trump.Height;
@@ -805,29 +836,39 @@ namespace Tarneeb_Card_Game
             string buttonContent = Convert.ToString(clickedButton.Tag);
             
             currentTrump = Convert.ToInt32(buttonContent);
-            
 
+            String trumpCardImagePath = "";
             if(currentTrump == 1)
             {
                 trumpCard = "Club";
+                trumpCardImagePath = "/Images/club.png";
             }
             else if (currentTrump == 2)
             {
                 trumpCard = "Diamond";
+                trumpCardImagePath = "/Images/diamond.png";
             }
             else if (currentTrump == 3)
             {
                 trumpCard = "Heart";
+                trumpCardImagePath = "/Images/heart.png";
             }
             else
             {
                 trumpCard = "Spade";
+                trumpCardImagePath = "/Images/spade.png";
             }
 
             TrumpSelect.Children.Remove(Trump);
             MessageBox.Show("The trump is " + trumpCard);
-                //ShowMatchHighestBid();
-            
+            //ShowMatchHighestBid();
+            Image myImage = new Image
+            {
+                
+                Source = new BitmapImage(new Uri(trumpCardImagePath, UriKind.RelativeOrAbsolute)),
+                Stretch = Stretch.Uniform
+            };
+            Round.Children.Add(myImage);
         }
 
         private void PassButton_Click(object sender, RoutedEventArgs e)
