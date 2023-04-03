@@ -15,7 +15,6 @@ namespace Tarneeb_Card_Game
         }
 
         public List<Card> Cards { get; set; }
-
         public void Reset()
         {
             Cards = Enumerable.Range(1, 4)

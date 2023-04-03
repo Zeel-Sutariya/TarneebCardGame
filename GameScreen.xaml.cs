@@ -30,7 +30,10 @@ namespace Tarneeb_Card_Game
     {
 
         //List<Card> roundCards = new List<Card>();
+        Deck deck = new Deck();
+        
         public int gameScore;
+        public List<Button> deckCards = new List<Button>();
         List<Button> bidButtons = new List<Button>();
         List<Button> trumpButtons = new List<Button>();
         Round round = new Round();
@@ -49,6 +52,7 @@ namespace Tarneeb_Card_Game
         Label selectTrump = new Label();
         Team team01 = new Team("Player 1", "Player3");
         Team team02 = new Team("player 2", "Player4");
+        string chosenCard = "";
         Card currentRoundCard = new Card();
         public GameScreen()
         {
@@ -85,6 +89,7 @@ namespace Tarneeb_Card_Game
         {
             MessageBox.Show("Your Turn!");
 
+            MessageBox.Show(deck.Cards.ToString());
         }
 
         public void AIBidTurn() 
@@ -222,6 +227,74 @@ namespace Tarneeb_Card_Game
             }
         }
 
+        public void HumanSelectSelect()
+        {
+            MessageBox.Show("Your Turn!");
+        }
+        public void AICardSelect()
+        {
+            if (currentPlayer == 2)
+            {
+                chosenCard = AI.PlayCard(match.player2,"",round.roundCards,currentTrump, gameMode.Content.ToString());
+                string buttonName = chosenCard;
+                int index = deckCards.FindIndex(button => button.Name == buttonName);
+                Button mybutton = deckCards.ElementAt(index);
+                //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
+                MessageBox.Show(Convert.ToString(chosenCard));
+                if (mybutton != null)
+                {
+                    // Click the button programmatically
+                    mybutton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                else
+                {
+                    // Button not found
+                    // Handle the error
+                    MessageBox.Show("button not found");
+                }
+            }
+            else if (currentPlayer == 3)
+            {
+                chosenCard = AI.PlayCard(match.player3, "", round.roundCards, currentTrump, gameMode.Content.ToString());
+                string buttonName = chosenCard;
+                int index = deckCards.FindIndex(button => button.Name == buttonName);
+                Button mybutton = deckCards.ElementAt(index);
+                //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
+                MessageBox.Show(Convert.ToString(chosenCard));
+                if (mybutton != null)
+                {
+                    // Click the button programmatically
+                    mybutton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                else
+                {
+                    // Button not found
+                    // Handle the error
+                    MessageBox.Show("button not found");
+                }
+            }
+            else if (currentPlayer == 4)
+            {
+                chosenCard = AI.PlayCard(match.player4, "", round.roundCards, currentTrump, gameMode.Content.ToString());
+                string buttonName = chosenCard;
+                int index = deckCards.FindIndex(button => button.Name == buttonName);
+                Button mybutton = deckCards.ElementAt(index);
+                //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
+                MessageBox.Show(Convert.ToString(chosenCard));
+                if (mybutton != null)
+                {
+                    // Click the button programmatically
+                    mybutton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                else
+                {
+                    // Button not found
+                    // Handle the error
+                    MessageBox.Show("button not found");
+                }
+            }
+        }
+
         private void CardButton_Click(object sender, RoutedEventArgs e)
         {
             // Removing Bid GRID from Round Grid.
@@ -319,7 +392,6 @@ namespace Tarneeb_Card_Game
         public void DisplayCards()
         {
             //Grid Test = new Grid();
-            Deck deck = new Deck();
             deck.Shuffle();
             match.player1 = deck.Sort(deck.TakeCards(13)); 
             match.player2 = deck.Sort(deck.TakeCards(13));
@@ -369,6 +441,7 @@ namespace Tarneeb_Card_Game
 
                 x++;
                 player1StackPanel.Children.Add(button);
+                deckCards.Add(button);
             }
             Player1.Children.Add(player1StackPanel);
         }
@@ -391,7 +464,7 @@ namespace Tarneeb_Card_Game
                 button.Height = 140;
                 card.isFaceUp = true;
                 card.ParentButton = button;
-                button.IsEnabled = true;
+                button.IsEnabled = false;
 
                 button.Margin = new Thickness(0, 0, 0, -120);
                 
@@ -404,7 +477,8 @@ namespace Tarneeb_Card_Game
 
 
                 x++;
-                player2StackPanel.Children.Add(button);
+                player2StackPanel.Children.Add(button); 
+                deckCards.Add(button);
             }
             player2StackPanel.Margin = new Thickness(0, 100, 0, 0);
             Player2.Children.Add(player2StackPanel);
@@ -428,7 +502,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = true;
-                button.IsEnabled = true;
+                button.IsEnabled = false;
                 card.ParentButton = button;
                 if (x == 0)
                 {
@@ -447,6 +521,7 @@ namespace Tarneeb_Card_Game
 
                 x++;
                 player3StackPanel.Children.Add(button);
+                deckCards.Add(button);
             }
             Player3.Children.Add(player3StackPanel);
         }
@@ -468,7 +543,7 @@ namespace Tarneeb_Card_Game
                 button.Width = 85;
                 button.Height = 140;
                 card.isFaceUp = true;
-                button.IsEnabled = true;
+                button.IsEnabled = false;
                 card.ParentButton = button;
              
 
@@ -484,6 +559,7 @@ namespace Tarneeb_Card_Game
 
                 x++;
                 player4StackPanel.Children.Add(button);
+                deckCards.Add(button);
             }
             player4StackPanel.Margin = new Thickness(0, 100, 0, 0);
             Player4.Children.Add(player4StackPanel);
@@ -856,7 +932,7 @@ namespace Tarneeb_Card_Game
             else
             {
                 trumpCard = "Spade";
-                trumpCardImagePath = "/Images/spade.png";
+                trumpCardImagePath = "/Images/spades.png";
             }
 
             TrumpSelect.Children.Remove(Trump);
@@ -869,6 +945,22 @@ namespace Tarneeb_Card_Game
                 Stretch = Stretch.Uniform
             };
             Round.Children.Add(myImage);
+            if(currentPlayer == 1)
+            {
+                HumanSelectSelect();
+            }
+            else if(currentPlayer == 2)
+            {
+                AICardSelect();
+            }
+            else if (currentPlayer == 3)
+            {
+                AICardSelect();
+            }
+            else if (currentPlayer == 4)
+            {
+                AICardSelect();
+            }
         }
 
         private void PassButton_Click(object sender, RoutedEventArgs e)

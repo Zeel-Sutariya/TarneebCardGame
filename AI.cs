@@ -266,8 +266,25 @@ namespace Tarneeb_Card_Game
         /// <param name="trumpSuit">suit that is trump</param>
         /// <param name="gameMode">current game mode</param>
         /// <returns></returns>
-        public static Card PlayCard(List<Card> playersCard, string roundSuit, List<Card> roundCard, string trumpSuit, string gameMode)
+        public static string PlayCard(List<Card> playersCard, string roundSuit, List<Card> roundCard, int inttrumpSuit, string gameMode)
         {
+            string trumpSuit = "";
+            if(inttrumpSuit == 1)
+            {
+                trumpSuit = "Club";
+            }
+            else if(inttrumpSuit == 2)
+            {
+                trumpSuit = "Diamond";
+            }
+            else if(inttrumpSuit == 3)
+            {
+                trumpSuit = "Heart";
+            }
+            else if(inttrumpSuit == 4)
+            {
+                trumpSuit = "Spade";
+            }
             Card chosenCard = null;
             Card highestCard = null;
 
@@ -283,7 +300,7 @@ namespace Tarneeb_Card_Game
             }else
 
             // Check if we have a trump card
-            if (chosenCard == null && !string.IsNullOrEmpty(trumpSuit))
+            if ( !string.IsNullOrEmpty(trumpSuit))
             {
                 List<Card> trumpCards = playersCard.Where(c => c.Suit.ToString() == trumpSuit).ToList();
                 if (trumpCards.Count > 0)
@@ -291,10 +308,10 @@ namespace Tarneeb_Card_Game
                     highestCard = trumpCards.OrderByDescending(c => c.CardNumber).First();
                     chosenCard = highestCard;
                 }
-            }
+            }else
 
             // If we still haven't found a card, play the lowest-ranking card
-            if (chosenCard == null)
+            
             {
                 highestCard = playersCard.OrderByDescending(c => c.CardNumber).Last();
                 chosenCard = highestCard;
@@ -312,7 +329,8 @@ namespace Tarneeb_Card_Game
 
             // Remove the chosen card from our hand and return it
             playersCard.Remove(chosenCard);
-            return chosenCard;
+            string returnCard = chosenCard.Suit.ToString() + chosenCard.CardNumber.ToString();
+            return returnCard;
         }
     }
 }
