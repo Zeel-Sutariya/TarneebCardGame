@@ -180,6 +180,46 @@ namespace Tarneeb_Card_Game
                     MessageBox.Show("button not found");
                 }
             }
+            else if (currentPlayer == 3)
+            {
+                currentTrump = AI.selectTrump(match.player3, gameMode.Content.ToString());
+                string buttonName = "btnTrump" + currentTrump.ToString();
+
+                Button mybutton = trumpButtons.ElementAt(currentTrump - 1);
+                //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
+                MessageBox.Show(Convert.ToString(currentTrump));
+                if (mybutton != null)
+                {
+                    // Click the button programmatically
+                    mybutton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                else
+                {
+                    // Button not found
+                    // Handle the error
+                    MessageBox.Show("button not found");
+                }
+            }
+            else if (currentPlayer == 4)
+            {
+                currentTrump = AI.selectTrump(match.player4, gameMode.Content.ToString());
+                string buttonName = "btnTrump" + currentTrump.ToString();
+
+                Button mybutton = trumpButtons.ElementAt(currentTrump - 1);
+                //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
+                MessageBox.Show(Convert.ToString(currentTrump));
+                if (mybutton != null)
+                {
+                    // Click the button programmatically
+                    mybutton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+                else
+                {
+                    // Button not found
+                    // Handle the error
+                    MessageBox.Show("button not found");
+                }
+            }
         }
 
         private void CardButton_Click(object sender, RoutedEventArgs e)
@@ -794,6 +834,7 @@ namespace Tarneeb_Card_Game
         {
             MessageBox.Show("Pass btn Clicked");
             pass++;
+            currentPlayer++;
             if (pass >= 3)
             {
                 Round.Children.Remove(Bid);
@@ -802,14 +843,16 @@ namespace Tarneeb_Card_Game
                 pass = 0;
                 ShowMatchHighestBid();
             }
-            currentPlayer++;
-            if (currentPlayer > 4)
+            else
             {
-                currentPlayer = 1;
-            }
-            if (currentPlayer != 1)
-            {
-                AIBidTurn();
+                if (currentPlayer > 4)
+                {
+                    currentPlayer = 1;
+                }
+                if (currentPlayer != 1)
+                {
+                    AIBidTurn();
+                }
             }
             
         }
