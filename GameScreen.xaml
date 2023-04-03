@@ -77,7 +77,7 @@
                 </Grid.ColumnDefinitions>
             </Grid>
         </Grid>
-        <Grid x:Name="TrumpSelect" ShowGridLines="True" Grid.Row="2" Grid.Column="2">
+        <Grid x:Name="TrumpSelect" ShowGridLines="False" Grid.Row="2" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="3*"/>

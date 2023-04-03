@@ -389,7 +389,7 @@ namespace Tarneeb_Card_Game
             return myImage;
         }
 
-        public void ShowMatchHighestBid()
+        public async void ShowMatchHighestBid()
         {
             // For match - showing final bid here
             System.Windows.Shapes.Rectangle highestBidBorder = new System.Windows.Shapes.Rectangle();
@@ -441,8 +441,7 @@ namespace Tarneeb_Card_Game
             Round.Children.Add(selectTrump);
             Grid.SetColumn(selectTrump, 0);
             Grid.SetRow(selectTrump, 0);
-            Thread.Sleep(3000);
-            DisplayTrump();
+            await DisplayTrump();
         }
         public void DisplayBid()
         {
@@ -513,8 +512,9 @@ namespace Tarneeb_Card_Game
 
         }
 
-        public void DisplayTrump()
+        public async Task DisplayTrump()
         {
+            await Task.Delay(TimeSpan.FromSeconds(2));
             Round.Children.Remove(selectTrump);
             System.Windows.Shapes.Rectangle trumpBorder = new System.Windows.Shapes.Rectangle();
             trumpBorder.Width = Trump.Width;
