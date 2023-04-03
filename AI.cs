@@ -219,35 +219,100 @@ namespace Tarneeb_Card_Game
             return trump;
         }
 
-        public static Card playCard(List<Card> playersCard, string roundSuit, List<Card> roundCard, string gameMode)
+        //public static Card playCard(List<Card> playersCard, string roundSuit, List<Card> roundCard, string trumpSuit, string gameMode)
+        //{
+        //    use roundsuit to find playable card
+        //    List<Card> playableCard = new List<Card>();
+        //    foreach (Card card in playersCard)
+        //    {
+        //        if ((card.Suit).ToString() == roundSuit)
+        //        {
+        //            playableCard.Add(card);
+        //        }
+        //    }
+        //    Card bestCard = new Card();
+        //    int teammate = 0;
+        //    if (playableCard.ElementAt(0).cardOwner == 1)
+        //        teammate = 3;
+        //    if (playableCard.ElementAt(0).cardOwner == 3)
+        //        teammate = 1;
+        //    if (playableCard.ElementAt(0).cardOwner == 4)
+        //        teammate = 2;
+        //    if (playableCard.ElementAt(0).cardOwner == 2)
+        //        teammate = 4;
+
+        //    teammate -= 1;
+        //    foreach (Card card in playableCard)
+        //    {
+        //        if (teammate >= 0 && teammate < roundCard.Count)
+        //        {
+        //            Card card1 = roundCard.ElementAt(teammate);
+        //            if (card >= card1)
+        //            {
+        //                bestCard = card;
+        //            }
+        //        }
+        //    }
+        //    return bestCard;
+        //}
+
+
+        /// <summary>
+        /// Play  card functioon that  use algorithum to selcet best card to win the round 
+        /// </summary>
+        /// <param name="playersCard"> cards of player in which we want to use AI to selct card</param>
+        /// <param name="roundSuit">name of suit for current round </param>
+        /// <param name="roundCard">list of card that are played till the round</param>
+        /// <param name="trumpSuit">suit that is trump</param>
+        /// <param name="gameMode">current game mode</param>
+        /// <returns></returns>
+        public static Card PlayCard(List<Card> playersCard, string roundSuit, List<Card> roundCard, string trumpSuit, string gameMode)
         {
-            //use roundsuit to find playable  card
-            List<Card> playableCard = new List<Card>();
-            foreach (Card card in playersCard)
+            Card chosenCard = null;
+            Card highestCard = null;
+
+            // Check if we have a card in the suit led
+            if (!string.IsNullOrEmpty(roundSuit))
             {
-                if((card.Suit).ToString() == roundSuit)
+                List<Card> suitCards = playersCard.Where(c => c.Suit.ToString() == roundSuit).ToList();
+                if (suitCards.Count > 0)
                 {
-                    playableCard.Add(card);
+                    highestCard = suitCards.OrderByDescending(c => c.CardNumber).First();
+                    chosenCard = highestCard;
+                }
+            }else
+
+            // Check if we have a trump card
+            if (chosenCard == null && !string.IsNullOrEmpty(trumpSuit))
+            {
+                List<Card> trumpCards = playersCard.Where(c => c.Suit.ToString() == trumpSuit).ToList();
+                if (trumpCards.Count > 0)
+                {
+                    highestCard = trumpCards.OrderByDescending(c => c.CardNumber).First();
+                    chosenCard = highestCard;
                 }
             }
-            int teammate = 0;
-            if (playableCard.ElementAt(0).cardOwner == 1)
-                teammate = 3;
-            if (playableCard.ElementAt(0).cardOwner == 3)
-                teammate = 1;
-            if (playableCard.ElementAt(0).cardOwner == 4)
-                teammate = 2;
-            if (playableCard.ElementAt(0).cardOwner == 2)
-                teammate = 4;
-            foreach (Card card in playableCard)
+
+            // If we still haven't found a card, play the lowest-ranking card
+            if (chosenCard == null)
             {
-                  
+                highestCard = playersCard.OrderByDescending(c => c.CardNumber).Last();
+                chosenCard = highestCard;
             }
 
+            // Adjust strategy if necessary based on the highest card played so far
+            if (roundCard != null && roundCard.Count > 0)
+            {
+                Card highestPlayedCard = roundCard.OrderByDescending(c => c.CardNumber).First();
+                if (highestPlayedCard.CardNumber < highestCard.CardNumber)
+                {
+                    chosenCard = playersCard.OrderBy(c => c.CardNumber).First();
+                }
+            }
 
-
-
-            return playableCard.ElementAt(1);
+            // Remove the chosen card from our hand and return it
+            playersCard.Remove(chosenCard);
+            return chosenCard;
         }
     }
 }
