@@ -67,6 +67,10 @@
     <None Remove="Images\Cards\SpadeThree .png" />
     <None Remove="Images\Cards\SpadeThree.png" />
     <None Remove="Images\Cards\SpadeTwo.png" />
+    <None Remove="Images\club.png" />
+    <None Remove="Images\diamond.png" />
+    <None Remove="Images\heart.png" />
+    <None Remove="Images\spades.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -237,6 +241,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Cards\SpadeTwo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\club.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\diamond.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\heart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\spades.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
