@@ -32,6 +32,7 @@ namespace Tarneeb_Card_Game
         //List<Card> roundCards = new List<Card>();
         public int gameScore;
         List<Button> bidButtons = new List<Button>();
+        List<Button> trumpButtons = new List<Button>();
         Round round = new Round();
         Match match;
         int currentBid = 0;
@@ -75,6 +76,7 @@ namespace Tarneeb_Card_Game
                     // xWhile loop untill button is clicked
 
                 }
+                DisplayTrump();
             }
         }
         public void HumanBidTurn()
@@ -375,6 +377,16 @@ namespace Tarneeb_Card_Game
             return myImage;
         }
 
+        public Image SetTrumpImage(String imagePath)
+        {
+            Image myImage = new Image
+            {
+                Source = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute)),
+                Stretch = Stretch.Fill
+            };
+            return myImage;
+        }
+
         public void ShowMatchHighestBid()
         {
             // For match - showing final bid here
@@ -494,6 +506,50 @@ namespace Tarneeb_Card_Game
                 bidButtons.Add(btnBid);
                 
             }
+
+        }
+
+        public void DisplayTrump()
+        {
+            System.Windows.Shapes.Rectangle trumpBorder = new System.Windows.Shapes.Rectangle();
+            trumpBorder.Width = Trump.Width;
+            trumpBorder.Height = Trump.Height;
+            trumpBorder.Stroke = Brushes.Aqua;
+            trumpBorder.StrokeThickness = 3;
+            TrumpSelect.Children.Add(trumpBorder);
+
+            int x = 0;
+            for (int j = 1; j <= 4; j++)
+            {
+
+                Button btnTrump = new Button();
+               
+               
+                btnTrump.Name = "btnTrump" + j.ToString();
+                btnTrump.Content = j.ToString();
+                btnTrump.Width = 100;
+                btnTrump.Height = 100;
+                //btnTrump.Click += BidButton_Click;
+                Trump.Children.Add(btnTrump);
+                //Grid.SetColumn(btnTrump, x);
+                //Grid.SetRow(btnTrump, x);
+                
+                x++;
+                trumpButtons.Add(btnTrump);
+                
+            }
+            Grid.SetColumn(trumpButtons[0], 0);
+            Grid.SetRow(trumpButtons[0], 0);
+            Grid.SetColumn(trumpButtons[1], 0);
+            Grid.SetRow(trumpButtons[1], 1);
+            Grid.SetColumn(trumpButtons[2], 1);
+            Grid.SetRow(trumpButtons[2], 1);
+            Grid.SetColumn(trumpButtons[3], 1);
+            Grid.SetRow(trumpButtons[3], 0);
+            trumpButtons[0].Content = SetTrumpImage("./images/spades.png");
+            trumpButtons[1].Content = SetTrumpImage("./images/diamond.png");
+            trumpButtons[2].Content = SetTrumpImage("./images/club.png");
+            trumpButtons[3].Content = SetTrumpImage("./images/heart.png");
 
         }
 

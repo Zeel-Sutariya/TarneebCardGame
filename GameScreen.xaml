@@ -77,6 +77,36 @@
                 </Grid.ColumnDefinitions>
             </Grid>
         </Grid>
+        <Grid x:Name="TrumpSelect" ShowGridLines="True" Grid.Row="2" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                
+
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="Trump" ShowGridLines="false" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
+                    
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    
+                </Grid.ColumnDefinitions>
+            </Grid> 
+        </Grid>
 
     </Grid>
 </Window>
