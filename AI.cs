@@ -318,7 +318,7 @@ namespace Tarneeb_Card_Game
             }
 
             // Adjust strategy if necessary based on the highest card played so far
-            if (roundCard != null && roundCard.Count > 0)
+            if ( roundCard.Count > 0)
             {
                 Card highestPlayedCard = roundCard.OrderByDescending(c => c.CardNumber).First();
                 if (highestPlayedCard.CardNumber < highestCard.CardNumber)
