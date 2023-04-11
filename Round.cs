@@ -29,8 +29,8 @@ namespace Tarneeb_Card_Game
                 }
             }
 
-            return (roundCards.IndexOf( greaterCard ) +1);
-           
+            //return (roundCards.IndexOf( greaterCard ) +1);
+            return greaterCard.cardOwner;
         }
     }
 }
