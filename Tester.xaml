@@ -5,379 +5,110 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tarneeb_Card_Game"
         mc:Ignorable="d"
-        Title="Tester" WindowStartupLocation="CenterScreen" MaxHeight="600" MaxWidth="820" MinHeight="600" MinWidth="820">
-    <Window.Resources>
+        Title="Tester" Loaded="Window_Loaded" Width="800" Height="420">
 
 
-        <Style TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border BorderThickness="2" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="{TemplateBinding Background}" CornerRadius="6" BorderBrush="MediumPurple">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
+    <Grid x:Name="test" ShowGridLines="False">
 
-                            <Trigger Property="IsMouseOver" Value="true">
+            <Grid.Background>
+                <ImageBrush ImageSource="/Images/background.jpg"/>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="3*"/>
 
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation To="118"  Storyboard.TargetProperty="Height" Duration="0:0:0.3" />
-                                            <ColorAnimation To="White" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="0:0:0.3"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="3*"/>
 
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation To="113"  Storyboard.TargetProperty="Height" Duration="0:0:0.3" />
-                                            <ColorAnimation To="#FFDDDDDD" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="0:0:0.3"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="Button" x:Key="ExemptButtonStyle">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Margin" Value="50"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="Player1" ShowGridLines="True" Grid.Row="4" Grid.Column="2">
+            </Grid>
+            <Grid x:Name="Player2" ShowGridLines="True" Grid.Row="2" Grid.Column="4">
+            </Grid>
+            <Grid x:Name="Player3" ShowGridLines="True" Grid.Row="0" Grid.Column="2">
+            </Grid>
+            <Grid x:Name="Player4" ShowGridLines="True" Grid.Row="2" Grid.Column="0">
 
-        </Style>
-    </Window.Resources>
-    <Window.Background>
-        <ImageBrush/>
-    </Window.Background>
-    <Grid Margin="0,-4,0,0">
-        <Grid.Background>
-            <ImageBrush ImageSource="/Images/background.jpg"/>
-        </Grid.Background>
-        <Label Content="Game Mode" x:Name="GameMode" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FF51D6E6">
-            <Label.Triggers>
-                <EventTrigger RoutedEvent="Label.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                     From="0" To="1"
-                                     Duration="0:0:1"
-                                     AutoReverse="True"
-                                     RepeatBehavior="Forever" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Label.Triggers>
-        </Label>
-        <Button x:Name="p1c1" Content="P1C1" HorizontalAlignment="Left" Margin="179,417,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-7"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c2" Content="P1C2" HorizontalAlignment="Left" Margin="209,415,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-5"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c3" Content="P1C3" Margin="239,413,0,0" VerticalAlignment="Top" Height="113"  RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="65">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-4"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c4" Content="P1C4" HorizontalAlignment="Left" Margin="269,411,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-3"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c5" Content="P1C5" HorizontalAlignment="Left" Margin="299,409,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-2"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c6" Content="P1C6" HorizontalAlignment="Left" Margin="329,407,0,0" VerticalAlignment="Top" Height="113" Width="66"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-1"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c7" Content="P1C7" HorizontalAlignment="Left" Margin="359,406,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button  x:Name="p1c8" Content="P1C8" HorizontalAlignment="Left" Margin="389,407,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="1"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button  x:Name="p1c9" Content="P1C9" HorizontalAlignment="Left" Margin="419,408,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="2"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c10" Content="P1C10" HorizontalAlignment="Left" Margin="449,410,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.Background>
-                <ImageBrush ImageSource="/Images/cardBackRed.png"/>
-            </Button.Background>
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="3"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c11" Content="P1C11" HorizontalAlignment="Left" Margin="479,412,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="4"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c12" Content="P1C12" HorizontalAlignment="Left" Margin="509,414,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="5"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p1c13" Content="P1C13" Margin="539,416,0,0" VerticalAlignment="Top" Height="113" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="65">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform />
-                    <RotateTransform Angle="6"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
+            </Grid>
+
+            <Grid x:Name="GridGameMode" Grid.Row="1" Grid.Column="2">
+                <Label Content="Game Mode" x:Name="gameMode" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FF51D6E6" Grid.Column="2">
+                    <Label.Triggers>
+                        <EventTrigger RoutedEvent="Label.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                         From="0" To="1"
+                                         Duration="0:0:1"
+                                         AutoReverse="True"
+                                         RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Grid>
+            <Grid x:Name="Round" ShowGridLines="True" Grid.Row="2" Grid.Column="2" >
+                <Grid x:Name="Bid" ShowGridLines="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </Grid>
+            <Grid x:Name="TrumpSelect" ShowGridLines="False" Grid.Row="2" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
 
 
-        </Button>
-        <Ellipse HorizontalAlignment="Left" Height="55" Margin="619,478,0,0" Stroke="#FF51D6E6" VerticalAlignment="Top" Width="55"/>
-        <Label Content="You" HorizontalAlignment="Left" Margin="682,501,0,0" VerticalAlignment="Top" Foreground="#FF3AFF00"/>
-        <Button Name="SettingsButton" Content="Settings" Click="SettingsButton_Click" Style="{StaticResource ExemptButtonStyle}" HorizontalAlignment="Left" Margin="746,526,0,0" VerticalAlignment="Top" Height="30" Width="50" BorderBrush="#FFF65151" Background="#FF4E2121" Foreground="White"/>
-        <Popup Name="SettingsPopup" PlacementTarget="{Binding ElementName=SettingsButton}" Placement="Bottom" StaysOpen="False">
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <StackPanel>
-                    <!-- Add your settings controls here -->
-                    <CheckBox Content="Music" />
-                    <CheckBox Content="Sound" />
-                </StackPanel>
-            </Border>
-        </Popup>
-        <Ellipse HorizontalAlignment="Left" Height="40" Margin="747,236,0,0" Stroke="#FF51D6E6" VerticalAlignment="Top" Width="40"/>
-        <Label Content="Player 2" HorizontalAlignment="Left" Margin="741,285,0,0" VerticalAlignment="Top" Foreground="#FF3AFF00" RenderTransformOrigin="-0.765,2.235"/>
-        <Ellipse HorizontalAlignment="Left" Height="40" Margin="520,47,0,0" Stroke="#FF51D6E6" VerticalAlignment="Top" Width="40"/>
-        <Label Content="Player 3" HorizontalAlignment="Left" Margin="569,53,0,0" VerticalAlignment="Top" Foreground="#FF3AFF00"/>
-        <Ellipse HorizontalAlignment="Left" Height="40" Margin="13,236,0,0" Stroke="#FF51D6E6" VerticalAlignment="Top" Width="40"/>
-        <Label Content="Player 4" HorizontalAlignment="Left" Margin="7,285,0,0" VerticalAlignment="Top" Foreground="#FF3AFF00"/>
-        <Button x:Name="ExitButton" Content="Exit" Style="{StaticResource ExemptButtonStyle}" HorizontalAlignment="Left" Margin="7,528,0,0" VerticalAlignment="Top" Height="30" Width="50" BorderBrush="#FFF65151" Background="#FF4E2121" Foreground="White" Click="ExitButton_Click"/>
-        <Rectangle x:Name="ScoreUs" HorizontalAlignment="Left" Height="100" Margin="13,15,0,0" Stroke="#FF3AFF00" VerticalAlignment="Top" Width="52"/>
-        <Rectangle x:Name="ScoreThem" HorizontalAlignment="Left" Height="100" Margin="64,15,0,0" Stroke="#FF3AFF00" VerticalAlignment="Top" Width="52"/>
-        <Label Content="US" FontWeight="Bold" HorizontalAlignment="Left" Margin="28,19,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White"/>
-        <Label Content="THEM" FontWeight="Bold" HorizontalAlignment="Left" Margin="68,19,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Button x:Name="p2c1" Content="P2C1" HorizontalAlignment="Left" Margin="580,208,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-92.464"/>
-                    <TranslateTransform X="61.437" Y="59.04"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p2c2" Content="P2C2" HorizontalAlignment="Left" Margin="610,206,0,0" VerticalAlignment="Top" Height="113" Width="66"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-91.464"/>
-                    <TranslateTransform X="28.688" Y="30.558"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p2c3" Content="P2C3" HorizontalAlignment="Left" Margin="640,205,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-90.464"/>
-                    <TranslateTransform X="-2.05" Y="2.067"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p2c4" Content="P2C4" HorizontalAlignment="Left" Margin="670,206,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-89.464"/>
-                    <TranslateTransform X="-31.292" Y="-28.941"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p2c5" Content="P2C5" HorizontalAlignment="Left" Margin="700,207,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-88.464"/>
-                    <TranslateTransform X="-60.536" Y="-59.948"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p4c1" Content="P4C1" HorizontalAlignment="Left" Margin="53,209,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="88.038"/>
-                    <TranslateTransform X="59.534" Y="-60.05"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p4c2" Content="P4C2" HorizontalAlignment="Left" Margin="83,207,0,0" VerticalAlignment="Top" Height="113" Width="66"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="89.038"/>
-                    <TranslateTransform X="31.017" Y="-27.55"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p4c3" Content="P4C3" HorizontalAlignment="Left" Margin="113,206,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90.038"/>
-                    <TranslateTransform X="2.496" Y="2.953"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p4c4" Content="P4C4" HorizontalAlignment="Left" Margin="143,207,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="91.038"/>
-                    <TranslateTransform X="-28.525" Y="31.951"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p4c5" Content="P4C5" HorizontalAlignment="Left" Margin="173,208,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="92.038"/>
-                    <TranslateTransform X="-59.544" Y="60.952"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p3c1" Content="P3C1" HorizontalAlignment="Left" Margin="306,45,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-181.932"/>
-                    <TranslateTransform X="119.79" Y="-1.156"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p3c2" Content="P3C2" HorizontalAlignment="Left" Margin="336,43,0,0" VerticalAlignment="Top" Height="113" Width="66"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-180.932"/>
-                    <TranslateTransform X="58.789" Y="2.811"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button  x:Name="p3c3" Content="P3C3" HorizontalAlignment="Left" Margin="366,42,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-179.932"/>
-                    <TranslateTransform X="-0.213" Y="4.776"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p3c4" Content="P3C4" HorizontalAlignment="Left" Margin="396,43,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="-1" ScaleY="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-178.932"/>
-                    <TranslateTransform X="-60.212" Y="2.738"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="p3c5" Content="P3C5" HorizontalAlignment="Left" Margin="426,44,0,0" VerticalAlignment="Top" Height="113" Width="65"  RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="-1" ScaleX="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-177.932"/>
-                    <TranslateTransform X="-120.212" Y="0.704"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-    </Grid>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+
+
+                </Grid.ColumnDefinitions>
+                <Grid x:Name="Trump" ShowGridLines="false" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </Grid>
+
+        </Grid>
 </Window>

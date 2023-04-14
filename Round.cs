@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Cards;
 namespace Tarneeb_Card_Game
 {
@@ -28,9 +29,10 @@ namespace Tarneeb_Card_Game
                     greaterCard = roundCards[i+1];
                 }
             }
-
-            //return (roundCards.IndexOf( greaterCard ) +1);
-            return greaterCard.cardOwner;
+            MessageBox.Show(greaterCard.Suit + greaterCard.CardNumber.ToString());
+            return (roundCards.IndexOf( greaterCard ) +1);
+            // return greaterCard.cardOwner ;
+            //return (greaterCard.Suit + greaterCard.CardNumber.ToString());
         }
     }
 }
