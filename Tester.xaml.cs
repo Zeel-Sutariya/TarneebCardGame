@@ -31,7 +31,6 @@ namespace Tarneeb_Card_Game
     {
         //List<Card> roundCards = new List<Card>();
         Deck deck = new Deck();
-        int x = 0;
         public int gameScore;
         public List<Button> deckCards = new List<Button>();
         List<Button> bidButtons = new List<Button>();
@@ -55,8 +54,7 @@ namespace Tarneeb_Card_Game
         Team team02 = new Team("player 2", "Player4");
         string chosenCard = "";
         Card currentRoundCard = new Card();
-
-        List<Card> list = new List<Card>();
+        List<Card> legalCards = new List<Card>();
         public Tester()
         {
             InitializeComponent();
@@ -232,9 +230,8 @@ namespace Tarneeb_Card_Game
 
         public void HumanCardSelect()
         {
-            x++;
             //turn++;
-            MessageBox.Show("Your Turn! x:" + x.ToString());
+            MessageBox.Show("Your Turn!");
             //currentPlayer++;
 
         }
@@ -419,7 +416,7 @@ namespace Tarneeb_Card_Game
             int margin = 100;
             if (card.cardOwner == 1)
             {
-                clickedButton.Margin = new Thickness(0, 2*margin, 0, 0);
+                clickedButton.Margin = new Thickness(0, margin, 0, 0);
             }
             else if (card.cardOwner == 2)
             {
@@ -441,11 +438,11 @@ namespace Tarneeb_Card_Game
             Grid.SetRow(clickedButton, 0);
             if (currentRoundCard.cardOwner == 0)
             {
-                List<Card> legal = SetLegalPlays(card);
+                SetLegalPlays(card);
             }
             else
             {
-                List<Card> legal = SetLegalPlays(currentRoundCard);
+                SetLegalPlays(currentRoundCard);
             }
 
 
@@ -504,7 +501,6 @@ namespace Tarneeb_Card_Game
             ShowSelectedTrumpImage();
             turn = 1;
             currentRoundCard.cardOwner = 0;
-            x = 0;
         }
 
         #region FindParent
@@ -1167,21 +1163,27 @@ namespace Tarneeb_Card_Game
 
         private void UnSetLegalPlays()
         {
-
-            MessageBox.Show("No Legal Plays");
-            list.Clear();
             foreach (Card card1 in match.player1)
             {
                 Button btn = card1.ParentButton;
 
                 btn.IsEnabled = true;
             }
+            if (legalCards.Count > 0)
+            {
+                foreach (Card card1 in legalCards)
+                {
+                    Button btn = card1.ParentButton;
+                    btn.Margin = new Thickness(0, 0, 0, 0);
+                }
+            }
         }
 
-        private List<Card> SetLegalPlays(Card card)
+        private void SetLegalPlays(Card card)
         {
+
+            legalCards.Clear();
             int x = 0;
-            list.Clear();
             currentRoundCard = card;
             List<Card> parent = FindParentCardList(card);
             foreach (Card card1 in match.player1)
@@ -1190,13 +1192,12 @@ namespace Tarneeb_Card_Game
                 if (card1.Suit == card.Suit)
                 {
                     x++;
-                    list.Add(card1);
+                    legalCards.Add(card1);
                     btn.Margin = new Thickness(0, 0, 0, 20);
                     btn.IsEnabled = true;
                 }
                 else if (card1.Suit == currentRoundCard.Suit)
                 {
-                    list.Add(card1);
                     btn.IsEnabled = true;
                 }
                 else
@@ -1205,51 +1206,10 @@ namespace Tarneeb_Card_Game
                 }
 
             }
-            MessageBox.Show("List count is : "+ x.ToString());
-            if (x == 0)
+            if (legalCards.Count == 0)
             {
                 UnSetLegalPlays();
             }
-            //foreach (Card card1 in match.player2)
-            //{
-            //    Button btn = card1.ParentButton;
-            //    if (card1.Suit == card.Suit)
-            //    {
-            //        list.Add(card1);
-            //    }
-            //    else
-            //    {
-            //        btn.IsEnabled = false;
-            //    }
-
-            //}
-            //foreach (Card card1 in match.player3)
-            //{
-            //    Button btn = card1.ParentButton;
-            //    if (card1.Suit == card.Suit)
-            //    {
-            //        list.Add(card1);
-            //    }
-            //    else
-            //    {
-            //        btn.IsEnabled = false;
-            //    }
-
-            //}
-            //foreach (Card card1 in match.player4)
-            //{
-            //    Button btn = card1.ParentButton;
-            //    if (card1.Suit == card.Suit)
-            //    {
-            //        list.Add(card1);
-            //    }
-            //    else
-            //    {
-            //        btn.IsEnabled = false;
-            //    }
-
-            //}
-            return list;
         }
 
 
