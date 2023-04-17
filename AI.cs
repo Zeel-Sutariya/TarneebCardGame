@@ -266,7 +266,7 @@ namespace Tarneeb_Card_Game
         /// <param name="trumpSuit">suit that is trump</param>
         /// <param name="gameMode">current game mode</param>
         /// <returns></returns>
-        public static string PlayCard(List<Card> playersCard, string roundSuit, List<Card> roundCard, int inttrumpSuit, string gameMode)
+        public static string PlayCard(List<Card> playersCard, string roundSuit, List<Card> roundCards, int inttrumpSuit, string gameMode)
         {
             string trumpSuit = "";
             if(inttrumpSuit == 1)
@@ -287,6 +287,16 @@ namespace Tarneeb_Card_Game
             }
             Card chosenCard = null;
             Card highestCard = null;
+
+            Card lowestCard = null;
+
+            Card roundHighestCard = null;
+            if (roundCards.Count > 0)
+            {
+                roundHighestCard = roundCards.OrderByDescending(c => c.CardNumber).First();
+            }
+
+
 
             // Count the number of cards in each suit
             Dictionary<Suit, int> suitCounts = new Dictionary<Suit, int>();
@@ -309,7 +319,16 @@ namespace Tarneeb_Card_Game
                 if (suitCards.Count > 0)
                 {
                     highestCard = suitCards.OrderByDescending(c => c.CardNumber).First();
-                    chosenCard = highestCard;
+
+                    lowestCard = suitCards.OrderByDescending(c => c.CardNumber).Last();
+
+                    if (highestCard >= roundHighestCard)
+                    {
+
+                        chosenCard = highestCard;
+                    }
+
+                    chosenCard = lowestCard;
                 }
             }else
 
@@ -320,7 +339,7 @@ namespace Tarneeb_Card_Game
                 List<Card> trumpCards = playersCard.Where(c => c.Suit.ToString() == trumpSuit).ToList();
                 if (trumpCards.Count > 0)
                 {
-                    highestCard = trumpCards.OrderByDescending(c => c.CardNumber).First();
+                    highestCard = trumpCards.OrderByDescending(c => c.CardNumber).Last();
                     chosenCard = highestCard;
                 }
             }else
@@ -349,4 +368,5 @@ namespace Tarneeb_Card_Game
             return returnCard;
         }
     }
+    
 }
