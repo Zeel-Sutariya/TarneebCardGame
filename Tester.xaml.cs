@@ -56,6 +56,7 @@ namespace Tarneeb_Card_Game
         string chosenCard = "";
         Card currentRoundCard = new Card();
 
+        List<Card> list = new List<Card>();
         public Tester()
         {
             InitializeComponent();
@@ -398,7 +399,6 @@ namespace Tarneeb_Card_Game
             // Removing Bid GRID from Round Grid.
             Round.Children.Remove(Bid);
             Round.Children.Remove(selectTrump);
-
             Button clickedButton = sender as Button;
             string buttonName = clickedButton.Name;
             clickedButton.IsEnabled = false;
@@ -434,6 +434,7 @@ namespace Tarneeb_Card_Game
                 clickedButton.Margin = new Thickness(0, 2 * margin, 2 * margin, 0);
             }
 
+            match.player1.Remove(card);
             round.roundCards.Add(card);
             Round.Children.Add(clickedButton);
             Grid.SetColumn(clickedButton, 0);
@@ -1166,6 +1167,9 @@ namespace Tarneeb_Card_Game
 
         private void UnSetLegalPlays()
         {
+
+            MessageBox.Show("No Legal Plays");
+            list.Clear();
             foreach (Card card1 in match.player1)
             {
                 Button btn = card1.ParentButton;
@@ -1173,16 +1177,19 @@ namespace Tarneeb_Card_Game
                 btn.IsEnabled = true;
             }
         }
+
         private List<Card> SetLegalPlays(Card card)
         {
+            int x = 0;
+            list.Clear();
             currentRoundCard = card;
-            List<Card> list = new List<Card>();
             List<Card> parent = FindParentCardList(card);
             foreach (Card card1 in match.player1)
             {
                 Button btn = card1.ParentButton;
                 if (card1.Suit == card.Suit)
                 {
+                    x++;
                     list.Add(card1);
                     btn.Margin = new Thickness(0, 0, 0, 20);
                     btn.IsEnabled = true;
@@ -1198,7 +1205,8 @@ namespace Tarneeb_Card_Game
                 }
 
             }
-            if (list.Count == 0)
+            MessageBox.Show("List count is : "+ x.ToString());
+            if (x == 0)
             {
                 UnSetLegalPlays();
             }
