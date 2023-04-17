@@ -37,6 +37,7 @@ namespace Tarneeb_Card_Game
         List<Button> trumpButtons = new List<Button>();
         Round round;
         Match match;
+        int NumberOfRounds = 0;
         int currentBid = 0;
         int currentPlayer = 1;
         int currentTrump = 0;
@@ -71,20 +72,31 @@ namespace Tarneeb_Card_Game
         {
             this.WindowState = WindowState.Maximized;
 
-            //while(gameScore <31)
+            StartMatch();
+            if(gameScore >=31)
             {
-                match = new Match();
-                round = new Round();
-                DisplayCards();
-                DisplayBid();
-                DisplayScore();
-                if (currentPlayer == 1)
-                {
-                    HumanBidTurn();
-                    // xWhile loop untill button is clicked
+                MessageBox.Show("Game is WON by ...");
+            }
+            else if(NumberOfRounds >=13)
+            {
+                Round.Children.Clear();
+                NumberOfRounds = 0;
+                StartMatch();
+            }
+             
+        }
+        private void StartMatch()
+        {
+            currentPlayer = 1;
+            match = new Match();
+            round = new Round();
+            DisplayCards();
+            DisplayBid();
+            DisplayScore();
+            if (currentPlayer == 1)
+            {
+                HumanBidTurn();
 
-                }
-                //DisplayTrump();
             }
         }
         public void HumanBidTurn()
@@ -477,16 +489,20 @@ namespace Tarneeb_Card_Game
                 int currentRoundWinner = round.RoundWinner();
                 currentPlayer = currentRoundWinner;
                 MessageBox.Show("Winner is Player " + currentRoundWinner.ToString());
+                NumberOfRounds++;
                 ResetRoundVariables();
-                if (currentPlayer == 1)
+                if (NumberOfRounds <= 13)
                 {
-                    //MessageBox.Show("Your Turn!");
-                    HumanCardSelect();
-                }
-                else
-                {
-                    AICardSelect();
+                    if (currentPlayer == 1)
+                    {
+                        //MessageBox.Show("Your Turn!");
+                        HumanCardSelect();
+                    }
+                    else
+                    {
+                        AICardSelect();
 
+                    }
                 }
 
             }
@@ -820,9 +836,43 @@ namespace Tarneeb_Card_Game
             roundBorder.StrokeThickness = 3;
             Round.Children.Add(roundBorder);
         }
+        Grid Bid;
         public void DisplayBid()
         {
+            // Create a new Grid
+            Bid = new Grid();
+            Bid.Name = "Bid";
+            Bid.ShowGridLines = false;
 
+            // Add RowDefinitions to the Grid
+            for (int i = 0; i < 4; i++)
+            {
+                RowDefinition row = new RowDefinition();
+                row.Height = new GridLength(3, GridUnitType.Star);
+                Bid.RowDefinitions.Add(row);
+            }
+
+            RowDefinition lastRow = new RowDefinition();
+            lastRow.Height = new GridLength(1, GridUnitType.Star);
+            Bid.RowDefinitions.Add(lastRow);
+
+            // Add ColumnDefinitions to the Grid
+            for (int i = 0; i < 9; i++)
+            {
+                ColumnDefinition column = new ColumnDefinition();
+                if (i == 0 || i == 8)
+                {
+                    column.Width = new GridLength(1, GridUnitType.Star);
+                }
+                else
+                {
+                    column.Width = new GridLength(3, GridUnitType.Star);
+                }
+                Bid.ColumnDefinitions.Add(column);
+            }
+
+            // Add the Grid to a parent element (e.g. a Window)
+            Round.Children.Add(Bid);
             RoundBorder();
             lblBid.Name = "lblBid";
             lblBid.Content = "BID";
@@ -830,7 +880,7 @@ namespace Tarneeb_Card_Game
             lblBid.FontSize = 44;
             lblBid.HorizontalAlignment = HorizontalAlignment.Center;
             lblBid.VerticalAlignment = VerticalAlignment.Bottom;
-            Bid.Children.Add(lblBid);
+            this.Bid.Children.Add(lblBid);
             Grid.SetRow(lblBid, 0);
             Grid.SetColumn(lblBid, 4);
 
@@ -840,7 +890,7 @@ namespace Tarneeb_Card_Game
             lblHighestBid.FontSize = 24;
             lblHighestBid.HorizontalAlignment = HorizontalAlignment.Center;
             lblHighestBid.VerticalAlignment = VerticalAlignment.Center;
-            Bid.Children.Add(lblHighestBid);
+            this.Bid.Children.Add(lblHighestBid);
             Grid.SetRow(lblHighestBid, 1);
             Grid.SetColumn(lblHighestBid, 3);
             Grid.SetColumnSpan(lblHighestBid, 3);
@@ -857,7 +907,7 @@ namespace Tarneeb_Card_Game
                     btnBid.Width = 150;
                     btnBid.Height = 30;
                     btnBid.Click += PassButton_Click;
-                    Bid.Children.Add(btnBid);
+                    this.Bid.Children.Add(btnBid);
                     Grid.SetColumn(btnBid, 3);
                     Grid.SetRow(btnBid, 3);
                     Grid.SetColumnSpan(btnBid, 3);
@@ -869,7 +919,7 @@ namespace Tarneeb_Card_Game
                     btnBid.Width = 50;
                     btnBid.Height = 50;
                     btnBid.Click += BidButton_Click;
-                    Bid.Children.Add(btnBid);
+                    this.Bid.Children.Add(btnBid);
                     Grid.SetColumn(btnBid, x);
                     Grid.SetRow(btnBid, 2);
                 }

@@ -10,105 +10,85 @@
 
     <Grid x:Name="test" ShowGridLines="False">
 
-            <Grid.Background>
-                <ImageBrush ImageSource="/Images/background.jpg"/>
-            </Grid.Background>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/background.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="3*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="3*"/>
+
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="1.2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="Player1" ShowGridLines="True" Grid.Row="4" Grid.Column="2">
+        </Grid>
+        <Grid x:Name="Player2" ShowGridLines="True" Grid.Row="2" Grid.Column="4">
+        </Grid>
+        <Grid x:Name="Player3" ShowGridLines="True" Grid.Row="0" Grid.Column="2">
+        </Grid>
+        <Grid x:Name="Player4" ShowGridLines="True" Grid.Row="2" Grid.Column="0">
+
+        </Grid>
+
+        <Grid x:Name="GridGameMode" Grid.Row="1" Grid.Column="2">
+            <Label Content="Game Mode" x:Name="gameMode" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FF51D6E6" Grid.Column="2">
+                <Label.Triggers>
+                    <EventTrigger RoutedEvent="Label.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                        From="0" To="1"
+                                        Duration="0:0:1"
+                                        AutoReverse="True"
+                                        RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Label.Triggers>
+            </Label>
+        </Grid>
+        <Grid x:Name="Round" ShowGridLines="True" Grid.Row="2" Grid.Column="2" >
+                
+        </Grid>
+        <Grid x:Name="TrumpSelect" ShowGridLines="False" Grid.Row="2" Grid.Column="2">
             <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="3*"/>
-                <RowDefinition Height="0.6*"/>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="0.6*"/>
                 <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+
 
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
 
-                <ColumnDefinition Width="0.1*"/>
-                <ColumnDefinition Width="1.2*"/>
+
             </Grid.ColumnDefinitions>
-            <Grid x:Name="Player1" ShowGridLines="True" Grid.Row="4" Grid.Column="2">
-            </Grid>
-            <Grid x:Name="Player2" ShowGridLines="True" Grid.Row="2" Grid.Column="4">
-            </Grid>
-            <Grid x:Name="Player3" ShowGridLines="True" Grid.Row="0" Grid.Column="2">
-            </Grid>
-            <Grid x:Name="Player4" ShowGridLines="True" Grid.Row="2" Grid.Column="0">
-
-            </Grid>
-
-            <Grid x:Name="GridGameMode" Grid.Row="1" Grid.Column="2">
-                <Label Content="Game Mode" x:Name="gameMode" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Background="{x:Null}" Foreground="#FF51D6E6" Grid.Column="2">
-                    <Label.Triggers>
-                        <EventTrigger RoutedEvent="Label.Loaded">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                         From="0" To="1"
-                                         Duration="0:0:1"
-                                         AutoReverse="True"
-                                         RepeatBehavior="Forever" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Label.Triggers>
-                </Label>
-            </Grid>
-            <Grid x:Name="Round" ShowGridLines="True" Grid.Row="2" Grid.Column="2" >
-                <Grid x:Name="Bid" ShowGridLines="False">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="1*"/>
-
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </Grid>
-            <Grid x:Name="TrumpSelect" ShowGridLines="False" Grid.Row="2" Grid.Column="2">
+            <Grid x:Name="Trump" ShowGridLines="false" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
                     <RowDefinition Height="3*"/>
                     <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
-
 
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="3*"/>
 
-
                 </Grid.ColumnDefinitions>
-                <Grid x:Name="Trump" ShowGridLines="false" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="3*"/>
-
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="3*"/>
-
-                    </Grid.ColumnDefinitions>
-                </Grid>
             </Grid>
-
         </Grid>
+
+    </Grid>
 </Window>
