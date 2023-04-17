@@ -76,6 +76,11 @@ namespace Cards
             this.isTrump = isTrump;
         }
 
+        public static void SetTrump(Card trump)
+        {
+            trump.isTrump = true;
+        }
+
 
         public static bool operator >=(Card card1, Card card2)
         {
@@ -94,7 +99,7 @@ namespace Cards
             }
             else
             {
-                return true;
+                return false;
             }
         }
 
@@ -115,7 +120,7 @@ namespace Cards
             }
             else
             {
-                return false;
+                return true;
             }
         }
 
