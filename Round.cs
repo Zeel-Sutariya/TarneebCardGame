@@ -30,8 +30,8 @@ namespace Tarneeb_Card_Game
                 }
             }
             MessageBox.Show(greaterCard.Suit + greaterCard.CardNumber.ToString());
-            return (roundCards.IndexOf( greaterCard ) +1);
-            // return greaterCard.cardOwner ;
+            //return (roundCards.IndexOf( greaterCard ) +1);
+             return greaterCard.cardOwner ;
             //return (greaterCard.Suit + greaterCard.CardNumber.ToString());
         }
     }
