@@ -288,8 +288,22 @@ namespace Tarneeb_Card_Game
             Card chosenCard = null;
             Card highestCard = null;
 
+            // Count the number of cards in each suit
+            Dictionary<Suit, int> suitCounts = new Dictionary<Suit, int>();
+            foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+            {
+                suitCounts[suit] = 0;
+            }
+
+            foreach (Card card in playersCard)
+            {
+                suitCounts[card.Suit]++;
+
+            }
+
+
             // Check if we have a card in the suit led
-            if (!string.IsNullOrEmpty(roundSuit))
+            if (!string.IsNullOrEmpty(roundSuit) &&( suitCounts[Enum.Parse<Suit>(roundSuit)] > 0))
             {
                 List<Card> suitCards = playersCard.Where(c => c.Suit.ToString() == roundSuit).ToList();
                 if (suitCards.Count > 0)
@@ -300,7 +314,8 @@ namespace Tarneeb_Card_Game
             }else
 
             // Check if we have a trump card
-            if ( !string.IsNullOrEmpty(trumpSuit))
+            if ( !string.IsNullOrEmpty(trumpSuit) && (suitCounts[Enum.Parse<Suit>(trumpSuit)] > 0))
+
             {
                 List<Card> trumpCards = playersCard.Where(c => c.Suit.ToString() == trumpSuit).ToList();
                 if (trumpCards.Count > 0)
@@ -309,6 +324,7 @@ namespace Tarneeb_Card_Game
                     chosenCard = highestCard;
                 }
             }else
+           
 
             // If we still haven't found a card, play the lowest-ranking card
             
@@ -318,14 +334,14 @@ namespace Tarneeb_Card_Game
             }
 
             // Adjust strategy if necessary based on the highest card played so far
-            if ( roundCard.Count > 0)
-            {
-                Card highestPlayedCard = roundCard.OrderByDescending(c => c.CardNumber).First();
-                if (highestPlayedCard.CardNumber < highestCard.CardNumber)
-                {
-                    chosenCard = playersCard.OrderBy(c => c.CardNumber).First();
-                }
-            }
+            //if ( roundCard.Count > 0)
+            //{
+            //    Card highestPlayedCard = roundCard.OrderByDescending(c => c.CardNumber).First();
+            //    if (highestPlayedCard.CardNumber < highestCard.CardNumber)
+            //    {
+            //        chosenCard = playersCard.OrderBy(c => c.CardNumber).First();
+            //    }
+            //}
 
             // Remove the chosen card from our hand and return it
             playersCard.Remove(chosenCard);
