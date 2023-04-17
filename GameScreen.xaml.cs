@@ -43,6 +43,7 @@ namespace Tarneeb_Card_Game
         int currentPlayer = 1;
         int currentTrump = 0;
         string trumpCard;
+        Card trump = new Card();
         StackPanel player1StackPanel = new StackPanel();
         StackPanel player2StackPanel = new StackPanel();
         StackPanel player3StackPanel = new StackPanel();
@@ -164,6 +165,7 @@ namespace Tarneeb_Card_Game
         public void HumanTrumpTurn()
         {
             MessageBox.Show("Your Turn!");
+
         } 
         public void AITrumpTurn()
         {
@@ -1115,22 +1117,28 @@ namespace Tarneeb_Card_Game
             {
                 trumpCard = "Club";
                 trumpCardImagePath = "/Images/club.png";
+                trump.Suit = Enums.Suit.Club;
+                //Card.SetTrump(trump);
             }
             else if (currentTrump == 2)
             {
                 trumpCard = "Diamond";
                 trumpCardImagePath = "/Images/diamond.png";
+                trump.Suit = Enums.Suit.Diamond;
             }
             else if (currentTrump == 3)
             {
                 trumpCard = "Heart";
                 trumpCardImagePath = "/Images/heart.png";
+                trump.Suit = Enums.Suit.Heart;
             }
             else
             {
                 trumpCard = "Spade";
                 trumpCardImagePath = "/Images/spades.png";
+                trump.Suit = Enums.Suit.Spade;
             }
+            Card.SetTrump(trump);
             Image myImage = new Image
             {
 
