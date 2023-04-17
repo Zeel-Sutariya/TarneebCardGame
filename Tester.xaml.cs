@@ -75,13 +75,13 @@ namespace Tarneeb_Card_Game
             StartMatch();
             if(gameScore >=31)
             {
-                MessageBox.Show("Game is WON by ...");
+                //MessageBox.Show("Game is WON by ...");
             }
             else if(NumberOfRounds >=13)
             {
-                Round.Children.Clear();
+                //Round.Children.Clear();
                 NumberOfRounds = 0;
-                StartMatch();
+                //StartMatch();
             }
              
         }
@@ -147,7 +147,7 @@ namespace Tarneeb_Card_Game
                 {
                     // Button not found
                     // Handle the error
-                    MessageBox.Show("button not found");
+                    //MessageBox.Show("button not found");
                 }
             }
             else if (currentPlayer == 4)
@@ -167,7 +167,7 @@ namespace Tarneeb_Card_Game
                 {
                     // Button not found
                     // Handle the error
-                    MessageBox.Show("button not found");
+                    //MessageBox.Show("button not found");
                 }
             }
         }
@@ -195,7 +195,7 @@ namespace Tarneeb_Card_Game
                 {
                     // Button not found
                     // Handle the error
-                    MessageBox.Show("button not found");
+                    //MessageBox.Show("button not found");
                 }
             }
             else if (currentPlayer == 3)
@@ -215,7 +215,7 @@ namespace Tarneeb_Card_Game
                 {
                     // Button not found
                     // Handle the error
-                    MessageBox.Show("button not found");
+                    //MessageBox.Show("button not found");
                 }
             }
             else if (currentPlayer == 4)
@@ -256,7 +256,7 @@ namespace Tarneeb_Card_Game
                 {
                     if (currentPlayer == 2)
                     {
-                        MessageBox.Show("Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player2, "", round.roundCards, currentTrump, gameMode.Content.ToString());
                         string buttonName = chosenCard;
@@ -278,7 +278,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 3 && turn <= 4)
                     {
-                        MessageBox.Show("Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player3, "", round.roundCards, currentTrump, gameMode.Content.ToString());
                         string buttonName = chosenCard;
@@ -300,7 +300,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 4 && turn <= 4)
                     {
-                        MessageBox.Show("Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
 
                         //currentPlayer = 1;
@@ -327,7 +327,7 @@ namespace Tarneeb_Card_Game
                 {
                     if (currentPlayer == 2)
                     {
-                        MessageBox.Show("**Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player2, currentRoundCard.Suit.ToString(), round.roundCards, currentTrump, gameMode.Content.ToString());
                         string buttonName = chosenCard;
@@ -349,7 +349,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 3 && turn <= 4)
                     {
-                        MessageBox.Show("**Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player3, currentRoundCard.Suit.ToString(), round.roundCards, currentTrump, gameMode.Content.ToString());
                         string buttonName = chosenCard;
@@ -371,7 +371,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 4 && turn <= 4)
                     {
-                        MessageBox.Show("**Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
 
                         //currentPlayer = 1;
@@ -1068,7 +1068,7 @@ namespace Tarneeb_Card_Game
             Random rnd = new Random();
             int time = rnd.Next(4000, 8000);
 
-            //Thread.Sleep(time);
+            //Thread.Sleep(3000);
         }
 
         private void BidButton_Click(object sender, RoutedEventArgs e)
@@ -1159,7 +1159,7 @@ namespace Tarneeb_Card_Game
 
 
             TrumpSelect.Children.Remove(Trump);
-            MessageBox.Show("The trump is " + trumpCard);
+            //MessageBox.Show("The trump is " + trumpCard);
             //ShowMatchHighestBid();
             ShowSelectedTrumpImage();
             if (currentPlayer == 1)
@@ -1182,7 +1182,7 @@ namespace Tarneeb_Card_Game
 
         private void PassButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Pass btn Clicked");
+            //MessageBox.Show("Pass btn Clicked");
             pass++;
             currentPlayer++;
             if (pass >= 3 && currentBid > 0)
