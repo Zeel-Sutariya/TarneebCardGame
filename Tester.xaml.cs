@@ -1185,6 +1185,7 @@ namespace Tarneeb_Card_Game
                 {
                     list.Add(card1);
                     btn.Margin = new Thickness(0, 0, 0, 20);
+                    btn.IsEnabled = true;
                 }
                 else if (card1.Suit == currentRoundCard.Suit)
                 {
