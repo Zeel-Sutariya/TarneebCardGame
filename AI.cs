@@ -192,7 +192,7 @@ namespace Tarneeb_Card_Game
                            group card by card.Suit into g
                            orderby g.Count() descending
                            select g.Key).FirstOrDefault();
-            if (gameMode == "Easy")
+            if (gameMode == "Easy" || gameMode == "Medium" || gameMode == "Hard")
             {
 
                 if (maxSuit == Suit.Club)
@@ -342,7 +342,8 @@ namespace Tarneeb_Card_Game
                     highestCard = trumpCards.OrderByDescending(c => c.CardNumber).Last();
                     chosenCard = highestCard;
                 }
-            }else
+            }
+            else
            
 
             // If we still haven't found a card, play the lowest-ranking card
