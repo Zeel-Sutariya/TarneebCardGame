@@ -108,7 +108,7 @@ namespace Tarneeb_Card_Game
 
                     random = new Random();
                     randomNumber = random.Next(1, 101);
-                    if (randomNumber < 66)
+                    if (randomNumber < 88)
                     {
                         if (maxCount > 6) //best case if 8 or more card from trump suit
                         {
@@ -144,7 +144,7 @@ namespace Tarneeb_Card_Game
                 case "Hard":
                     random = new Random();
                     randomNumber = random.Next(1, 101);
-                    if (randomNumber < 86)
+                    if (randomNumber < 98)
                     {
                         if (maxCount > 4) //best case if 8 or more card from trump suit
                         {
@@ -267,21 +267,21 @@ namespace Tarneeb_Card_Game
         /// <param name="gameMode">current game mode</param>
         /// <returns></returns>
         public static string PlayCard(List<Card> playersCard, string roundSuit, List<Card> roundCards, int inttrumpSuit, string gameMode)
-        {
+        { 
             string trumpSuit = "";
-            if(inttrumpSuit == 1)
+            if (inttrumpSuit == 1)
             {
                 trumpSuit = "Club";
             }
-            else if(inttrumpSuit == 2)
+            else if (inttrumpSuit == 2)
             {
                 trumpSuit = "Diamond";
             }
-            else if(inttrumpSuit == 3)
+            else if (inttrumpSuit == 3)
             {
                 trumpSuit = "Heart";
             }
-            else if(inttrumpSuit == 4)
+            else if (inttrumpSuit == 4)
             {
                 trumpSuit = "Spade";
             }
@@ -313,7 +313,7 @@ namespace Tarneeb_Card_Game
 
 
             // Check if we have a card in the suit led
-            if (!string.IsNullOrEmpty(roundSuit) &&( suitCounts[Enum.Parse<Suit>(roundSuit)] > 0))
+            if (!string.IsNullOrEmpty(roundSuit) && (suitCounts[Enum.Parse<Suit>(roundSuit)] > 0))
             {
                 List<Card> suitCards = playersCard.Where(c => c.Suit.ToString() == roundSuit).ToList();
                 if (suitCards.Count > 0)
@@ -330,10 +330,10 @@ namespace Tarneeb_Card_Game
 
                     chosenCard = lowestCard;
                 }
-            }else
+            } else
 
             // Check if we have a trump card
-            if ( !string.IsNullOrEmpty(trumpSuit) && (suitCounts[Enum.Parse<Suit>(trumpSuit)] > 0))
+            if (!string.IsNullOrEmpty(trumpSuit) && (suitCounts[Enum.Parse<Suit>(trumpSuit)] > 0))
 
             {
                 List<Card> trumpCards = playersCard.Where(c => c.Suit.ToString() == trumpSuit).ToList();
@@ -342,15 +342,16 @@ namespace Tarneeb_Card_Game
                     highestCard = trumpCards.OrderByDescending(c => c.CardNumber).Last();
                     chosenCard = highestCard;
                 }
-            }else
-           
+            } else
+
 
             // If we still haven't found a card, play the lowest-ranking card
-            
+
             {
                 highestCard = playersCard.OrderByDescending(c => c.CardNumber).Last();
                 chosenCard = highestCard;
-            }
+            } 
+            
 
             // Adjust strategy if necessary based on the highest card played so far
             //if ( roundCard.Count > 0)
