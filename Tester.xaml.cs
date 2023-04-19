@@ -47,10 +47,10 @@ namespace Tarneeb_Card_Game
         System.Windows.Shapes.Rectangle roundBorder;
         string trumpCard;
         Image selectedTrumpImage;
-        StackPanel player1StackPanel = new StackPanel();
-        StackPanel player2StackPanel = new StackPanel();
-        StackPanel player3StackPanel = new StackPanel();
-        StackPanel player4StackPanel = new StackPanel();
+        StackPanel player1StackPanel;
+        StackPanel player2StackPanel;
+        StackPanel player3StackPanel;
+        StackPanel player4StackPanel;
         Label lblBid = new Label();
         Label lblHighestBid = new Label();
         int pass = 0;
@@ -85,6 +85,7 @@ namespace Tarneeb_Card_Game
         }
         private void StartMatch()
         {
+            
             currentPlayer = 1;
             DisplayCards();
             DisplayBid();
@@ -113,7 +114,10 @@ namespace Tarneeb_Card_Game
 
         private void ResetMatchVariables()
         {
-            
+            player1StackPanel.Children.Clear();
+            player2StackPanel.Children.Clear();
+            player3StackPanel.Children.Clear();
+            player4StackPanel.Children.Clear();
             Round.Children.Remove(selectedTrumpImage);
             Player1.Children.Remove(player1StackPanel);
             Player2.Children.Remove(player2StackPanel);
@@ -640,7 +644,7 @@ namespace Tarneeb_Card_Game
         public void DisplayPlayer1()
         {
             int x = 0;
-            //StackPanel player1StackPanel = new StackPanel();
+            player1StackPanel = new StackPanel();
             player1StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player1StackPanel.Orientation = Orientation.Horizontal;
             foreach (Card card in match.player1)
@@ -681,6 +685,7 @@ namespace Tarneeb_Card_Game
         #region Display Player 2
         public void DisplayPlayer2()
         {
+            player2StackPanel = new StackPanel();
             player2StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player2StackPanel.Orientation = Orientation.Vertical;
             int x = 0;
@@ -720,7 +725,7 @@ namespace Tarneeb_Card_Game
         public void DisplayPlayer3()
         {
             int x = 0;
-            //StackPanel player1StackPanel = new StackPanel();
+            player3StackPanel = new StackPanel();
             player3StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player3StackPanel.Orientation = Orientation.Horizontal;
             foreach (Card card in match.player3)
@@ -761,6 +766,7 @@ namespace Tarneeb_Card_Game
         #region Display PLayer 4
         public void DisplayPlayer4()
         {
+            player4StackPanel = new StackPanel();
             player4StackPanel.HorizontalAlignment = HorizontalAlignment.Center;
             player4StackPanel.Orientation = Orientation.Vertical;
             int x = 0;
