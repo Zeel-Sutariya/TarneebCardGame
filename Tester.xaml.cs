@@ -42,6 +42,7 @@ namespace Tarneeb_Card_Game
         int currentBid = 0;
         int currentPlayer = 1;
         int currentTrump = 0;
+        Grid Score = new Grid();
         System.Windows.Shapes.Rectangle highestBidBorder;
         Label matchHighestBid;
         System.Windows.Shapes.Rectangle roundBorder;
@@ -63,6 +64,11 @@ namespace Tarneeb_Card_Game
         string chosenCard = "";
         Card currentRoundCard = new Card();
         List<Card> legalCards = new List<Card>();
+        int team01GameScore = 0;
+        int team02GameScore = 0;
+        int team01MatchScore = 0;
+        int team02MatchScore = 0;
+        int intCard = 1;
         public Tester()
         {
             InitializeComponent();
@@ -117,6 +123,9 @@ namespace Tarneeb_Card_Game
 
         private void ResetMatchVariables()
         {
+
+            Score.Children.Remove(lblUsScore);
+            Score.Children.Remove(lblThemScore);
             player1StackPanel.Children.Clear();
             player2StackPanel.Children.Clear();
             player3StackPanel.Children.Clear();
@@ -141,6 +150,8 @@ namespace Tarneeb_Card_Game
             chosenCard = "";
             team01.teamScore = 0;
             team02.teamScore = 0;
+            team01MatchScore = 0;
+            team02MatchScore = 0;
         }
         public void HumanBidTurn()
         {
@@ -457,7 +468,7 @@ namespace Tarneeb_Card_Game
 
         private void CardButton_Click(object sender, RoutedEventArgs e)
         {
-
+            intCard++;
             // Removing Bid GRID from Round Grid.
             Round.Children.Remove(Bid);
             Round.Children.Remove(selectTrump);
@@ -470,12 +481,19 @@ namespace Tarneeb_Card_Game
             card.isFaceUp = true;
 
             clickedButton.Content = SetCardImage(card);
-
-
-            StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
+            if (intCard <= 52)
+            {
+                StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
+                parentStackPanel.Children.Remove(clickedButton);
+            }
+            else
+            {
+                StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
+                parentStackPanel.Children.Remove(clickedButton);
+            }
 
             // Remove the button from the StackPanel
-            parentStackPanel.Children.Remove(clickedButton);
+            
 
 
             int margin = 100;
@@ -1088,7 +1106,7 @@ namespace Tarneeb_Card_Game
 
         public void DisplayScore()
         {
-            Grid Score = new Grid();
+            //Score = new Grid();
             Score.Name = "Score";
             test.Children.Remove(Score);
             test.Children.Add(Score);
@@ -1136,8 +1154,8 @@ namespace Tarneeb_Card_Game
             lblThem.Foreground = Brushes.Red;
             lblThem.FontSize = 16;
 
-            
-            lblUsScore.Content = team01.teamScore;
+
+            lblUsScore.Content = team01GameScore ;
             lblUsScore.FontWeight = System.Windows.FontWeights.Bold;
             lblUsScore.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             lblUsScore.VerticalAlignment = System.Windows.VerticalAlignment.Top;
@@ -1145,8 +1163,8 @@ namespace Tarneeb_Card_Game
             lblUsScore.Foreground = Brushes.White;
             lblUsScore.FontSize = 16;
 
-            
-            lblThemScore.Content = team02.teamScore;
+
+            lblThemScore.Content = team02GameScore;
             lblThemScore.FontWeight = System.Windows.FontWeights.Bold;
             lblThemScore.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             lblThemScore.VerticalAlignment = System.Windows.VerticalAlignment.Top;
@@ -1158,8 +1176,6 @@ namespace Tarneeb_Card_Game
             Score.Children.Remove(ScoreThem);
             Score.Children.Remove(lblUs);
             Score.Children.Remove(lblThem);
-            Score.Children.Remove(lblUsScore);
-            Score.Children.Remove(lblThemScore);
 
             Score.Children.Add(ScoreUs);
             Score.Children.Add(ScoreThem);
@@ -1218,17 +1234,21 @@ namespace Tarneeb_Card_Game
             {
                 Round.Children.Remove(Bid);
                 MessageBox.Show("Final Bid is " + currentBid + ", Won by Player " + currentPlayer);
-                ShowMatchHighestBid();
+                
                 if (currentPlayer == 1 || currentPlayer == 3)
                 {
                     team01.teamBid = currentBid;
                     team02.teamBid = 0;
+                    MessageBox.Show("team 1 bid: " + team01.teamBid + " current bid: " + currentBid);
                 }
-                else
+                if(currentPlayer == 2 || currentPlayer == 4)
                 {
+                    
                     team02.teamBid = currentBid;
                     team01.teamBid = 0;
+                    MessageBox.Show("team 2 bid: " + team02.teamBid + " current bid: " + currentBid);
                 }
+                ShowMatchHighestBid();
             }
         }
 
@@ -1311,6 +1331,19 @@ namespace Tarneeb_Card_Game
                 //Thread.Sleep(3000);
                 MessageBox.Show("Final Bid is " + currentBid + ", Won by Player " + currentPlayer);
                 pass = 0;
+                if (currentPlayer == 1 || currentPlayer == 3)
+                {
+                    team01.teamBid = currentBid;
+                    team02.teamBid = 0;
+                    MessageBox.Show("team 1 bid: " + team01.teamBid + " current bid: " + currentBid);
+                }
+                if (currentPlayer == 2 || currentPlayer == 4)
+                {
+
+                    team02.teamBid = currentBid;
+                    team01.teamBid = 0;
+                    MessageBox.Show("team 2 bid: " + team02.teamBid + " current bid: " + currentBid);
+                }
                 ShowMatchHighestBid();
             }
             else
@@ -1380,36 +1413,43 @@ namespace Tarneeb_Card_Game
 
         public void DisplayTeamScore()
         {
-            if (team01.teamBid != 0)
+            if (team01.teamBid > 0)
             {
-                MessageBox.Show("team score" + team01.teamScore);
-                MessageBox.Show("team bid" + team01.teamBid);
+                MessageBox.Show("team 1 score" + team01.teamScore);
+                MessageBox.Show("team 1 bid" + team01.teamBid);
                 if (team01.teamScore >= team01.teamBid)
                 {
-                    team01.teamScore = team01.teamBid;
-                    lblUsScore.Content = team01.teamBid.ToString();
+                    //team01.teamScore = team01.teamBid;
+                    team01MatchScore = team01.teamBid;
+                    team01GameScore += team01MatchScore;
                 }
                 else
                 {
-
-                   lblUsScore.Content = (Convert.ToInt32(lblUsScore.Content) - team01.teamBid).ToString();
+                    team01MatchScore = team01.teamBid;
+                    team01GameScore -= team01MatchScore;
+                   
+                   
                 }
+
                 
+
             }
 
             else
             {
-                MessageBox.Show("team score" + team02.teamScore);
-                MessageBox.Show("team bid" + team02.teamBid);
+                MessageBox.Show("team 2 score" + team02.teamScore);
+                MessageBox.Show("team 2 bid" + team02.teamBid);
                 if (team02.teamScore >= team02.teamBid)
                 {
-                    team02.teamScore = team02.teamBid;
-                    lblThemScore.Content = team01.teamBid.ToString();
+                    team02MatchScore = team02.teamBid;
+                    team02GameScore += team02MatchScore;
                 }
                 else
                 {
 
-                    lblThemScore.Content = (Convert.ToInt32(lblThemScore.Content) - team02.teamBid).ToString();
+                    team02MatchScore = team02.teamBid;
+                    team02GameScore -= team02MatchScore;
+
                 }
             }
 
