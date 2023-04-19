@@ -32,6 +32,7 @@ namespace Tarneeb_Card_Game
         //List<Card> roundCards = new List<Card>();
         Deck deck;
         public int gameScore;
+       
         public List<Button> deckCards = new List<Button>();
         List<Button> bidButtons = new List<Button>();
         List<Button> trumpButtons = new List<Button>();
@@ -54,6 +55,8 @@ namespace Tarneeb_Card_Game
         Label lblHighestBid = new Label();
         int pass = 0;
         int turn = 1;
+        Label lblThemScore = new Label();
+        Label lblUsScore = new Label();
         Label selectTrump = new Label();
         Team team01 = new Team("Player 1", "Player3");
         Team team02 = new Team("player 2", "Player4");
@@ -105,6 +108,7 @@ namespace Tarneeb_Card_Game
             {
                 MessageBox.Show("Match Completed...");
                 NumberOfRounds = 1;
+                DisplayTeamScore();
                 ResetMatchVariables();
                 StartMatch();
 
@@ -135,6 +139,8 @@ namespace Tarneeb_Card_Game
             pass = 0;
             turn = 1;
             chosenCard = "";
+            team01.teamScore = 0;
+            team02.teamScore = 0;
         }
         public void HumanBidTurn()
         {
@@ -286,13 +292,16 @@ namespace Tarneeb_Card_Game
         }
         public void AICardSelect()
         {
+            
             //turn++;
             if (turn <= 4)
             {
+                //thinkTime();
                 if (round.roundCards.Count == 0)
                 {
                     if (currentPlayer == 2)
                     {
+                        //thinkTime();
                         //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player2, "", round.roundCards, currentTrump, gameMode.Content.ToString());
@@ -315,6 +324,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 3 && turn <= 4)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player3, "", round.roundCards, currentTrump, gameMode.Content.ToString());
@@ -337,6 +347,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 4 && turn <= 4)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
 
@@ -364,6 +375,7 @@ namespace Tarneeb_Card_Game
                 {
                     if (currentPlayer == 2)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player2, currentRoundCard.Suit.ToString(), round.roundCards, currentTrump, gameMode.Content.ToString());
@@ -386,6 +398,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 3 && turn <= 4)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player3, currentRoundCard.Suit.ToString(), round.roundCards, currentTrump, gameMode.Content.ToString());
@@ -408,6 +421,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 4 && turn <= 4)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
 
@@ -435,7 +449,9 @@ namespace Tarneeb_Card_Game
             }
             else
             {
+
                 //MessageBox.Show("Round Winner is " + round.RoundWinner().ToString());
+                
             }
         }
 
@@ -527,6 +543,17 @@ namespace Tarneeb_Card_Game
                 int currentRoundWinner = round.RoundWinner();
                 currentPlayer = currentRoundWinner;
                 //MessageBox.Show("Winner is Player " + currentRoundWinner.ToString());
+                if (currentRoundWinner == 1 || currentRoundWinner == 3)
+                {
+                    team01.teamScore++;
+                }
+                else if (currentRoundWinner == 2 || currentRoundWinner == 4)
+                {
+                    team02.teamScore++;
+                }
+                //MessageBox.Show("Team 1 score: "+team01.teamScore.ToString());
+                //MessageBox.Show("Team 2 score: " + team02.teamScore.ToString());
+
                 NumberOfRounds++;
                 ResetRoundVariables();
                 if (NumberOfRounds <= 13)
@@ -1109,15 +1136,37 @@ namespace Tarneeb_Card_Game
             lblThem.Foreground = Brushes.Red;
             lblThem.FontSize = 16;
 
+            
+            lblUsScore.Content = team01.teamScore;
+            lblUsScore.FontWeight = System.Windows.FontWeights.Bold;
+            lblUsScore.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            lblUsScore.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            lblUsScore.Margin = new System.Windows.Thickness(28, 42, 0, 0);
+            lblUsScore.Foreground = Brushes.White;
+            lblUsScore.FontSize = 16;
+
+            
+            lblThemScore.Content = team02.teamScore;
+            lblThemScore.FontWeight = System.Windows.FontWeights.Bold;
+            lblThemScore.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            lblThemScore.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            lblThemScore.Margin = new System.Windows.Thickness(74, 42, 0, 0);
+            lblThemScore.Foreground = Brushes.White;
+            lblThemScore.FontSize = 16;
+
             Score.Children.Remove(ScoreUs);
             Score.Children.Remove(ScoreThem);
             Score.Children.Remove(lblUs);
             Score.Children.Remove(lblThem);
+            Score.Children.Remove(lblUsScore);
+            Score.Children.Remove(lblThemScore);
 
             Score.Children.Add(ScoreUs);
             Score.Children.Add(ScoreThem);
             Score.Children.Add(lblUs);
             Score.Children.Add(lblThem);
+            Score.Children.Add(lblUsScore);
+            Score.Children.Add(lblThemScore);
         }
 
         public void thinkTime()
@@ -1125,7 +1174,7 @@ namespace Tarneeb_Card_Game
             Random rnd = new Random();
             int time = rnd.Next(4000, 8000);
 
-            //Thread.Sleep(3000);
+            //Thread.Sleep(time);
         }
 
         private void BidButton_Click(object sender, RoutedEventArgs e)
@@ -1170,6 +1219,16 @@ namespace Tarneeb_Card_Game
                 Round.Children.Remove(Bid);
                 MessageBox.Show("Final Bid is " + currentBid + ", Won by Player " + currentPlayer);
                 ShowMatchHighestBid();
+                if (currentPlayer == 1 || currentPlayer == 3)
+                {
+                    team01.teamBid = currentBid;
+                    team02.teamBid = 0;
+                }
+                else
+                {
+                    team02.teamBid = currentBid;
+                    team01.teamBid = 0;
+                }
             }
         }
 
@@ -1317,6 +1376,43 @@ namespace Tarneeb_Card_Game
             {
                 UnSetLegalPlays();
             }
+        }
+
+        public void DisplayTeamScore()
+        {
+            if (team01.teamBid != 0)
+            {
+                MessageBox.Show("team score" + team01.teamScore);
+                MessageBox.Show("team bid" + team01.teamBid);
+                if (team01.teamScore >= team01.teamBid)
+                {
+                    team01.teamScore = team01.teamBid;
+                    lblUsScore.Content = team01.teamBid.ToString();
+                }
+                else
+                {
+
+                   lblUsScore.Content = (Convert.ToInt32(lblUsScore.Content) - team01.teamBid).ToString();
+                }
+                
+            }
+
+            else
+            {
+                MessageBox.Show("team score" + team02.teamScore);
+                MessageBox.Show("team bid" + team02.teamBid);
+                if (team02.teamScore >= team02.teamBid)
+                {
+                    team02.teamScore = team02.teamBid;
+                    lblThemScore.Content = team01.teamBid.ToString();
+                }
+                else
+                {
+
+                    lblThemScore.Content = (Convert.ToInt32(lblThemScore.Content) - team02.teamBid).ToString();
+                }
+            }
+
         }
 
 

@@ -34,7 +34,7 @@ namespace Tarneeb_Card_Game
 
         public Team(string playerA, string playerB)
         {
-
+            teamScore = 0;
             Player player01 = new Player(playerA);
             Player player02 = new Player(playerB);
             setTeamScore(0);

@@ -248,14 +248,14 @@ namespace Tarneeb_Card_Game
                 {
                     if (currentPlayer == 2)
                     {
-                        MessageBox.Show("Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player2, "", round.roundCards, currentTrump, gameMode.Content.ToString());
                         string buttonName = chosenCard;
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -273,14 +273,14 @@ namespace Tarneeb_Card_Game
                 {
                     if (currentPlayer == 2)
                     {
-                        MessageBox.Show("**Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player2, currentRoundCard.Suit.ToString(), round.roundCards, currentTrump, gameMode.Content.ToString());
                         string buttonName = chosenCard;
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -298,14 +298,14 @@ namespace Tarneeb_Card_Game
                 {
                     if (currentPlayer == 3 && turn <= 4)
                     {
-                        MessageBox.Show("Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player3, "", round.roundCards, currentTrump, gameMode.Content.ToString());
                         string buttonName = chosenCard;
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -324,14 +324,14 @@ namespace Tarneeb_Card_Game
 
                     if (currentPlayer == 3 && turn <= 4)
                     {
-                        MessageBox.Show("**Current Player: " + currentPlayer.ToString());
+                       // MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player3, currentRoundCard.Suit.ToString(), round.roundCards, currentTrump, gameMode.Content.ToString());
                         string buttonName = chosenCard;
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -349,7 +349,7 @@ namespace Tarneeb_Card_Game
                 {
                     if (currentPlayer == 4 && turn <= 4)
                     {
-                        MessageBox.Show("Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
 
                         //currentPlayer = 1;
@@ -358,7 +358,7 @@ namespace Tarneeb_Card_Game
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -381,7 +381,7 @@ namespace Tarneeb_Card_Game
                 {
                     if (currentPlayer == 4 && turn <= 4)
                     {
-                        MessageBox.Show("**Current Player: " + currentPlayer.ToString());
+                        //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
 
                         //currentPlayer = 1;
@@ -390,7 +390,7 @@ namespace Tarneeb_Card_Game
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                       // MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -1159,7 +1159,7 @@ namespace Tarneeb_Card_Game
             
 
             TrumpSelect.Children.Remove(Trump);
-            MessageBox.Show("The trump is " + trumpCard);
+            //MessageBox.Show("The trump is " + trumpCard);
             //ShowMatchHighestBid();
             ShowTrumpImage();
             if(currentPlayer == 1)
