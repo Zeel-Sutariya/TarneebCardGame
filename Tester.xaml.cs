@@ -32,6 +32,7 @@ namespace Tarneeb_Card_Game
         //List<Card> roundCards = new List<Card>();
         Deck deck = new Deck();
         public int gameScore;
+       
         public List<Button> deckCards = new List<Button>();
         List<Button> bidButtons = new List<Button>();
         List<Button> trumpButtons = new List<Button>();
@@ -249,13 +250,16 @@ namespace Tarneeb_Card_Game
         }
         public void AICardSelect()
         {
+            
             //turn++;
             if (turn <= 4)
             {
+                //thinkTime();
                 if (round.roundCards.Count == 0)
                 {
                     if (currentPlayer == 2)
                     {
+                        //thinkTime();
                         //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player2, "", round.roundCards, currentTrump, gameMode.Content.ToString());
@@ -263,7 +267,7 @@ namespace Tarneeb_Card_Game
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -278,6 +282,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 3 && turn <= 4)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player3, "", round.roundCards, currentTrump, gameMode.Content.ToString());
@@ -285,7 +290,7 @@ namespace Tarneeb_Card_Game
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -300,6 +305,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 4 && turn <= 4)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
 
@@ -309,7 +315,7 @@ namespace Tarneeb_Card_Game
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -327,6 +333,7 @@ namespace Tarneeb_Card_Game
                 {
                     if (currentPlayer == 2)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player2, currentRoundCard.Suit.ToString(), round.roundCards, currentTrump, gameMode.Content.ToString());
@@ -334,7 +341,7 @@ namespace Tarneeb_Card_Game
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -349,6 +356,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 3 && turn <= 4)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player3, currentRoundCard.Suit.ToString(), round.roundCards, currentTrump, gameMode.Content.ToString());
@@ -356,7 +364,7 @@ namespace Tarneeb_Card_Game
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -371,6 +379,7 @@ namespace Tarneeb_Card_Game
                     }
                     else if (currentPlayer == 4 && turn <= 4)
                     {
+                        //Thread.Sleep(1000);
                         //MessageBox.Show("**Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
 
@@ -380,7 +389,7 @@ namespace Tarneeb_Card_Game
                         int index = deckCards.FindIndex(button => button.Name == buttonName);
                         Button mybutton = deckCards.ElementAt(index);
                         //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                        MessageBox.Show(Convert.ToString(chosenCard));
+                        //MessageBox.Show(Convert.ToString(chosenCard));
                         if (mybutton != null)
                         {
                             // Click the button programmatically
@@ -398,7 +407,9 @@ namespace Tarneeb_Card_Game
             }
             else
             {
+
                 //MessageBox.Show("Round Winner is " + round.RoundWinner().ToString());
+                
             }
         }
 
@@ -489,6 +500,17 @@ namespace Tarneeb_Card_Game
                 int currentRoundWinner = round.RoundWinner();
                 currentPlayer = currentRoundWinner;
                 MessageBox.Show("Winner is Player " + currentRoundWinner.ToString());
+                if (currentRoundWinner == 1 || currentRoundWinner == 3)
+                {
+                    team01.teamScore++;
+                }
+                else if (currentRoundWinner == 2 || currentRoundWinner == 4)
+                {
+                    team02.teamScore++;
+                }
+                MessageBox.Show("Team 1 score: "+team01.teamScore.ToString());
+                MessageBox.Show("Team 2 score: " + team02.teamScore.ToString());
+
                 NumberOfRounds++;
                 ResetRoundVariables();
                 if (NumberOfRounds <= 13)
@@ -1057,10 +1079,30 @@ namespace Tarneeb_Card_Game
             lblThem.Foreground = Brushes.Red;
             lblThem.FontSize = 16;
 
+            Label lblUsScore = new Label();
+            lblUsScore.Content = team01.teamScore.ToString();
+            lblUsScore.FontWeight = System.Windows.FontWeights.Bold;
+            lblUsScore.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            lblUsScore.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            lblUsScore.Margin = new System.Windows.Thickness(28, 42, 0, 0);
+            lblUsScore.Foreground = Brushes.White;
+            lblUsScore.FontSize = 16;
+
+            Label lblThemScore = new Label();
+            lblThemScore.Content = team02.teamScore.ToString();
+            lblThemScore.FontWeight = System.Windows.FontWeights.Bold;
+            lblThemScore.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            lblThemScore.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            lblThemScore.Margin = new System.Windows.Thickness(74, 42, 0, 0);
+            lblThemScore.Foreground = Brushes.White;
+            lblThemScore.FontSize = 16;
+
             Score.Children.Add(ScoreUs);
             Score.Children.Add(ScoreThem);
             Score.Children.Add(lblUs);
             Score.Children.Add(lblThem);
+            Score.Children.Add(lblUsScore);
+            Score.Children.Add(lblThemScore);
         }
 
         public void thinkTime()
@@ -1068,7 +1110,7 @@ namespace Tarneeb_Card_Game
             Random rnd = new Random();
             int time = rnd.Next(4000, 8000);
 
-            //Thread.Sleep(3000);
+            //Thread.Sleep(time);
         }
 
         private void BidButton_Click(object sender, RoutedEventArgs e)
