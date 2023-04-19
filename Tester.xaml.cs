@@ -30,7 +30,7 @@ namespace Tarneeb_Card_Game
     public partial class Tester : Window
     {
         //List<Card> roundCards = new List<Card>();
-        Deck deck = new Deck();
+        Deck deck;
         public int gameScore;
        
         public List<Button> deckCards = new List<Button>();
@@ -38,11 +38,15 @@ namespace Tarneeb_Card_Game
         List<Button> trumpButtons = new List<Button>();
         Round round;
         Match match;
-        int NumberOfRounds = 0;
+        int NumberOfRounds = 1;
         int currentBid = 0;
         int currentPlayer = 1;
         int currentTrump = 0;
+        System.Windows.Shapes.Rectangle highestBidBorder;
+        Label matchHighestBid;
+        System.Windows.Shapes.Rectangle roundBorder;
         string trumpCard;
+        Image selectedTrumpImage;
         StackPanel player1StackPanel = new StackPanel();
         StackPanel player2StackPanel = new StackPanel();
         StackPanel player3StackPanel = new StackPanel();
@@ -73,24 +77,15 @@ namespace Tarneeb_Card_Game
         {
             this.WindowState = WindowState.Maximized;
 
+            match = new Match();
+            round = new Round();
             StartMatch();
-            if(gameScore >=31)
-            {
-                //MessageBox.Show("Game is WON by ...");
-            }
-            else if(NumberOfRounds >=13)
-            {
-                //Round.Children.Clear();
-                NumberOfRounds = 0;
-                //StartMatch();
-            }
+            
              
         }
         private void StartMatch()
         {
             currentPlayer = 1;
-            match = new Match();
-            round = new Round();
             DisplayCards();
             DisplayBid();
             DisplayScore();
@@ -99,6 +94,44 @@ namespace Tarneeb_Card_Game
                 HumanBidTurn();
 
             }
+        }
+        private void CheckForAnotherMatch()
+        {
+            if (gameScore >= 31)
+            {
+                MessageBox.Show("Game is WON by ...");
+            }
+            else if (NumberOfRounds > 13)
+            {
+                MessageBox.Show("Match Completed...");
+                NumberOfRounds = 1;
+                ResetMatchVariables();
+                StartMatch();
+
+            }
+        }
+
+        private void ResetMatchVariables()
+        {
+            
+            Round.Children.Remove(selectedTrumpImage);
+            Player1.Children.Remove(player1StackPanel);
+            Player2.Children.Remove(player2StackPanel);
+            Player3.Children.Remove(player3StackPanel);
+            Player4.Children.Remove(player4StackPanel);
+            Bid.Children.Remove(lblBid);
+            Bid.Children.Remove(lblHighestBid);
+            test.Children.Remove(highestBidBorder);
+            test.Children.Remove(matchHighestBid);
+            Round.Children.Remove(selectTrump);
+            Round.Children.Remove(roundBorder);
+            NumberOfRounds = 1;
+            currentBid = 0;
+            currentPlayer = 1;
+            currentTrump = 0;
+            pass = 0;
+            turn = 1;
+            chosenCard = "";
         }
         public void HumanBidTurn()
         {
@@ -186,7 +219,7 @@ namespace Tarneeb_Card_Game
 
                 Button mybutton = trumpButtons.ElementAt(currentTrump - 1);
                 //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                //MessageBox.Show(Convert.ToString(currentTrump));
+                MessageBox.Show(Convert.ToString(currentTrump));
                 if (mybutton != null)
                 {
                     // Click the button programmatically
@@ -206,7 +239,7 @@ namespace Tarneeb_Card_Game
 
                 Button mybutton = trumpButtons.ElementAt(currentTrump - 1);
                 //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                //MessageBox.Show(Convert.ToString(currentTrump));
+                MessageBox.Show(Convert.ToString(currentTrump));
                 if (mybutton != null)
                 {
                     // Click the button programmatically
@@ -226,7 +259,7 @@ namespace Tarneeb_Card_Game
 
                 Button mybutton = trumpButtons.ElementAt(currentTrump - 1);
                 //MessageBox.Show(Convert.ToString(Bid.FindName(buttonName) as Button));
-                //MessageBox.Show(Convert.ToString(currentTrump));
+                MessageBox.Show(Convert.ToString(currentTrump));
                 if (mybutton != null)
                 {
                     // Click the button programmatically
@@ -456,6 +489,7 @@ namespace Tarneeb_Card_Game
 
             match.player1.Remove(card);
             round.roundCards.Add(card);
+            Round.Children.Remove(clickedButton);
             Round.Children.Add(clickedButton);
             Grid.SetColumn(clickedButton, 0);
             Grid.SetRow(clickedButton, 0);
@@ -525,6 +559,9 @@ namespace Tarneeb_Card_Game
                         AICardSelect();
 
                     }
+                }else
+                {
+                    CheckForAnotherMatch();
                 }
 
             }
@@ -580,7 +617,12 @@ namespace Tarneeb_Card_Game
         #region Display Cards
         public void DisplayCards()
         {
+            match.player1.Clear();
+            match.player2.Clear();
+            match.player3.Clear();
+            match.player4.Clear();
             //Grid Test = new Grid();
+            deck = new Deck();
             deck.Shuffle();
             match.player1 = deck.Sort(deck.TakeCards(13));
             match.player2 = deck.Sort(deck.TakeCards(13));
@@ -634,6 +676,7 @@ namespace Tarneeb_Card_Game
             Player1.Children.Add(player1StackPanel);
         }
         #endregion
+
 
         #region Display Player 2
         public void DisplayPlayer2()
@@ -757,30 +800,30 @@ namespace Tarneeb_Card_Game
         #region SetCardImage
         public Image SetCardImage(Card card)
         {
-            Image myImage = new Image
+            Image cardImage = new Image
             {
                 Source = new BitmapImage(new Uri(card.getImagePath(), UriKind.RelativeOrAbsolute)),
                 Stretch = Stretch.Fill
             };
-            return myImage;
+            return cardImage;
         }
         #endregion
 
         #region SetTrumpImage
         public Image SetTrumpImage(String imagePath)
         {
-            Image myImage = new Image
+            Image setTrumpImage = new Image
             {
                 Source = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute)),
                 Stretch = Stretch.Fill
             };
-            return myImage;
+            return setTrumpImage;
         }
         #endregion
         public async void ShowMatchHighestBid()
         {
             // For match - showing final bid here
-            System.Windows.Shapes.Rectangle highestBidBorder = new System.Windows.Shapes.Rectangle();
+            highestBidBorder = new System.Windows.Shapes.Rectangle();
             highestBidBorder.Width = Round.Width;
             highestBidBorder.Height = Round.Height;
             highestBidBorder.Stroke = Brushes.Aqua;
@@ -795,7 +838,7 @@ namespace Tarneeb_Card_Game
             Grid.SetRow(highestBidBorder, 0);
             Grid.SetColumnSpan(highestBidBorder, 2);
 
-            Label matchHighestBid = new Label();
+            matchHighestBid = new Label();
             matchHighestBid.Name = "matchHighestBid";
             matchHighestBid.Content = currentBid;
             matchHighestBid.FontSize = 36;
@@ -851,7 +894,7 @@ namespace Tarneeb_Card_Game
         {
 
             // Making for Round - bidding take place here.
-            System.Windows.Shapes.Rectangle roundBorder = new System.Windows.Shapes.Rectangle();
+            roundBorder = new System.Windows.Shapes.Rectangle();
             roundBorder.Width = Round.Width;
             roundBorder.Height = Round.Height;
             roundBorder.Stroke = Brushes.Aqua;
@@ -929,6 +972,7 @@ namespace Tarneeb_Card_Game
                     btnBid.Width = 150;
                     btnBid.Height = 30;
                     btnBid.Click += PassButton_Click;
+                    this.Bid.Children.Remove(btnBid);
                     this.Bid.Children.Add(btnBid);
                     Grid.SetColumn(btnBid, 3);
                     Grid.SetRow(btnBid, 3);
@@ -941,6 +985,7 @@ namespace Tarneeb_Card_Game
                     btnBid.Width = 50;
                     btnBid.Height = 50;
                     btnBid.Click += BidButton_Click;
+                    this.Bid.Children.Remove(btnBid);
                     this.Bid.Children.Add(btnBid);
                     Grid.SetColumn(btnBid, x);
                     Grid.SetRow(btnBid, 2);
@@ -948,6 +993,7 @@ namespace Tarneeb_Card_Game
 
 
                 x++;
+                bidButtons.Remove(btnBid);
                 bidButtons.Add(btnBid);
 
             }
@@ -966,6 +1012,7 @@ namespace Tarneeb_Card_Game
 
             // Create a new Storyboard and add the opacity animation to it
             Storyboard storyboard = new Storyboard();
+            storyboard.Children.Remove(opacityAnimation);
             storyboard.Children.Add(opacityAnimation);
 
             // Set the target property of the opacity animation to the element's Opacity property
@@ -1008,11 +1055,13 @@ namespace Tarneeb_Card_Game
                 btnTrump.Width = 100;
                 btnTrump.Height = 100;
                 btnTrump.Click += TrumpButton_Click;
+                Trump.Children.Remove(btnTrump);
                 Trump.Children.Add(btnTrump);
                 //Grid.SetColumn(btnTrump, x);
                 //Grid.SetRow(btnTrump, x);
 
                 x++;
+                trumpButtons.Remove(btnTrump);
                 trumpButtons.Add(btnTrump);
 
             }
@@ -1034,6 +1083,7 @@ namespace Tarneeb_Card_Game
         {
             Grid Score = new Grid();
             Score.Name = "Score";
+            test.Children.Remove(Score);
             test.Children.Add(Score);
             Grid.SetRow(Score, 0);
             Grid.SetColumn(Score, 0);
@@ -1181,13 +1231,13 @@ namespace Tarneeb_Card_Game
                 trumpCard = "Spade";
                 trumpCardImagePath = "/Images/spades.png";
             }
-            Image myImage = new Image
+            selectedTrumpImage = new Image
             {
 
                 Source = new BitmapImage(new Uri(trumpCardImagePath, UriKind.RelativeOrAbsolute)),
                 Stretch = Stretch.Uniform
             };
-            Round.Children.Add(myImage);
+            Round.Children.Add(selectedTrumpImage);
         }
         private void TrumpButton_Click(object sender, RoutedEventArgs e)
         {
