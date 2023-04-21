@@ -43,7 +43,7 @@ namespace Tarneeb_Card_Game
 
             /*GameScreen win1 = new GameScreen();
             win1.Show();*/
-            Tester win1 = new Tester();
+            GameScreen win1 = new GameScreen();
 
             win1.gameMode.Content = selectedMode;
             win1.Show();
