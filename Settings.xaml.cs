@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using static Tarneeb_Card_Game.Tester;
+using static Tarneeb_Card_Game.GameScreen;
 
 namespace Tarneeb_Card_Game
 {
