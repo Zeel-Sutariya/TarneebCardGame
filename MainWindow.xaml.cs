@@ -79,7 +79,9 @@ namespace Tarneeb_Card_Game
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Settings settings = new Settings();
+            settings.Show();
+            
         }
     }
 }

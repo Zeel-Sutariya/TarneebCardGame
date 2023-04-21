@@ -84,6 +84,7 @@ namespace Tarneeb_Card_Game
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
+            
 
             match = new Match();
             round = new Round();
@@ -103,6 +104,14 @@ namespace Tarneeb_Card_Game
                 HumanBidTurn();
 
             }
+        }
+
+        private void musicPlay()
+        {
+            musicPlay();
+            MediaPlayer musicPlayer = new MediaPlayer();
+            musicPlayer.Open(new Uri(mediaPlayer.Source.ToString()));
+            musicPlayer.Play();
         }
         private void CheckForAnotherMatch()
         {
@@ -483,12 +492,12 @@ namespace Tarneeb_Card_Game
             clickedButton.Content = SetCardImage(card);
             if (intCard <= 52)
             {
-                StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
+                StackPanel parentStackPanel = FindParent(clickedButton);
                 parentStackPanel.Children.Remove(clickedButton);
             }
             else
             {
-                StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
+                StackPanel parentStackPanel = FindParent(clickedButton);
                 parentStackPanel.Children.Remove(clickedButton);
             }
 
@@ -606,14 +615,25 @@ namespace Tarneeb_Card_Game
         }
 
         #region FindParent
-        private static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        //private static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        //{
+        //    DependencyObject parent = VisualTreeHelper.GetParent(child);
+        //    while (parent != null && !(parent is T))
+        //    {
+        //        parent = VisualTreeHelper.GetParent(parent);
+        //    }
+        //    return parent as T;
+        //}
+        private StackPanel FindParent(Button button)
         {
-            DependencyObject parent = VisualTreeHelper.GetParent(child);
-            while (parent != null && !(parent is T))
+            DependencyObject parent = VisualTreeHelper.GetParent(button);
+
+            while (parent != null && !(parent is StackPanel))
             {
                 parent = VisualTreeHelper.GetParent(parent);
             }
-            return parent as T;
+
+            return parent as StackPanel;
         }
         #endregion
 

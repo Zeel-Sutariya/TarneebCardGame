@@ -89,6 +89,8 @@
                 </Grid.ColumnDefinitions>
             </Grid>
         </Grid>
-
+        <MediaElement x:Name="mediaPlayer" Source="Wallpaper.mp3" LoadedBehavior="Play" 
+                      UnloadedBehavior="Stop" Volume="{Binding ElementName=volumeSlider, Path=Value}"/>
     </Grid>
+    
 </Window>
