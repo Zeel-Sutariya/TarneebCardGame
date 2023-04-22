@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
@@ -21,6 +22,8 @@ using System.Windows.Shapes;
 using Cards;
 using UsingCards;
 using Size = System.Windows.Size;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace Tarneeb_Card_Game
 {
@@ -164,7 +167,7 @@ namespace Tarneeb_Card_Game
         }
         public void HumanBidTurn()
         {
-            MessageBox.Show("Your Turn!");
+            //MessageBox.Show("Your Turn!");
             //MessageBox.Show(deck.Cards.ToString());
         }
 
@@ -316,6 +319,7 @@ namespace Tarneeb_Card_Game
             //turn++;
             if (turn <= 4)
             {
+                //thinkTime();
                 if (round.roundCards.Count == 0)
                 {
                     if (currentPlayer == 2)
@@ -500,6 +504,8 @@ namespace Tarneeb_Card_Game
                 StackPanel parentStackPanel = FindParent(clickedButton);
                 parentStackPanel.Children.Remove(clickedButton);
             }
+
+
 
             // Remove the button from the StackPanel
 
