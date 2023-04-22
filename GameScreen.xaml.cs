@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
@@ -22,8 +21,6 @@ using System.Windows.Shapes;
 using Cards;
 using UsingCards;
 using Size = System.Windows.Size;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace Tarneeb_Card_Game
 {
@@ -88,6 +85,7 @@ namespace Tarneeb_Card_Game
         {
             this.WindowState = WindowState.Maximized;
 
+
             match = new Match();
             round = new Round();
             StartMatch();
@@ -106,6 +104,14 @@ namespace Tarneeb_Card_Game
                 HumanBidTurn();
 
             }
+        }
+
+        private void musicPlay()
+        {
+            musicPlay();
+            MediaPlayer musicPlayer = new MediaPlayer();
+            musicPlayer.Open(new Uri(mediaPlayer.Source.ToString()));
+            musicPlayer.Play();
         }
         private void CheckForAnotherMatch()
         {
@@ -158,7 +164,7 @@ namespace Tarneeb_Card_Game
         }
         public void HumanBidTurn()
         {
-            //MessageBox.Show("Your Turn!");
+            MessageBox.Show("Your Turn!");
             //MessageBox.Show(deck.Cards.ToString());
         }
 
@@ -231,7 +237,7 @@ namespace Tarneeb_Card_Game
 
         public void HumanTrumpTurn()
         {
-            //MessageBox.Show("Your Turn!");
+            MessageBox.Show("Your Turn!");
         }
         public void AITrumpTurn()
         {
@@ -300,23 +306,21 @@ namespace Tarneeb_Card_Game
         public void HumanCardSelect()
         {
             //turn++;
-            //MessageBox.Show("Your Turn!");
+            MessageBox.Show("Your Turn!");
             //currentPlayer++;
 
         }
-        public void AICardSelect()
+        public async Task AICardSelect()
         {
 
             //turn++;
             if (turn <= 4)
             {
-                //thinkTime();
                 if (round.roundCards.Count == 0)
                 {
                     if (currentPlayer == 2)
                     {
                         //thinkTime();
-                        //Thread.Sleep(1000);
                         //MessageBox.Show("Current Player: " + currentPlayer.ToString());
                         //MessageBox.Show("Turn: " + turn.ToString());
                         chosenCard = AI.PlayCard(match.player2, "", round.roundCards, currentTrump, gameMode.Content.ToString());
@@ -388,6 +392,7 @@ namespace Tarneeb_Card_Game
                 }
                 else
                 {
+                    await thinkTime();
                     if (currentPlayer == 2)
                     {
                         //Thread.Sleep(1000);
@@ -485,11 +490,16 @@ namespace Tarneeb_Card_Game
             card.isFaceUp = true;
 
             clickedButton.Content = SetCardImage(card);
-
-            StackPanel parentStackPanel = FindParent<StackPanel>(clickedButton);
-            parentStackPanel.Children.Remove(clickedButton);
-
-
+            if (intCard <= 52)
+            {
+                StackPanel parentStackPanel = FindParent(clickedButton);
+                parentStackPanel.Children.Remove(clickedButton);
+            }
+            else
+            {
+                StackPanel parentStackPanel = FindParent(clickedButton);
+                parentStackPanel.Children.Remove(clickedButton);
+            }
 
             // Remove the button from the StackPanel
 
@@ -560,7 +570,6 @@ namespace Tarneeb_Card_Game
                 int currentRoundWinner = round.RoundWinner();
                 currentPlayer = currentRoundWinner;
                 //MessageBox.Show("Winner is Player " + currentRoundWinner.ToString());
-
                 if (currentRoundWinner == 1 || currentRoundWinner == 3)
                 {
                     team01.teamScore++;
@@ -607,14 +616,25 @@ namespace Tarneeb_Card_Game
         }
 
         #region FindParent
-        private static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        //private static T FindParent<T>(DependencyObject child) where T : DependencyObject
+        //{
+        //    DependencyObject parent = VisualTreeHelper.GetParent(child);
+        //    while (parent != null && !(parent is T))
+        //    {
+        //        parent = VisualTreeHelper.GetParent(parent);
+        //    }
+        //    return parent as T;
+        //}
+        private StackPanel FindParent(Button button)
         {
-            DependencyObject parent = VisualTreeHelper.GetParent(child);
-            while (parent != null && !(parent is T))
+            DependencyObject parent = VisualTreeHelper.GetParent(button);
+
+            while (parent != null && !(parent is StackPanel))
             {
                 parent = VisualTreeHelper.GetParent(parent);
             }
-            return parent as T;
+
+            return parent as StackPanel;
         }
         #endregion
 
@@ -720,7 +740,7 @@ namespace Tarneeb_Card_Game
                 button.Tag = card; // Assign the card object to the button's Tag property
                 button.Width = 85;
                 button.Height = 140;
-                card.isFaceUp = true;
+                card.isFaceUp = false;
                 card.ParentButton = button;
                 button.IsEnabled = false;
 
@@ -758,7 +778,7 @@ namespace Tarneeb_Card_Game
                 button.Tag = card; // Assign the card object to the button's Tag property
                 button.Width = 85;
                 button.Height = 140;
-                card.isFaceUp = true;
+                card.isFaceUp = false;
                 button.IsEnabled = false;
                 card.ParentButton = button;
                 if (x == 0)
@@ -799,7 +819,7 @@ namespace Tarneeb_Card_Game
                 button.Tag = card; // Assign the card object to the button's Tag property
                 button.Width = 85;
                 button.Height = 140;
-                card.isFaceUp = true;
+                card.isFaceUp = false;
                 button.IsEnabled = false;
                 card.ParentButton = button;
 
@@ -1186,12 +1206,13 @@ namespace Tarneeb_Card_Game
             Score.Children.Add(lblThemScore);
         }
 
-        public void thinkTime()
+        public async Task thinkTime()
         {
             Random rnd = new Random();
-            int time = rnd.Next(4000, 8000);
+            int time = rnd.Next(1, 3);
 
-            //Thread.Sleep(time);
+            await Task.Delay(TimeSpan.FromSeconds(time));
+
         }
 
         private void BidButton_Click(object sender, RoutedEventArgs e)
@@ -1240,14 +1261,14 @@ namespace Tarneeb_Card_Game
                 {
                     team01.teamBid = currentBid;
                     team02.teamBid = 0;
-                    //MessageBox.Show("team 1 bid: " + team01.teamBid + " current bid: " + currentBid);
+                    MessageBox.Show("team 1 bid: " + team01.teamBid + " current bid: " + currentBid);
                 }
                 if (currentPlayer == 2 || currentPlayer == 4)
                 {
 
                     team02.teamBid = currentBid;
                     team01.teamBid = 0;
-                    //MessageBox.Show("team 2 bid: " + team02.teamBid + " current bid: " + currentBid);
+                    MessageBox.Show("team 2 bid: " + team02.teamBid + " current bid: " + currentBid);
                 }
                 ShowMatchHighestBid();
             }
@@ -1336,14 +1357,14 @@ namespace Tarneeb_Card_Game
                 {
                     team01.teamBid = currentBid;
                     team02.teamBid = 0;
-                    //MessageBox.Show("team 1 bid: " + team01.teamBid + " current bid: " + currentBid);
+                    MessageBox.Show("team 1 bid: " + team01.teamBid + " current bid: " + currentBid);
                 }
                 if (currentPlayer == 2 || currentPlayer == 4)
                 {
 
                     team02.teamBid = currentBid;
                     team01.teamBid = 0;
-                    //MessageBox.Show("team 2 bid: " + team02.teamBid + " current bid: " + currentBid);
+                    MessageBox.Show("team 2 bid: " + team02.teamBid + " current bid: " + currentBid);
                 }
                 ShowMatchHighestBid();
             }
@@ -1416,8 +1437,8 @@ namespace Tarneeb_Card_Game
         {
             if (team01.teamBid > 0)
             {
-                //MessageBox.Show("team 1 score" + team01.teamScore);
-                //MessageBox.Show("team 1 bid" + team01.teamBid);
+                MessageBox.Show("team 1 score" + team01.teamScore);
+                MessageBox.Show("team 1 bid" + team01.teamBid);
                 if (team01.teamScore >= team01.teamBid)
                 {
                     //team01.teamScore = team01.teamBid;
@@ -1438,8 +1459,8 @@ namespace Tarneeb_Card_Game
 
             else
             {
-                //MessageBox.Show("team 2 score" + team02.teamScore);
-                //MessageBox.Show("team 2 bid" + team02.teamBid);
+                MessageBox.Show("team 2 score" + team02.teamScore);
+                MessageBox.Show("team 2 bid" + team02.teamBid);
                 if (team02.teamScore >= team02.teamBid)
                 {
                     team02MatchScore = team02.teamBid;

@@ -41,20 +41,10 @@ namespace Tarneeb_Card_Game
                 selectedMode = "Hard";
             }
 
-            /*GameScreen win1 = new GameScreen();
-            win1.Show();*/
             GameScreen win1 = new GameScreen();
 
             win1.gameMode.Content = selectedMode;
             win1.Show();
-            if (win1.IsEnabled)
-            {
-                //playButton.IsEnabled = false;
-            }
-            else
-            {
-                //playButton.IsEnabled = true;
-            }
         }
 
         private void RulesButton_Click(object sender, RoutedEventArgs e)
